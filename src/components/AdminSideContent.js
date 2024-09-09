@@ -7,7 +7,7 @@ function AdminSideContent() {
       <li class="list-group-item">user</li>
 
       <Link to="/titik-tpa">
-        <li class="list-group-item active" aria-current="true">
+        <li class="list-group-item " aria-current="true">
           <i class="bi bi-geo-alt-fill"></i> Titik TPA
         </li>
       </Link>
