@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import AdminTable from "./AdminTable";
 import AdminPagination from "./AdminPagination";
 import AdminOptionBar from "./AdminOptionBar";
+import { Route, Routes } from "react-router-dom";
+import AdminMaps from "./AdminMaps";
 
 function AdminDataContent({ title }) {
   return (
@@ -23,12 +25,12 @@ function AdminDataContent({ title }) {
           </div>
         </div>
         <AdminOptionBar />
+
+        {/* <Routes>
+          <Route path="/titik-tpa-table" element={<AdminTable />}></Route>
+          <Route path="/titik-tpa-maps" element={<AdminMaps />}></Route>
+        </Routes> */}
         <AdminTable />
-        <div class="position-relative">
-          <div class="position-absolute  end-0">
-            <AdminPagination />
-          </div>
-        </div>
       </div>
     </div>
   );

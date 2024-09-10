@@ -17,7 +17,7 @@ class AdminApp extends React.Component {
             <div class="col ">
               <Routes>
                 <Route
-                  path="/titik-tpa"
+                  path="/titik-tpa-table"
                   element={<AdminDataContent title={"Titik TPA"} />}
                 ></Route>
                 <Route
