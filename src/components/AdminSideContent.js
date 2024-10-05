@@ -3,48 +3,53 @@ import { Link } from "react-router-dom";
 
 function AdminSideContent() {
   return (
-    <ul class="list-group">
-      <li class="list-group-item">user</li>
-
-      <Link to="/titik-tpa-table">
-        <li class="list-group-item " aria-current="true">
-          <i class="bi bi-geo-alt-fill"></i> Titik TPA
+    <div className="AdminSideContent">
+      <ul class="list-group">
+        <li class="list-group-item text-center">
+          <div class="mb-3">
+            <img src="/images/user.png" width="150" alt="..." />
+          </div>
+          <h3>Irwan Gumilar</h3>
         </li>
-      </Link>
-
-      <Link to="/jadwal-pengangkutan">
+        <Link to="/titik-tpa-table">
+          <li class="list-group-item " aria-current="true">
+            <i class="bi bi-geo-alt-fill"></i> Titik TPA
+          </li>
+        </Link>
+        <Link to="/jadwal-pengangkutan">
+          <li class="list-group-item">
+            <i class="bi bi-calendar-day"></i> Jadwal Pengangkutan
+          </li>
+        </Link>
+        <Link to="/upt">
+          <li class="list-group-item">
+            <i class="bi bi-building-fill"></i> UPT
+          </li>
+        </Link>
         <li class="list-group-item">
-          <i class="bi bi-calendar-day"></i> Jadwal Pengangkutan
+          <i class="bi bi-book-fill"> </i>
+          Laporan
+          <i class="bi bi-chevron-down"></i>
         </li>
-      </Link>
-      <Link to="/upt">
+        <Link to="/laporan-pengangkutan">
+          <li class="list-group-item text-end">Pengangkutan</li>
+        </Link>
+        <Link to="/laporan-pengaduan">
+          <li class="list-group-item text-end">Pengaduan</li>
+        </Link>
+        <Link to="/pengguna">
+          <li class="list-group-item">
+            <i class="bi bi-person-fill"></i> Pengguna
+          </li>
+        </Link>
         <li class="list-group-item">
-          <i class="bi bi-building-fill"></i> UPT
+          <br></br>
+          <br></br>
+          <br></br>
         </li>
-      </Link>
-      <li class="list-group-item">
-        <i class="bi bi-book-fill"> </i>
-        Laporan
-        <i class="bi bi-chevron-down"></i>
-      </li>
-      <Link to="/laporan-pengangkutan">
-        <li class="list-group-item text-end">Pengangkutan</li>
-      </Link>
-      <Link to="/laporan-pengaduan">
-        <li class="list-group-item text-end">Pengaduan</li>
-      </Link>
-      <Link to="/pengguna">
-        <li class="list-group-item">
-          <i class="bi bi-person-fill"></i> Pengguna
-        </li>
-      </Link>
-      <li class="list-group-item">
-        <br></br>
-        <br></br>
-        <br></br>
-      </li>
-      <li class="list-group-item text-center">Keluar</li>
-    </ul>
+        <li class="list-group-item text-center">Keluar</li>
+      </ul>
+    </div>
   );
 }
 
