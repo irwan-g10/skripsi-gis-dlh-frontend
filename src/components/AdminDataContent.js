@@ -10,24 +10,35 @@ function AdminDataContent({ title }) {
   return (
     <div className="AdminDataContent">
       <div class="container">
-        <div class="row mb-3">
-          <div class="col-9">
-            <h2>{title}</h2>
-          </div>
-          <div class="col-3 ">
-            <div class="col d-grid">
-              <Link to="/titik-tpa-input">
-                <button type="button" class="btn btn-primary ">
-                  Add
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <h2>{title}</h2>
+        <div className="border-top border-2 border-dark my-4 mx-5"></div>
+
         <div className="AdminOptionBar">
           <div class="container text-center mb-5">
             <div class="row">
               <div class="col ">
+                <Link to="/titik-tpa-input">
+                  <div class="col d-grid">
+                    <button type="button" class="btn btn-primary d-grid">
+                      Tambah
+                    </button>
+                  </div>
+                </Link>
+              </div>
+              <div class="col">
+                <form class="d-flex" role="search">
+                  <input
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button class="btn btn-outline-success" type="submit">
+                    Search
+                  </button>
+                </form>
+              </div>
+              <div class="col-3 ">
                 <div
                   class="btn-group"
                   role="group"
@@ -57,25 +68,12 @@ function AdminDataContent({ title }) {
                   </label>
                 </div>
               </div>
-              <div class="col">
-                <form class="d-flex" role="search">
-                  <input
-                    class="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <button class="btn btn-outline-success" type="submit">
-                    Search
-                  </button>
-                </form>
-              </div>
             </div>
           </div>
         </div>
 
         <AdminTable />
-        <AdminMaps />
+        {/* <AdminMaps /> */}
       </div>
     </div>
   );

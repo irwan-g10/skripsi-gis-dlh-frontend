@@ -10,12 +10,12 @@ class AdminApp extends React.Component {
     return (
       <div className="AdminApp">
         <Navigation />
-        <div className="AdminContent" class="container-fluid">
+        <div className="AdminContent container-fluid ">
           <div class="row">
             <div class="col-3">
               <AdminSideContent />
             </div>
-            <div class="col ">
+            <div class="col border rounded p-3">
               <Routes>
                 <Route
                   path="/titik-tpa-table"
