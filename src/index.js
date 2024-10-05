@@ -4,10 +4,9 @@ import { BrowserRouter } from "react-router-dom";
 
 import AdminApp from "./components/AdminApp";
 
-import "./styles/styles.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./styles/styles.css";
 
 const root = createRoot(document.getElementById("root"));
 

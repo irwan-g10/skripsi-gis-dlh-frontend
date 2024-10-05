@@ -13,40 +13,85 @@ function AdminSideContent() {
         </li>
         <Link to="/titik-tpa-table">
           <li class="list-group-item " aria-current="true">
-            <i class="bi bi-geo-alt-fill"></i> Titik TPA
+            <div className="row container">
+              <div className="col-2">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div className="col">Titik TPA</div>
+              <div className="col-1">
+                <i class="bi bi-caret-right-fill"></i>
+              </div>
+            </div>
           </li>
         </Link>
         <Link to="/jadwal-pengangkutan">
-          <li class="list-group-item">
-            <i class="bi bi-calendar-day"></i> Jadwal Pengangkutan
+          <li class="list-group-item " aria-current="true">
+            <div className="row container">
+              <div className="col-2">
+                <i class="bi bi-calendar-day"></i>
+              </div>
+              <div className="col">Jadwal Pengangkutan</div>
+              <div className="col-1">
+                <i class="bi bi-caret-right-fill"></i>
+              </div>
+            </div>
           </li>
         </Link>
         <Link to="/upt">
-          <li class="list-group-item">
-            <i class="bi bi-building-fill"></i> UPT
+          <li class="list-group-item " aria-current="true">
+            <div className="row container">
+              <div className="col-2">
+                <i class="bi bi-building-fill"></i>
+              </div>
+              <div className="col">Unit Pelayanan Teknis</div>
+              <div className="col-1">
+                <i class="bi bi-caret-right-fill"></i>
+              </div>
+            </div>
           </li>
         </Link>
-        <li class="list-group-item">
-          <i class="bi bi-book-fill"> </i>
-          Laporan
-          <i class="bi bi-chevron-down"></i>
+        <li class="list-group-item " aria-current="true">
+          <div className="row container">
+            <div className="col-2">
+              <i class="bi bi-book-fill"> </i>
+            </div>
+            <div className="col">Laporan</div>
+          </div>
         </li>
         <Link to="/laporan-pengangkutan">
-          <li class="list-group-item text-end">Pengangkutan</li>
-        </Link>
-        <Link to="/laporan-pengaduan">
-          <li class="list-group-item text-end">Pengaduan</li>
-        </Link>
-        <Link to="/pengguna">
-          <li class="list-group-item">
-            <i class="bi bi-person-fill"></i> Pengguna
+          <li class="list-group-item " aria-current="true">
+            <div className="row container">
+              <div className="col text-end">Pengangkutan</div>
+              <div className="col-1">
+                <i class="bi bi-caret-right-fill"></i>
+              </div>
+            </div>
           </li>
         </Link>
-        <li class="list-group-item">
-          <br></br>
-          <br></br>
-          <br></br>
-        </li>
+        <Link to="/laporan-pengaduan">
+          <li class="list-group-item " aria-current="true">
+            <div className="row container">
+              <div className="col text-end">Pengaduan</div>
+              <div className="col-1">
+                <i class="bi bi-caret-right-fill"></i>
+              </div>
+            </div>
+          </li>
+        </Link>
+        <Link to="/pengguna">
+          <li class="list-group-item " aria-current="true">
+            <div className="row container">
+              <div className="col-2">
+                <i class="bi bi-person-fill"></i>
+              </div>
+              <div className="col">Pengguna</div>
+              <div className="col-1">
+                <i class="bi bi-caret-right-fill"></i>
+              </div>
+            </div>
+          </li>
+        </Link>
+
         <li class="list-group-item text-center">Keluar</li>
       </ul>
     </div>
