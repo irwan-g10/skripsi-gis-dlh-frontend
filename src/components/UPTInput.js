@@ -1,17 +1,21 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 
-function TPAInput({ isUpdate }) {
+function UPTInput({ isUpdate }) {
   return (
-    <div className="TPAInput">
+    <div className="UPTInput">
       <div class="container">
         <div class="mb-5">
-          <h2>{isUpdate ? "Informasi TPA" : "Tambah Lokasi TPA"}</h2>
+          <h2>
+            {isUpdate
+              ? "Informasi Unit Pelayanan Teknis"
+              : "Tambah Unit Pelayanan Teknis"}
+          </h2>
         </div>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
         <div class="mb-3">
           <label for=" namaTempat" class="form-label">
-            Nama Tempat
+            Nama Unit Pelayanan Teknis
           </label>
           <input
             type="input"
@@ -19,30 +23,6 @@ function TPAInput({ isUpdate }) {
             id=" namaTempat"
             placeholder="Masukan nama tempat ..."
           />
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">
-            Jenis Tong
-          </label>
-
-          <select class="form-select" aria-label="Default select example">
-            <option selected>-- pilih --</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">
-            Unit Pelayanan Teknis
-          </label>
-
-          <select class="form-select" aria-label="Default select example">
-            <option selected>-- pilih --</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
         </div>
 
         <div className=" row">
@@ -132,4 +112,4 @@ function TPAInput({ isUpdate }) {
   );
 }
 
-export default TPAInput;
+export default UPTInput;

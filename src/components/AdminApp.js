@@ -4,6 +4,9 @@ import Navigation from "./Navigation";
 import AdminSideContent from "./AdminSideContent";
 import { Route, Routes } from "react-router-dom";
 import TPAInput from "./TPAInput";
+import JadwalPengangkutanInput from "./JadwalPengangkutanInput";
+import UPTInput from "./UPTInput";
+import PenggunaInput from "./PenggunaInput";
 
 class AdminApp extends React.Component {
   render() {
@@ -42,6 +45,15 @@ class AdminApp extends React.Component {
                   element={<AdminDataContent title={"Pengguna"} />}
                 ></Route>
                 <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
+                <Route
+                  path="/jadwal-pengangkutan-input"
+                  element={<JadwalPengangkutanInput />}
+                ></Route>
+                <Route path="/upt-input" element={<UPTInput />}></Route>
+                <Route
+                  path="/pengguna-input"
+                  element={<PenggunaInput />}
+                ></Route>
                 <Route
                   path="/titik-tpa-update"
                   element={<TPAInput isUpdate={true} />}
