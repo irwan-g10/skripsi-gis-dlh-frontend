@@ -8,15 +8,16 @@ function TPAInput({ isUpdate }) {
         <div class="mb-5">
           <h2>{isUpdate ? "Informasi TPA TPA" : "Tambah Lokasi TPA"}</h2>
         </div>
+        <div className="border-top border-2 border-dark my-4 mx-5"></div>
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">
-            Nama
+          <label for=" namaTempat" class="form-label">
+            Nama Tempat
           </label>
           <input
             type="input"
             class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Masukan data...."
+            id=" namaTempat"
+            placeholder="Masukan nama tempat ..."
           />
         </div>
         <div class="mb-3">
@@ -25,7 +26,7 @@ function TPAInput({ isUpdate }) {
           </label>
 
           <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
+            <option selected>-- pilih --</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
@@ -37,7 +38,7 @@ function TPAInput({ isUpdate }) {
           </label>
 
           <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
+            <option selected>-- pilih --</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
@@ -45,7 +46,7 @@ function TPAInput({ isUpdate }) {
         </div>
 
         <div className=" row">
-          <label for="exampleFormControlInput1" class="form-label">
+          <label for="lokasi" class="form-label">
             Lokasi
           </label>
           <div className=" col">
@@ -53,8 +54,8 @@ function TPAInput({ isUpdate }) {
               <input
                 type="input"
                 class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Masukan data...."
+                id="lokasi"
+                placeholder="Masukan lokasi ..."
               />
             </div>
           </div>
@@ -70,51 +71,51 @@ function TPAInput({ isUpdate }) {
         <div className=" row">
           <div className=" col">
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">
+              <label for="latitude" class="form-label">
                 Latitude
               </label>
               <input
                 type="input"
                 class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Masukan data...."
+                id="latitude"
+                placeholder="Masukan latitude ..."
               />
             </div>
           </div>
           <div className="col">
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">
+              <label for="longitude" class="form-label">
                 Logitude
               </label>
               <input
                 type="input"
                 class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Masukan data...."
+                id="longitude"
+                placeholder="Masukan longitude ...."
               />
             </div>
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">
-            kecamatan
+          <label for="kecamatan" class="form-label">
+            Kecamatan
           </label>
           <input
             type="input"
             class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Masukan data...."
+            id="kecamatan"
+            placeholder="Masukan Kecamatan ..."
           />
           <div class="mb-5">
-            <label for="exampleFormControlInput1" class="form-label">
+            <label for="desa" class="form-label">
               Desa
             </label>
             <input
               type="input"
               class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="Masukan data...."
+              id="desa"
+              placeholder="Masukan desa ..."
             />
           </div>
 

@@ -53,7 +53,7 @@ function AdminDataContent({ title }) {
                     checked
                   />
                   <label class="btn btn-outline-secondary" for="btnradio1">
-                    Radio 1
+                    Tabel
                   </label>
 
                   <input
@@ -64,7 +64,7 @@ function AdminDataContent({ title }) {
                     autocomplete="off"
                   />
                   <label class="btn btn-outline-secondary" for="btnradio2">
-                    Radio 2
+                    Maps
                   </label>
                 </div>
               </div>
