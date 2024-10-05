@@ -3,6 +3,7 @@ import AdminDataContent from "./AdminDataContent";
 import Navigation from "./Navigation";
 import AdminSideContent from "./AdminSideContent";
 import { Route, Routes } from "react-router-dom";
+import TPAInput from "./TPAInput";
 
 class AdminApp extends React.Component {
   render() {
@@ -39,6 +40,11 @@ class AdminApp extends React.Component {
                 <Route
                   path="/pengguna"
                   element={<AdminDataContent title={"Pengguna"} />}
+                ></Route>
+                <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
+                <Route
+                  path="/titik-tpa-update"
+                  element={<TPAInput isUpdate={true} />}
                 ></Route>
               </Routes>
             </div>

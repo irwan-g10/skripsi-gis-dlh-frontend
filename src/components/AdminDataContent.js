@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
@@ -18,9 +19,11 @@ function AdminDataContent({ title }) {
           </div>
           <div class="col-3 ">
             <div class="col d-grid">
-              <button type="button" class="btn btn-primary ">
-                Add
-              </button>
+              <Link to="/titik-tpa-input">
+                <button type="button" class="btn btn-primary ">
+                  Add
+                </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import AdminPagination from "./AdminPagination";
+import { Link } from "react-router-dom";
 
 function AdminTable() {
   return (
@@ -23,9 +24,11 @@ function AdminTable() {
               <td>@mdo</td>
               <td>
                 <div class="container  text-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
+                  <Link to="/titik-tpa-update">
+                    <button type="button" class="btn btn-success me-2">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                  </Link>
                   <button type="button" class="btn btn-warning">
                     <i class="bi bi-trash"></i>
                   </button>
