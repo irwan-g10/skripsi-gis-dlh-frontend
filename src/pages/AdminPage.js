@@ -1,0 +1,71 @@
+import React from "react";
+import Navigation from "../components/admin/NavigationTPA";
+import AdminSideContent from "../components/admin/AdminSideContent";
+import { Route, Routes } from "react-router-dom";
+import { getAllTitikTPA } from "../utils/api";
+import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
+
+function AdminPage() {
+  const [titikTpas, setTitikTpas] = React.useState([]);
+
+  React.useEffect(() => {
+    getAllTitikTPA().then(({ data }) => {
+      setTitikTpas(data.titikTpa);
+    });
+  }, []);
+
+  // console.log(titikTpas);
+  return (
+    <div className="admin-page container-fluid">
+      <Navigation />
+      <div className="row">
+        <div className="col-3">
+          <AdminSideContent />
+        </div>
+        <div className="col">
+          <div className="border rounded p-3">
+            <Routes>
+              <Route
+                path="/titik-tpa-table"
+                element={<AdminDataTPA title={"Titik TPA"} data={titikTpas} />}
+              ></Route>
+              {/* <Route
+                path="/jadwal-pengangkutan"
+                element={<AdminDataContent title={"Jadwal Pengangkutan"} />}
+              ></Route>
+              <Route
+                path="/upt"
+                element={<AdminDataContent title={"UPT"} />}
+              ></Route>
+              <Route
+                path="/laporan-pengangkutan"
+                element={<AdminDataContent title={"Laporan Pengangkutan"} />}
+              ></Route>
+              <Route
+                path="/laporan-pengaduan"
+                element={<AdminDataContent title={"Laporan Pengaduan"} />}
+              ></Route>
+              <Route
+                path="/pengguna"
+                element={<AdminDataContent title={"Pengguna"} />}
+              ></Route>
+              <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
+              <Route
+                path="/jadwal-pengangkutan-input"
+                element={<JadwalPengangkutanInput />}
+              ></Route>
+              <Route path="/upt-input" element={<UPTInput />}></Route>
+              <Route path="/pengguna-input" element={<PenggunaInput />}></Route>
+              <Route
+                path="/titik-tpa-update"
+                element={<TPAInput isUpdate={true} />}
+              ></Route> */}
+            </Routes>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AdminPage;

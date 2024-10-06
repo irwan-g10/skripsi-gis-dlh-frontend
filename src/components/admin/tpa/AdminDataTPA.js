@@ -2,68 +2,74 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
+import TableTPA from "./TableTPA";
 
-import AdminTable from "./AdminTable";
-import AdminMaps from "./AdminMaps";
+// import AdminMaps from "../AdminMaps";
 
-function AdminDataContent({ title }) {
+function AdminDataTPA({ title, data }) {
+  // console.log(data);
   return (
-    <div className="AdminDataContent">
-      <div class="container">
+    <div className="AdminDataTPA">
+      <div className="container">
         <h2>{title}</h2>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
 
         <div className="AdminOptionBar">
-          <div class="container text-center mb-5">
-            <div class="row">
-              <div class="col ">
+          <div className="container text-center mb-5">
+            <div className="row">
+              <div className="col ">
                 <Link to="/titik-tpa-input">
-                  <div class="col d-grid">
-                    <button type="button" class="btn btn-primary d-grid">
+                  <div className="col d-grid">
+                    <button type="button" className="btn btn-primary d-grid">
                       Tambah
                     </button>
                   </div>
                 </Link>
               </div>
-              <div class="col">
-                <form class="d-flex" role="search">
+              <div className="col">
+                <form className="d-flex" role="search">
                   <input
-                    class="form-control me-2"
+                    className="form-control me-2"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
                   />
-                  <button class="btn btn-outline-success" type="submit">
+                  <button className="btn btn-outline-success" type="submit">
                     Search
                   </button>
                 </form>
               </div>
-              <div class="col-3 ">
+              <div className="col-3 ">
                 <div
-                  class="btn-group"
+                  className="btn-group"
                   role="group"
                   aria-label="Basic radio toggle button group"
                 >
                   <input
                     type="radio"
-                    class="btn-check"
+                    className="btn-check"
                     name="btnradio"
                     id="btnradio1"
-                    autocomplete="off"
-                    checked
+                    autoComplete="off"
                   />
-                  <label class="btn btn-outline-secondary" for="btnradio1">
+                  <label
+                    className="btn btn-outline-secondary"
+                    htmlFor="btnradio1"
+                  >
                     Tabel
                   </label>
 
                   <input
                     type="radio"
-                    class="btn-check"
+                    className="btn-check"
                     name="btnradio"
                     id="btnradio2"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
-                  <label class="btn btn-outline-secondary" for="btnradio2">
+                  <label
+                    className="btn btn-outline-secondary"
+                    htmlFor="btnradio2"
+                  >
                     Maps
                   </label>
                 </div>
@@ -72,15 +78,15 @@ function AdminDataContent({ title }) {
           </div>
         </div>
 
-        <AdminTable />
+        <TableTPA data={data} />
         {/* <AdminMaps /> */}
       </div>
     </div>
   );
 }
 
-AdminDataContent.propTypes = {
+AdminDataTPA.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default AdminDataContent;
+export default AdminDataTPA;

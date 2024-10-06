@@ -1,12 +1,12 @@
 import React from "react";
-import AdminPagination from "./AdminPagination";
+import AdminPagination from "./admin/tpa/PaginationTPA";
 import { Link } from "react-router-dom";
 
 function AdminTable() {
   return (
     <div className="AdminTable">
-      <div class="container mb-1">
-        <table class="table">
+      <div className="container mb-1">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -23,149 +23,23 @@ function AdminTable() {
               <td>Otto</td>
               <td>@mdo</td>
               <td>
-                <div class="container  text-center">
+                <div className="container  text-center">
                   <Link to="/titik-tpa-update">
-                    <button type="button" class="btn btn-success me-2">
-                      <i class="bi bi-pencil-square"></i>
+                    <button type="button" className="btn btn-success me-2">
+                      <i className="bi bi-pencil-square"></i>
                     </button>
                   </Link>
-                  <button type="button" class="btn btn-warning">
-                    <i class="bi bi-trash"></i>
+                  <button type="button" className="btn btn-warning">
+                    <i className="bi bi-trash"></i>
                   </button>
                 </div>
               </td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <div class="container  text-center">
-                <button type="button" class="btn btn-success me-2">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button type="button" class="btn btn-warning">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-              <div class="container  text-center">
-                <button type="button" class="btn btn-success me-2">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button type="button" class="btn btn-warning">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-              <div class="container  text-center">
-                <button type="button" class="btn btn-success me-2">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button type="button" class="btn btn-warning">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-              <div class="container  text-center">
-                <button type="button" class="btn btn-success me-2">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button type="button" class="btn btn-warning">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </tr>
-            {/* <tr>
-                <th scope="row">6</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-                <div class="container  text-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </tr>
-              <tr>
-                <th scope="row">7</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-                <div class="container  text-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </tr>
-              <tr>
-                <th scope="row">8</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-                <div class="container  text-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </tr>
-              <tr>
-                <th scope="row">9</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-                <div class="container  text-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </tr>
-              <tr>
-                <th scope="row">10</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-                <div class="container  text-center">
-                  <button type="button" class="btn btn-success me-2">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
-                  <button type="button" class="btn btn-warning">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </tr> */}
           </tbody>
         </table>
       </div>
-      <div class="position-relative">
-        <div class="position-absolute  end-0">
+      <div className="position-relative">
+        <div className="position-absolute  end-0">
           <AdminPagination />
         </div>
       </div>
