@@ -7,12 +7,14 @@ import TPAInput from "./TPAInput";
 import JadwalPengangkutanInput from "./JadwalPengangkutanInput";
 import UPTInput from "./UPTInput";
 import PenggunaInput from "./PenggunaInput";
+import LoginPage from "../pages/LoginPage";
 
 class AdminApp extends React.Component {
   render() {
     return (
       <div className="AdminApp">
-        <Navigation />
+        <LoginPage />
+        {/* <Navigation />
         <div className="AdminContent container-fluid ">
           <div class="row">
             <div class="col-3">
@@ -61,7 +63,7 @@ class AdminApp extends React.Component {
               </Routes>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
