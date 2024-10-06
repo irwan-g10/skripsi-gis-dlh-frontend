@@ -2,10 +2,10 @@ import React from "react";
 import PropTyoe from "prop-types";
 import { Link } from "react-router-dom";
 
-function TPAItem({ id, nama_tempat, jenis_tong, lokasi }) {
+function TPAItem({ id, nomor, nama_tempat, jenis_tong, lokasi }) {
   return (
     <tr>
-      <th scope="row">1</th>
+      <th scope="row">{nomor}</th>
       <td>{nama_tempat}</td>
       <td>{jenis_tong}</td>
       <td>{lokasi}</td>

@@ -3,6 +3,7 @@ import Navigation from "../components/admin/NavigationTPA";
 import AdminSideContent from "../components/admin/AdminSideContent";
 import { Route, Routes } from "react-router-dom";
 import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
+import TPAInput from "../components/admin/tpa/TPAInput";
 
 function AdminPage() {
   return (
@@ -16,6 +17,7 @@ function AdminPage() {
           <div className="border rounded p-3 shadow  rounded">
             <Routes>
               <Route path="/titik-tpa-table" element={<AdminDataTPA />}></Route>
+              <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
               {/* <Route
                 path="/jadwal-pengangkutan"
                 element={<AdminDataContent title={"Jadwal Pengangkutan"} />}
@@ -36,7 +38,7 @@ function AdminPage() {
                 path="/pengguna"
                 element={<AdminDataContent title={"Pengguna"} />}
               ></Route>
-              <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
+              
               <Route
                 path="/jadwal-pengangkutan-input"
                 element={<JadwalPengangkutanInput />}

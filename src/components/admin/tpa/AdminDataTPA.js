@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 import TableTPA from "./TableTPA";
 import axios from "axios";
 
-// import AdminMaps from "../AdminMaps";
-
 function AdminDataTPA() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -22,10 +20,6 @@ function AdminDataTPA() {
         alert(error.message);
       });
   }, []);
-  // console.log(data);
-  // console.log("sebelum");
-  // console.log(data.result);
-  // console.log("sesudah");
   return (
     <div className="AdminDataTPA">
       <div className="container">
