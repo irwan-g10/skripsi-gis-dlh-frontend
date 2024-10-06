@@ -18,6 +18,10 @@ function AdminPage() {
             <Routes>
               <Route path="/titik-tpa-table" element={<AdminDataTPA />}></Route>
               <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
+              <Route
+                path="/titik-tpa-update/:id"
+                element={<TPAInput isUpdate={true} />}
+              ></Route>
               {/* <Route
                 path="/jadwal-pengangkutan"
                 element={<AdminDataContent title={"Jadwal Pengangkutan"} />}
