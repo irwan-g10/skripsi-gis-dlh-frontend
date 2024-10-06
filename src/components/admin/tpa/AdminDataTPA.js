@@ -3,15 +3,33 @@ import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import TableTPA from "./TableTPA";
+import axios from "axios";
 
 // import AdminMaps from "../AdminMaps";
 
-function AdminDataTPA({ title, data }) {
+function AdminDataTPA() {
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/titik-tpa`)
+      .then((response) => {
+        setData(response.data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
   // console.log(data);
+  // console.log("sebelum");
+  // console.log(data.result);
+  // console.log("sesudah");
   return (
     <div className="AdminDataTPA">
       <div className="container">
-        <h2>{title}</h2>
+        <h2>Titik TPA</h2>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
 
         <div className="AdminOptionBar">
@@ -77,16 +95,12 @@ function AdminDataTPA({ title, data }) {
             </div>
           </div>
         </div>
-
-        <TableTPA data={data} />
+        {loading ? true : <TableTPA titikTpas={data} />}
+        {/*  */}
         {/* <AdminMaps /> */}
       </div>
     </div>
   );
 }
-
-AdminDataTPA.propTypes = {
-  title: PropTypes.string.isRequired,
-};
 
 export default AdminDataTPA;

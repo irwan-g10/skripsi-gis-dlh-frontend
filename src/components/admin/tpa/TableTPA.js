@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TPAItem from "./TPAItem";
 
 function TableTPA(data) {
-  // console.log(data);
+  console.log(data.titikTpas);
   return (
     <div className="TableTPA">
       <div className="container mb-1">
@@ -18,13 +18,13 @@ function TableTPA(data) {
             </tr>
           </thead>
           <tbody>
-            {data.data.map((item) => (
+            {data.titikTpas.map((titikTpa) => (
               <TPAItem
-                key={item.id}
-                id={item.id}
-                nama_tempat={item.nama_tempat}
-                jenis_tong={item.jenis_tong}
-                lokasi={item.lokasi}
+                key={titikTpa.id}
+                id={titikTpa.id}
+                nama_tempat={titikTpa.nama_tempat}
+                jenis_tong={titikTpa.jenis_tong}
+                lokasi={titikTpa.lokasi}
               />
             ))}
           </tbody>
@@ -35,8 +35,8 @@ function TableTPA(data) {
   );
 }
 
-TableTPA.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+// TableTPA.propTypes = {
+//   titikTpas: PropTypes.arrayOf(PropTypes.object).isRequired,
+// };
 
 export default TableTPA;

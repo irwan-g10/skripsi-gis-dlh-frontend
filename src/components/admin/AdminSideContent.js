@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function AdminSideContent() {
   return (
-    <div className="AdminSideContent">
+    <div className="AdminSideContent shadow">
       <ul className="list-group">
         <li className="list-group-item text-center">
           <div className="mb-3">

@@ -2,19 +2,9 @@ import React from "react";
 import Navigation from "../components/admin/NavigationTPA";
 import AdminSideContent from "../components/admin/AdminSideContent";
 import { Route, Routes } from "react-router-dom";
-import { getAllTitikTPA } from "../utils/api";
 import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
 
 function AdminPage() {
-  const [titikTpas, setTitikTpas] = React.useState([]);
-
-  React.useEffect(() => {
-    getAllTitikTPA().then(({ data }) => {
-      setTitikTpas(data.titikTpa);
-    });
-  }, []);
-
-  // console.log(titikTpas);
   return (
     <div className="admin-page container-fluid">
       <Navigation />
@@ -22,13 +12,10 @@ function AdminPage() {
         <div className="col-3">
           <AdminSideContent />
         </div>
-        <div className="col">
-          <div className="border rounded p-3">
+        <div className="col ">
+          <div className="border rounded p-3 shadow  rounded">
             <Routes>
-              <Route
-                path="/titik-tpa-table"
-                element={<AdminDataTPA title={"Titik TPA"} data={titikTpas} />}
-              ></Route>
+              <Route path="/titik-tpa-table" element={<AdminDataTPA />}></Route>
               {/* <Route
                 path="/jadwal-pengangkutan"
                 element={<AdminDataContent title={"Jadwal Pengangkutan"} />}
