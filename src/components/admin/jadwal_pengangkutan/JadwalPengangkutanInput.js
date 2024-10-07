@@ -4,9 +4,17 @@ import { useParams } from "react-router-dom";
 
 function JadwalPengangkutanInput({ isUpdate = false }) {
   const [titikTpa, setTitikTPa] = React.useState("");
-  const [hari, setHari] = React.useState("");
+  const [hari, setHari] = React.useState({
+    senin: false,
+    selasa: false,
+    rabu: false,
+    kamis: false,
+    jumat: false,
+    sabtu: false,
+    minggu: false,
+  });
   const [dataTpa, setDataTpa] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  // const [loading, setLoading] = React.useState(true);
 
   const { id } = useParams();
 
@@ -15,7 +23,7 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
       .get(`http://localhost:5000/api/titik-tpa`)
       .then((response) => {
         setDataTpa(response.data.result);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch((error) => {
         alert(error.message);
@@ -45,15 +53,23 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
     setTitikTPa(event.target.value);
   };
   const onHariChangeHandler = (event) => {
-    setHari(event.target.value);
+    const { name, checked } = event.target;
+    // console.log(hari);
+    setHari((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+
+    // console.log(name, checked);
+    // console.log(hari);
   };
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
-    const postData = {
-      titikTpa: titikTpa,
-      hari: hari,
-    };
+    console.log(hari);
+    // const postData = {
+    //   titikTpa: titikTpa,
+    //   hari: hari,
+    // };
 
     // if (isUpdate) {
     //   await axios
@@ -82,7 +98,7 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
 
   return (
     <div className="JadwalPengangkutanInput">
-      {console.log(dataTpa)}
+      {/* {console.log(dataTpa)} */}
       <div className="container">
         <div className="mb-5">
           <h2>
@@ -95,7 +111,7 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
         <form onSubmit={onSubmitHandler}>
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">
-              TitikTPA
+              Titik TPA
             </label>
 
             <select
@@ -115,6 +131,102 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 );
               })}
             </select>
+          </div>
+          <div className="mb-3 row">
+            <label htmlFor="exampleFormControlInput1" className="form-label">
+              Hari Pengangkutan
+            </label>
+            <div className="form-check  col mx-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="senin"
+                id="senin"
+                checked={hari.senin}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="senin">
+                Senin
+              </label>
+            </div>
+            <div className="form-check  col">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="selasa"
+                id="selasa"
+                checked={hari.selasa}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="selasa">
+                Selasa
+              </label>
+            </div>
+            <div className="form-check  col">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="rabu"
+                id="rabu"
+                checked={hari.rabu}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="rabu">
+                Rabu
+              </label>
+            </div>
+            <div className="form-check  col">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="kamis"
+                id="kamis"
+                checked={hari.kamis}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="kamis">
+                Kamis
+              </label>
+            </div>
+            <div className="form-check  col">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="jumat"
+                id="jumat"
+                checked={hari.jumat}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="jumat">
+                Jumat
+              </label>
+            </div>
+            <div className="form-check  col">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="sabtu"
+                id="sabtu"
+                checked={hari.sabtu}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="sabtu">
+                Sabtu
+              </label>
+            </div>
+            <div className="form-check  col">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="minggu"
+                id="minggu"
+                checked={hari.minggu}
+                onChange={onHariChangeHandler}
+              />
+              <label className="form-check-label" htmlFor="minggu">
+                Minggu
+              </label>
+            </div>
           </div>
 
           <div className="mb-3 m-3 d-grid">
