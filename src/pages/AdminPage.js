@@ -2,8 +2,10 @@ import React from "react";
 import Navigation from "../components/admin/NavigationTPA";
 import AdminSideContent from "../components/admin/AdminSideContent";
 import { Route, Routes } from "react-router-dom";
-import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
 import TPAInput from "../components/admin/tpa/TPAInput";
+import AdminJadwalPengangkutan from "../components/admin/jadwal_pengangkutan/AdminDataJadwalPengangkutan";
+import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
+import JadwalPengangkutanInput from "../components/admin/jadwal_pengangkutan/JadwalPengangkutanInput";
 
 function AdminPage() {
   return (
@@ -22,10 +24,16 @@ function AdminPage() {
                 path="/titik-tpa-update/:id"
                 element={<TPAInput isUpdate={true} />}
               ></Route>
-              {/* <Route
-                path="/jadwal-pengangkutan"
-                element={<AdminDataContent title={"Jadwal Pengangkutan"} />}
+              <Route
+                path="/jadwal-pengangkutan-tabel"
+                element={<AdminJadwalPengangkutan />}
               ></Route>
+
+              <Route
+                path="/jadwal-pengangkutan-input"
+                element={<JadwalPengangkutanInput />}
+              ></Route>
+              {/*
               <Route
                 path="/upt"
                 element={<AdminDataContent title={"UPT"} />}
@@ -43,10 +51,7 @@ function AdminPage() {
                 element={<AdminDataContent title={"Pengguna"} />}
               ></Route>
               
-              <Route
-                path="/jadwal-pengangkutan-input"
-                element={<JadwalPengangkutanInput />}
-              ></Route>
+              
               <Route path="/upt-input" element={<UPTInput />}></Route>
               <Route path="/pengguna-input" element={<PenggunaInput />}></Route>
               <Route

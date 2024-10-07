@@ -24,7 +24,7 @@ function AdminSideContent() {
             </div>
           </li>
         </Link>
-        <Link to="/jadwal-pengangkutan">
+        <Link to="/jadwal-pengangkutan-tabel">
           <li className="list-group-item " aria-current="true">
             <div className="row container">
               <div className="col-2">

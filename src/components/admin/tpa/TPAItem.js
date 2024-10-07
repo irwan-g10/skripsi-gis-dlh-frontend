@@ -3,7 +3,6 @@ import PropTyoe from "prop-types";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-// class TO
 function TPAItem({ id, nomor, nama_tempat, jenis_tong, lokasi }) {
   async function onDeleteHandler(id) {
     await axios
