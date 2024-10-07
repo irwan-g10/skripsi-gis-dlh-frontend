@@ -9,7 +9,7 @@ function TPAItem({ id, nomor, nama_tempat, jenis_tong, lokasi }) {
     await axios
       .delete(`http://localhost:5000/api/titik-tpa/${id}`)
       .then((response) => {
-        alert("Berhasil Di Hapus");
+        alert("Berhasil di Hapus");
         window.location.reload();
       })
       .catch((error) => {

@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import TableTPA from "./TableTPA";
+import AdminMaps from "./AdminMaps";
 import axios from "axios";
 
 function AdminDataTPA() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [isTable, setIstable] = React.useState(true);
 
   React.useEffect(() => {
     axios
@@ -20,6 +22,13 @@ function AdminDataTPA() {
         alert(error.message);
       });
   }, []);
+
+  const onIsTableOptionChange = (event) => {
+    // Memastikan nilai event target diambil dengan benar
+    setIstable(event.target.value === "table");
+    console.log(event.target.value); // Debug untuk melihat nilai yang dipilih
+  };
+
   return (
     <div className="AdminDataTPA">
       <div className="container">
@@ -60,9 +69,12 @@ function AdminDataTPA() {
                   <input
                     type="radio"
                     className="btn-check"
-                    name="btnradio"
+                    // name="btnradio"
+                    value="table"
                     id="btnradio1"
-                    autoComplete="off"
+                    checked={isTable === true}
+                    onChange={onIsTableOptionChange}
+                    // autoComplete="off"
                   />
                   <label
                     className="btn btn-outline-secondary"
@@ -74,9 +86,12 @@ function AdminDataTPA() {
                   <input
                     type="radio"
                     className="btn-check"
-                    name="btnradio"
+                    // name="btnradio"
+                    value="maps"
                     id="btnradio2"
-                    autoComplete="off"
+                    checked={isTable === false}
+                    onChange={onIsTableOptionChange}
+                    // autoComplete="off"
                   />
                   <label
                     className="btn btn-outline-secondary"
@@ -89,7 +104,13 @@ function AdminDataTPA() {
             </div>
           </div>
         </div>
-        {loading ? true : <TableTPA titikTpas={data} />}
+        {loading ? (
+          true
+        ) : isTable ? (
+          <TableTPA titikTpas={data} />
+        ) : (
+          <AdminMaps />
+        )}
         {/*  */}
         {/* <AdminMaps /> */}
       </div>
