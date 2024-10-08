@@ -23,7 +23,13 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
     axios
       .get(`http://localhost:5000/api/titik-tpa`)
       .then((response) => {
-        setDataTpa(response.data.result);
+        const result = response.data.result;
+
+        let a = [];
+        result.map((item) => {
+          a = [...a, item.nama_tempat];
+        });
+        setDataTpa(a);
       })
       .catch((error) => {
         alert(error.message);
@@ -32,7 +38,12 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
     axios
       .get(`http://localhost:5000/api/jadwal-pengangkutan`)
       .then((response) => {
-        setRecentJadwal(response.data.result);
+        const result = response.data.result;
+        let a = [];
+        result.map((item) => {
+          a = [...a, item.titik_tpa];
+        });
+        setRecentJadwal(a);
       })
       .catch((error) => {
         alert(error.message);
@@ -76,6 +87,24 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
       hari,
     };
 
+    console.log("data tpa");
+    console.log(dataTpa);
+    console.log("data recent jadwal");
+    console.log(recentJadwal);
+    // Filter elemen dari dataTpa yang tidak ada di recentJadwal
+    let uniqueDataTpa = dataTpa.filter((item) => !recentJadwal.includes(item));
+
+    // Filter elemen dari recentJadwal yang tidak ada di dataTpa
+    let uniqueRecentJadwal = recentJadwal.filter(
+      (item) => !dataTpa.includes(item)
+    );
+
+    // Gabungkan kedua array yang sudah difilter
+    let filterAray = [...uniqueDataTpa, ...uniqueRecentJadwal];
+
+    console.log("data yang difilter");
+    console.log(filterAray);
+
     // if (isUpdate) {
     //   await axios
     //     .patch(`http://localhost:5000/api/titik-tpa/${id}`, postData)
@@ -87,24 +116,24 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
     //       alert(error.message);
     //     });
     // } else {
-    await axios
-      .post(`http://localhost:5000/api/jadwal-pengangkutan`, postData)
-      .then((response) => {
-        alert("sukses");
-        window.location.reload();
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    // await axios
+    //   .post(`http://localhost:5000/api/jadwal-pengangkutan`, postData)
+    //   .then((response) => {
+    //     alert("sukses");
+    //     window.location.reload();
+    //   })
+    //   .catch((error) => {
+    //     alert(error.message);
+    //   });
     // }
 
     // console.log(postData);
   };
 
-  console.log("tpa");
-  console.log(dataTpa);
-  console.log("jadwal");
-  console.log(recentJadwal);
+  // console.log("tpa");
+  // console.log(dataTpa);
+  // console.log("jadwal");
+  // console.log(recentJadwal);
   return (
     <div className="JadwalPengangkutanInput">
       <div className="container">
@@ -131,13 +160,13 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 {isUpdate ? titikTpa : "--- Pilih ---"}
               </option>
 
-              {dataTpa.map((item) => {
+              {/* {dataTpa.map((item) => {
                 return (
                   <option value={titikTpa.nama_tempat} key={item.id}>
                     {item.nama_tempat}
                   </option>
                 );
-              })}
+              })} */}
             </select>
           </div>
           <div className="mb-3 row">

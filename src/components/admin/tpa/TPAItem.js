@@ -3,7 +3,14 @@ import PropTyoe from "prop-types";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function TPAItem({ id, nomor, nama_tempat, jenis_tong, lokasi }) {
+function TPAItem({
+  id,
+  nomor,
+  nama_tempat,
+  jenis_tong,
+  lokasi,
+  jadwal_pengangkutan,
+}) {
   async function onDeleteHandler(id) {
     await axios
       .delete(`http://localhost:5000/api/titik-tpa/${id}`)
@@ -15,13 +22,48 @@ function TPAItem({ id, nomor, nama_tempat, jenis_tong, lokasi }) {
         alert(error.message);
       });
   }
+  function filteredHari(hari) {
+    const result = "d-none";
+    if (!hari) {
+      return result;
+    }
+  }
 
+  // console.log(jadwal_pengangkutan);
   return (
     <tr>
       <th scope="row">{nomor}</th>
       <td>{nama_tempat}</td>
       <td>{jenis_tong}</td>
       <td>{lokasi}</td>
+      <td>
+        <label className={filteredHari(jadwal_pengangkutan.senin)}>
+          {" "}
+          Senin,
+        </label>
+        <label className={filteredHari(jadwal_pengangkutan.selasa)}>
+          {" "}
+          Selasa,
+        </label>
+        <label className={filteredHari(jadwal_pengangkutan.rabu)}> Rabu,</label>
+        <br></br>
+        <label className={filteredHari(jadwal_pengangkutan.kamis)}>
+          {" "}
+          Kamis,
+        </label>
+        <label className={filteredHari(jadwal_pengangkutan.jumat)}>
+          {" "}
+          Jumat,
+        </label>
+        <label className={filteredHari(jadwal_pengangkutan.sabtu)}>
+          {" "}
+          Sabtu,
+        </label>
+        <label className={filteredHari(jadwal_pengangkutan.minggu)}>
+          {" "}
+          Minggu
+        </label>
+      </td>
       <td>
         <div className="container  text-center">
           <Link to={"/titik-tpa-update/" + id}>
@@ -40,12 +82,5 @@ function TPAItem({ id, nomor, nama_tempat, jenis_tong, lokasi }) {
     </tr>
   );
 }
-
-TPAItem.propType = {
-  id: PropTyoe.string.isRequired,
-  nama_tempat: PropTyoe.string.isRequired,
-  jenis_tong: PropTyoe.string.isRequired,
-  lokasi: PropTyoe.string.isRequired,
-};
 
 export default TPAItem;
