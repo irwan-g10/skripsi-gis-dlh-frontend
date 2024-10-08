@@ -4,6 +4,8 @@ import AdminSideContent from "../components/admin/AdminSideContent";
 import { Route, Routes } from "react-router-dom";
 import TPAInput from "../components/admin/tpa/TPAInput";
 import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
+import AdminDataUPT from "../components/admin/upt/DataUPT";
+import UPTInput from "../components/admin/upt/UPTInput";
 
 function AdminPage() {
   return (
@@ -23,11 +25,13 @@ function AdminPage() {
                 element={<TPAInput isUpdate={true} />}
               ></Route>
 
-              {/*
+              <Route path="/titik-upt-table" element={<AdminDataUPT />}></Route>
+              <Route path="/titik-upt-input" element={<UPTInput />}></Route>
               <Route
-                path="/upt"
-                element={<AdminDataContent title={"UPT"} />}
+                path="/titik-upt-update/:id"
+                element={<UPTInput isUpdate={true} />}
               ></Route>
+              {/*
               <Route
                 path="/laporan-pengangkutan"
                 element={<AdminDataContent title={"Laporan Pengangkutan"} />}

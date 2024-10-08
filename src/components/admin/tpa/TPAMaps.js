@@ -1,6 +1,6 @@
 import React from "react";
 
-function AdminMaps() {
+function TPAMaps() {
   return (
     <div className="AdminMaps">
       <h1>this is Maps</h1>
@@ -8,4 +8,4 @@ function AdminMaps() {
   );
 }
 
-export default AdminMaps;
+export default TPAMaps;

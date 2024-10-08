@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import TPAItem from "./TPAItem";
 
-function TableTPA({ data }) {
+function TPATable({ data }) {
   // console.log(data);
   return (
-    <div className="TableTPA">
+    <div className="TPATable">
       <div className="container mb-1">
         <table className="table">
           <thead>
@@ -38,8 +38,8 @@ function TableTPA({ data }) {
   );
 }
 
-// TableTPA.propTypes = {
+// TPATable.propTypes = {
 //   titikTpas: PropTypes.arrayOf(PropTypes.object).isRequired,
 // };
 
-export default TableTPA;
+export default TPATable;

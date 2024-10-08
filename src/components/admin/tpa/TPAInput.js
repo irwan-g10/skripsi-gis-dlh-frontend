@@ -36,7 +36,7 @@ function TPAInput({ isUpdate = false }) {
           setLokasi(result.lokasi);
           setLatitude(result.latitude);
           setLongitude(result.longitude);
-          setKecamatan(result.nama_tempat);
+          setKecamatan(result.kecamatan);
           setDesa(result.desa);
           setHari(result.hari[0]);
         })

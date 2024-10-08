@@ -37,7 +37,7 @@ function AdminSideContent() {
             </div>
           </li>
         </Link> */}
-        <Link to="/upt">
+        <Link to="/titik-upt-table">
           <li className="list-group-item " aria-current="true">
             <div className="row container">
               <div className="col-2">

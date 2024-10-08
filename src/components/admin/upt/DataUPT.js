@@ -1,19 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import PropTypes from "prop-types";
-import TPATable from "./TPATable";
-import TPAMaps from "./TPAMaps";
 import axios from "axios";
+import UPTTable from "./UPTTable";
+import UPTMaps from "./UPTMaps";
 
-function AdminDataTPA() {
+function AdminDataUPT() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [isTable, setIstable] = React.useState(true);
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa`)
+      .get(`http://localhost:5000/api/titik-upt`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);
@@ -30,16 +29,16 @@ function AdminDataTPA() {
   };
 
   return (
-    <div className="AdminDataTPA">
+    <div className="AdminDataUPT">
       <div className="container">
-        <h2>Titik TPA</h2>
+        <h2>Unit Pelayanan Teknis</h2>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
 
         <div className="AdminOptionBar">
           <div className="container text-center mb-5">
             <div className="row">
               <div className="col ">
-                <Link to="/titik-tpa-input">
+                <Link to="/titik-upt-input">
                   <div className="col d-grid">
                     <button type="button" className="btn btn-primary d-grid">
                       Tambah
@@ -104,10 +103,12 @@ function AdminDataTPA() {
             </div>
           </div>
         </div>
-        {loading ? true : isTable ? <TPATable data={data} /> : <TPAMaps />}
+        {loading ? true : isTable ? <UPTTable data={data} /> : <UPTMaps />}
+        {/*  */}
+        {/* <AdminMaps /> */}
       </div>
     </div>
   );
 }
 
-export default AdminDataTPA;
+export default AdminDataUPT;
