@@ -3,9 +3,7 @@ import Navigation from "../components/admin/NavigationTPA";
 import AdminSideContent from "../components/admin/AdminSideContent";
 import { Route, Routes } from "react-router-dom";
 import TPAInput from "../components/admin/tpa/TPAInput";
-import AdminJadwalPengangkutan from "../components/admin/jadwal_pengangkutan/AdminDataJadwalPengangkutan";
 import AdminDataTPA from "../components/admin/tpa/AdminDataTPA";
-import JadwalPengangkutanInput from "../components/admin/jadwal_pengangkutan/JadwalPengangkutanInput";
 
 function AdminPage() {
   return (
@@ -24,15 +22,7 @@ function AdminPage() {
                 path="/titik-tpa-update/:id"
                 element={<TPAInput isUpdate={true} />}
               ></Route>
-              <Route
-                path="/jadwal-pengangkutan-tabel"
-                element={<AdminJadwalPengangkutan />}
-              ></Route>
 
-              <Route
-                path="/jadwal-pengangkutan-input"
-                element={<JadwalPengangkutanInput />}
-              ></Route>
               {/*
               <Route
                 path="/upt"
