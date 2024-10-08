@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function TPAInput({ isUpdate = false }) {
   const [nama_tempat, setNamaTempat] = React.useState("");
@@ -10,7 +10,6 @@ function TPAInput({ isUpdate = false }) {
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
   const [kecamatan, setKecamatan] = React.useState("");
-  // const [dataHari, setDataHari] = React.useState({});
   const [desa, setDesa] = React.useState("");
 
   const [hari, setHari] = React.useState({
@@ -23,6 +22,7 @@ function TPAInput({ isUpdate = false }) {
     minggu: false,
   });
   const { id } = useParams();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (isUpdate) {
@@ -38,7 +38,7 @@ function TPAInput({ isUpdate = false }) {
           setLongitude(result.longitude);
           setKecamatan(result.nama_tempat);
           setDesa(result.desa);
-          console.log("mengambil data detail");
+          setHari(result.hari[0]);
         })
         .catch((error) => {
           alert(error.message);
@@ -71,7 +71,6 @@ function TPAInput({ isUpdate = false }) {
     setDesa(event.target.value);
   };
   const oncheckedHariChangeHandler = (event) => {
-    console.log("ditekan check");
     const { name, checked } = event.target;
     setHari((prevState) => ({
       ...prevState,
@@ -91,7 +90,6 @@ function TPAInput({ isUpdate = false }) {
       kecamatan: kecamatan,
       desa: desa,
     };
-    console.log(postData);
 
     if (isUpdate) {
       await axios
@@ -99,7 +97,7 @@ function TPAInput({ isUpdate = false }) {
         .then((response) => {
           console.log(response.data);
           alert("sukses");
-          window.location.reload();
+          navigate("/titik-tpa-table");
         })
         .catch((error) => {
           alert(error.message);
@@ -109,7 +107,7 @@ function TPAInput({ isUpdate = false }) {
         .post(`http://localhost:5000/api/titik-tpa`, postData)
         .then((response) => {
           alert("sukses");
-          window.location.reload();
+          navigate("/titik-tpa-table");
         })
         .catch((error) => {
           alert(error.message);

@@ -21,7 +21,6 @@ function AdminDataTPA() {
       .catch((error) => {
         alert(error.message);
       });
-    console.log("halo");
   }, []);
 
   const onIsTableOptionChange = (event) => {
