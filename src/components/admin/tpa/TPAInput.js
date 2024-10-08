@@ -32,7 +32,6 @@ function TPAInput({ isUpdate = false }) {
         .catch((error) => {
           alert(error.message);
         });
-      // console.log("hello");
     }
   }, [id, isUpdate]);
 
@@ -95,13 +94,10 @@ function TPAInput({ isUpdate = false }) {
           alert(error.message);
         });
     }
-
-    // console.log(postData);
   };
 
   return (
     <div className="TPAInput">
-      {console.log(id)}
       <div className="container">
         <div className="mb-5">
           <h2>{isUpdate ? "Perbarui Lokasi TPA" : "Tambah Lokasi TPA"}</h2>

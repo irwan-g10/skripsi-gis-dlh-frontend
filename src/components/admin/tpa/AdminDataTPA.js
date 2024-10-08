@@ -104,13 +104,7 @@ function AdminDataTPA() {
             </div>
           </div>
         </div>
-        {loading ? (
-          true
-        ) : isTable ? (
-          <TableTPA titikTpas={data} />
-        ) : (
-          <AdminMaps />
-        )}
+        {loading ? true : isTable ? <TableTPA data={data} /> : <AdminMaps />}
         {/*  */}
         {/* <AdminMaps /> */}
       </div>

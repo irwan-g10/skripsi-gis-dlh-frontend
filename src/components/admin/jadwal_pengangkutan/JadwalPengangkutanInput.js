@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 function JadwalPengangkutanInput({ isUpdate = false }) {
   const [titikTpa, setTitikTPa] = React.useState("");
+  const [recentJadwal, setRecentJadwal] = React.useState([]);
   const [hari, setHari] = React.useState({
     senin: false,
     selasa: false,
@@ -23,7 +24,15 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
       .get(`http://localhost:5000/api/titik-tpa`)
       .then((response) => {
         setDataTpa(response.data.result);
-        // setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+
+    axios
+      .get(`http://localhost:5000/api/jadwal-pengangkutan`)
+      .then((response) => {
+        setRecentJadwal(response.data.result);
       })
       .catch((error) => {
         alert(error.message);
@@ -52,24 +61,20 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
   const onTitikTpaChangeHandler = (event) => {
     setTitikTPa(event.target.value);
   };
-  const onHariChangeHandler = (event) => {
+  const oncheckedHariChangeHandler = (event) => {
     const { name, checked } = event.target;
-    // console.log(hari);
+    // console.log(checkedHari);
     setHari((prevState) => ({
       ...prevState,
       [name]: checked,
     }));
-
-    // console.log(name, checked);
-    // console.log(hari);
   };
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(hari);
-    // const postData = {
-    //   titikTpa: titikTpa,
-    //   hari: hari,
-    // };
+    const postData = {
+      titik_tpa: titikTpa,
+      hari,
+    };
 
     // if (isUpdate) {
     //   await axios
@@ -82,23 +87,26 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
     //       alert(error.message);
     //     });
     // } else {
-    //   await axios
-    //     .post(`http://localhost:5000/api/titik-tpa`, postData)
-    //     .then((response) => {
-    //       alert("sukses");
-    //       window.location.reload();
-    //     })
-    //     .catch((error) => {
-    //       alert(error.message);
-    //     });
+    await axios
+      .post(`http://localhost:5000/api/jadwal-pengangkutan`, postData)
+      .then((response) => {
+        alert("sukses");
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
     // }
 
     // console.log(postData);
   };
 
+  console.log("tpa");
+  console.log(dataTpa);
+  console.log("jadwal");
+  console.log(recentJadwal);
   return (
     <div className="JadwalPengangkutanInput">
-      {/* {console.log(dataTpa)} */}
       <div className="container">
         <div className="mb-5">
           <h2>
@@ -141,9 +149,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="senin"
+                value="senin"
                 id="senin"
                 checked={hari.senin}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="senin">
                 Senin
@@ -154,9 +163,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="selasa"
+                value="selasa"
                 id="selasa"
                 checked={hari.selasa}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="selasa">
                 Selasa
@@ -167,9 +177,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="rabu"
+                value="rabu"
                 id="rabu"
                 checked={hari.rabu}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="rabu">
                 Rabu
@@ -180,9 +191,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="kamis"
+                value="kamis"
                 id="kamis"
                 checked={hari.kamis}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="kamis">
                 Kamis
@@ -193,9 +205,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="jumat"
+                value="jumat"
                 id="jumat"
                 checked={hari.jumat}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="jumat">
                 Jumat
@@ -206,9 +219,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="sabtu"
+                value="sabtu"
                 id="sabtu"
                 checked={hari.sabtu}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="sabtu">
                 Sabtu
@@ -219,9 +233,10 @@ function JadwalPengangkutanInput({ isUpdate = false }) {
                 className="form-check-input"
                 type="checkbox"
                 name="minggu"
+                value="minggu"
                 id="minggu"
                 checked={hari.minggu}
-                onChange={onHariChangeHandler}
+                onChange={oncheckedHariChangeHandler}
               />
               <label className="form-check-label" htmlFor="minggu">
                 Minggu

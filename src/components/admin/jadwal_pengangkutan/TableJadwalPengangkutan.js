@@ -1,31 +1,30 @@
 import React from "react";
-import PropTypes from "prop-types";
-import TPAItem from "./TPAItem";
+import JadwalPengangkutanItem from "./JadwalPengangkutanItem";
+// import TPAItem from "./TPAItem";
 
-function TableTPA({ data }) {
+function TableJadwalPengangkutan({ data }) {
   // console.log(data);
   return (
-    <div className="TableTPA">
+    <div className="TableJadwalPengangkutan">
       <div className="container mb-1">
         <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Nama Tempat</th>
-              <th scope="col">Jenis Tong</th>
-              <th scope="col">Lokasi</th>
+              <th scope="col">Titik TPA</th>
+              <th scope="col">Hari</th>
+
               <th scope="col">Option</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <TPAItem
+              <JadwalPengangkutanItem
                 key={item.id}
                 nomor={index + 1}
                 id={item.id}
-                nama_tempat={item.nama_tempat}
-                jenis_tong={item.jenis_tong}
-                lokasi={item.lokasi}
+                titik_tpa={item.titik_tpa}
+                hari={item.hari[0]}
               />
             ))}
           </tbody>
@@ -40,4 +39,4 @@ function TableTPA({ data }) {
 //   titikTpas: PropTypes.arrayOf(PropTypes.object).isRequired,
 // };
 
-export default TableTPA;
+export default TableJadwalPengangkutan;

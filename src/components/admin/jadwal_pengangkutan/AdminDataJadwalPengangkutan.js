@@ -5,23 +5,24 @@ import PropTypes from "prop-types";
 import TableTPA from "../tpa/TableTPA";
 import AdminMaps from "../tpa/AdminMaps";
 import axios from "axios";
+import TableJadwalPengangkutan from "./TableJadwalPengangkutan";
 
 function AdminJadwalPengangkutan() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [isTable, setIstable] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5000/api/titik-tpa`)
-  //     .then((response) => {
-  //       setData(response.data.result);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //     });
-  // }, []);
+  React.useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/jadwal-pengangkutan`)
+      .then((response) => {
+        setData(response.data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
 
   const onIsTableOptionChange = (event) => {
     // Memastikan nilai event target diambil dengan benar
@@ -99,13 +100,9 @@ function AdminJadwalPengangkutan() {
             </div>
           </div>
         </div>
-        {loading ? (
-          true
-        ) : isTable ? (
-          <TableTPA titikTpas={data} />
-        ) : (
-          <AdminMaps />
-        )}
+        {loading ? true : <TableJadwalPengangkutan data={data} />}
+
+        {/* <AdminMaps /> */}
       </div>
     </div>
   );
