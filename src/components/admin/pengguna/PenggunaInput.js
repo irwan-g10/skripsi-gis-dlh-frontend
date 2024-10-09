@@ -125,15 +125,15 @@ function PenggunaInput({ isUpdate = false }) {
               <option value={upt_pengelola}>
                 {isUpdate ? upt_pengelola : "--- Pilih ---"}
               </option>
-              <option value="Tong Besar">Tong Besar</option>
-              <option value="Tong Sedang">Tong Sedang</option>
-              <option value="Tong Kecil">Tong Kecil</option>
+              <option value=" UPT 1"> UPT 1</option>
+              <option value=" UPT 2"> UPT 2</option>
+              <option value=" UPT 3"> UPT 3</option>
             </select>
           </div>
 
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">
-              UPT Pengelola
+              Unit Kerja
             </label>
 
             <select
@@ -144,9 +144,9 @@ function PenggunaInput({ isUpdate = false }) {
               <option value={unit_kerja}>
                 {isUpdate ? unit_kerja : "--- Pilih ---"}
               </option>
-              <option value="UPT Banjaran">UPT Banjaran</option>
-              <option value="UPT Baleendah">UPT Baleendah</option>
-              <option value="UPT Soreang">UPT Soreang</option>
+              <option value="Unit Kerja 1">Unit Kerja</option>
+              <option value="Unit Kerja 2">Unit Kerja 2</option>
+              <option value="Unit Kerja3">Unit Kerja3</option>
             </select>
           </div>
           <div className="mb-3">

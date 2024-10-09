@@ -3,15 +3,7 @@ import PropTyoe from "prop-types";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function PenggunaItem({
-  id,
-  nomor,
-  nip,
-  nama,
-  upt_pengelola,
-  unit_kerja,
-  role,
-}) {
+function PenggunaItem({ id, nomor, nama, upt_pengelola, unit_kerja, role }) {
   async function onDeleteHandler(id) {
     await axios
       .delete(`http://localhost:5000/api/pengguna/${id}`)
@@ -28,7 +20,6 @@ function PenggunaItem({
   return (
     <tr>
       <th scope="row">{nomor}</th>
-      <td>{nip}</td>
       <td>{nama}</td>
       <td>{upt_pengelola}</td>
       <td>{unit_kerja}</td>

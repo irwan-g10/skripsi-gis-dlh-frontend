@@ -27,7 +27,6 @@ function PenggunaTable({ data }) {
                 upt_pengelola={item.upt_pengelola}
                 unit_kerja={item.unit_kerja}
                 role={item.role}
-                nip={item.nip}
               />
             ))}
           </tbody>
