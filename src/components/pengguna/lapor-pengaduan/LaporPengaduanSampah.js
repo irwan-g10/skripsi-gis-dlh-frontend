@@ -511,7 +511,7 @@ function LaporPengaduanSampah() {
                       rows="3"
                       placeholder="Masukkan tanda tangan Anda"
                     ></textarea>
-                    <br></br>( .............. )
+                    <br></br>( {nama_tempat} )
                   </div>
                 </div>
               </form>
