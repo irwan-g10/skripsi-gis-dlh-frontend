@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import PenggunaHome from "../components/pengguna/penggunaHome";
 import InformasiGeografis from "../components/pengguna/informasi-geografis/InformasiGeografis";
 import JadwalPengangkutan from "../components/pengguna/jadwal-pengangkutan/JadwalPengangkutan";
@@ -12,7 +12,7 @@ function PenggunaPage() {
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
           <div className="container-fluid">
             <a className="navbar-brand" href="#">
-              Navbar
+              DLH KAB BANDUNG
             </a>
             <button
               className="navbar-toggler"
@@ -30,11 +30,13 @@ function PenggunaPage() {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
-                    Home
-                  </a>
-                </li>
+                <Link to="/">
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="#">
+                      Home
+                    </a>
+                  </li>
+                </Link>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
                     Link
