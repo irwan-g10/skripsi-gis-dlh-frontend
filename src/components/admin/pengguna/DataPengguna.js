@@ -24,7 +24,6 @@ function DataPengguna() {
   const onIsTableOptionChange = (event) => {
     // Memastikan nilai event target diambil dengan benar
     setIstable(event.target.value === "table");
-    console.log(event.target.value); // Debug untuk melihat nilai yang dipilih
   };
 
   return (

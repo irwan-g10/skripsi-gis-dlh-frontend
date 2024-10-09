@@ -18,7 +18,7 @@ function AdminPage() {
           <AdminSideContent />
         </div>
         <div className="col ">
-          <div className="border rounded p-3 shadow  rounded">
+          <div className="border rounded p-3 shadow  ">
             <Routes>
               <Route path="/titik-tpa-table" element={<AdminDataTPA />}></Route>
               <Route path="/titik-tpa-input" element={<TPAInput />}></Route>
@@ -39,24 +39,6 @@ function AdminPage() {
                 path="/pengguna-update/:id"
                 element={<PenggunaInput isUpdate={true} />}
               ></Route>
-              {/*
-              <Route
-                path="/laporan-pengangkutan"
-                element={<AdminDataContent title={"Laporan Pengangkutan"} />}
-              ></Route>
-              <Route
-                path="/laporan-pengaduan"
-                element={<AdminDataContent title={"Laporan Pengaduan"} />}
-              ></Route>
-              
-              
-              
-              <Route path="/upt-input" element={<UPTInput />}></Route>
-              <Route path="/pengguna-input" element={<PenggunaInput />}></Route>
-              <Route
-                path="/titik-tpa-update"
-                element={<TPAInput isUpdate={true} />}
-              ></Route> */}
             </Routes>
           </div>
         </div>

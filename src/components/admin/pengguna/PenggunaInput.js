@@ -60,7 +60,6 @@ function PenggunaInput({ isUpdate = false }) {
       await axios
         .patch(`http://localhost:5000/api/pengguna/${id}`, postData)
         .then((response) => {
-          console.log(response.data);
           alert("sukses");
           navigate("/pengguna");
         })
