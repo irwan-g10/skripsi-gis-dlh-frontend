@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import SignaturePad from "react-signature-canvas";
 
 function LaporPengaduanSampah() {
   const [nama_tempat, setNamaTempat] = React.useState("");
@@ -8,6 +9,12 @@ function LaporPengaduanSampah() {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     console.log("item ditekan" + nama_tempat);
+  };
+  const signCanva = useRef({});
+
+  const clearSignature = () => {
+    console.log("button ditekan");
+    signCanva.current.clear();
   };
   return (
     <div className="LaporPengaduanSampah border rounded p-5 mx-5 shadow ">
@@ -27,6 +34,7 @@ function LaporPengaduanSampah() {
                   <h5>
                     DUGAAN PENCEMARAN DAN / ATAU PERUSAKAN LINGKUNGAN HIDUP
                   </h5>
+                  <br></br>
                 </div>
                 <p>
                   Pada hari ini ……………… tanggal ……………………………… bulan ……………………..
@@ -233,6 +241,52 @@ function LaporPengaduanSampah() {
                       <h6>E.</h6>
                     </div>
                     <div className="col">
+                      <h6>Lampiran:</h6>
+                    </div>
+                  </div>
+                  <div className="row mb-2">
+                    <div className="col-1"></div>
+
+                    <div className="col">
+                      <div class="input-group mb-3">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="inputGroupFile02"
+                        />
+                        <label class="input-group-text" for="inputGroupFile02">
+                          Upload
+                        </label>
+                      </div>
+                      <div class="input-group mb-3">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="inputGroupFile02"
+                        />
+                        <label class="input-group-text" for="inputGroupFile02">
+                          Upload
+                        </label>
+                      </div>
+                      <div class="input-group mb-3">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="inputGroupFile02"
+                        />
+                        <label class="input-group-text" for="inputGroupFile02">
+                          Upload
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bagian-input mb-4">
+                  <div className="row">
+                    <div className="col-1">
+                      <h6>F.</h6>
+                    </div>
+                    <div className="col">
                       <h6>Penyelesaian yang diinginkan:</h6>
                     </div>
                   </div>
@@ -251,7 +305,7 @@ function LaporPengaduanSampah() {
                 <div className="bagian-input mb-4">
                   <div className="row">
                     <div className="col-1">
-                      <h6>F.</h6>
+                      <h6>G.</h6>
                     </div>
                     <div className="col">
                       <h6>Pernah Menyampaikan Pengaduan:</h6>
@@ -347,7 +401,7 @@ function LaporPengaduanSampah() {
                 <div className="bagian-input mb-4">
                   <div className="row">
                     <div className="col-1">
-                      <h6>G.</h6>
+                      <h6>H.</h6>
                     </div>
                     <div className="col">
                       <h6>Informasi Pengaduan</h6>
@@ -453,7 +507,7 @@ function LaporPengaduanSampah() {
                 <div className="bagian-input mb-4">
                   <div className="row">
                     <div className="col-1">
-                      <h6>H.</h6>
+                      <h6>I.</h6>
                     </div>
                     <div className="col">
                       <h6>Kerahasiaan Pengadu</h6>
@@ -468,7 +522,7 @@ function LaporPengaduanSampah() {
 
                     <div className="col">
                       <div className="mb-3 row">
-                        <div className="form-check  col mx-3">
+                        <div className="form-check  col-3 mx-3">
                           <input
                             className="form-check-input"
                             type="checkbox"
@@ -502,17 +556,23 @@ function LaporPengaduanSampah() {
                 </div>
                 <div className="tanda-tangan row">
                   <div className="col"></div>
+                  <button
+                    onClick={clearSignature}
+                    className="col-1 bg-transparent border-0 justify-content-center align-items-center d-flex"
+                  >
+                    <i class="bi bi-eraser fs-1"></i>
+                  </button>
                   <div className="col-5 text-center">
                     Soreang, 9 Oktober 2024
                     <br></br>Pengadu
-                    <textarea
-                      id="signature"
-                      class="form-control"
-                      rows="3"
-                      placeholder="Masukkan tanda tangan Anda"
-                    ></textarea>
+                    <SignaturePad ref={signCanva} />
                     <br></br>( {nama_tempat} )
                   </div>
+                </div>
+                <div className="mb-3 m-3 d-grid">
+                  <button type="button" class="btn btn-primary">
+                    Laporkan
+                  </button>
                 </div>
               </form>
             </div>
