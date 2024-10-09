@@ -2,13 +2,77 @@ import React, { useRef } from "react";
 import SignaturePad from "react-signature-canvas";
 
 function InputLaporanPengaduan() {
-  const [nama_tempat, setNamaTempat] = React.useState("");
-  const onNamaTempatChangeHandler = (event) => {
-    setNamaTempat(event.target.value);
+  const [nama, setNama] = React.useState("");
+  const [alamatPengadu, setAlamatPengadu] = React.useState("");
+  const [lokasiKejadian, setLokasiKejadian] = React.useState("");
+  const [jenisKegiatan, setJenisKegiatan] = React.useState("");
+  const [namaKegiatan, setNamaKegiatan] = React.useState("");
+  const [waktuKejadian, setWaktuKejadian] = React.useState("");
+  const [uraianKejadian, setUraianKejadian] = React.useState("");
+  const [dampakkejadian, setDampakKejadian] = React.useState("");
+  const [informasiSms, setInformasiSms] = React.useState("");
+  const [informasiEmail, setInformasiEmail] = React.useState("");
+  const [informasiMediaSosial, setInformasiMediaSosial] = React.useState("");
+  const [informasiLain, setInformasiLain] = React.useState("");
+  const [harapanPenyelesaian, setHarapanPenyelesaian] = React.useState("");
+
+  const onNamaChangeHandler = (event) => {
+    setNama(event.target.value);
+  };
+  const onAlamatPengaduChangeHandler = (event) => {
+    setAlamatPengadu(event.target.value);
+  };
+  const onLokasiKejadianChangeHandler = (event) => {
+    setLokasiKejadian(event.target.value);
+  };
+  const onJenisKegiatanChangeHandler = (event) => {
+    setJenisKegiatan(event.target.value);
+  };
+  const onNamaKegiatanChangeHandler = (event) => {
+    setNamaKegiatan(event.target.value);
+  };
+  const onWaktuKejadianChangeHandler = (event) => {
+    setWaktuKejadian(event.target.value);
+  };
+  const onUraianKejadianChangeHandler = (event) => {
+    setUraianKejadian(event.target.value);
+  };
+  const onDampakKejadianChangeHandler = (event) => {
+    setDampakKejadian(event.target.value);
+  };
+  const onInformasiSmsChangeHandler = (event) => {
+    setInformasiSms(event.target.value);
+  };
+  const onInformasiEmailChangeHandler = (event) => {
+    setInformasiEmail(event.target.value);
+  };
+  const onInformasiMediaSosialChangeHandler = (event) => {
+    setInformasiMediaSosial(event.target.value);
+  };
+  const onInformasiLainChangeHandler = (event) => {
+    setInformasiLain(event.target.value);
+  };
+  const onHarapanPenyelesaianChangeHandler = (event) => {
+    setHarapanPenyelesaian(event.target.value);
   };
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("item ditekan" + nama_tempat);
+    const postData = {
+      nama,
+      alamat_pengadu: alamatPengadu,
+      lokasi_kejadian: lokasiKejadian,
+      jenis_kegiatan: jenisKegiatan,
+      nama_kegiatan: namaKegiatan,
+      waktu_kejadian: waktuKejadian,
+      uraian_kejadian: uraianKejadian,
+      dampak_kejadian: dampakkejadian,
+      harapan_penyelesaian: harapanPenyelesaian,
+      informasi_telepon: informasiSms,
+      informasi_email: informasiEmail,
+      informasi_media_sosial: informasiMediaSosial,
+      informasi_lain: informasiLain,
+    };
+    console.log(postData);
   };
   const signCanva = useRef({});
 
@@ -33,17 +97,15 @@ function InputLaporanPengaduan() {
               <h6 className="text-end">1.</h6>
             </div>
             <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                Nama
-              </label>
+              <label className="form-label">Nama</label>
             </div>
             <div className="col">
               <input
                 type="input"
                 className="form-control"
                 placeholder="Masukan nama tempat ..."
-                value={nama_tempat}
-                onChange={onNamaTempatChangeHandler}
+                value={nama}
+                onChange={onNamaChangeHandler}
               />
             </div>
           </div>
@@ -52,14 +114,13 @@ function InputLaporanPengaduan() {
               <h6 className="text-end">2.</h6>
             </div>
             <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                Alamat
-              </label>
+              <label className="form-label">Alamat</label>
             </div>
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={alamatPengadu}
+                onChange={onAlamatPengaduChangeHandler}
                 rows="4"
               ></textarea>
             </div>
@@ -79,15 +140,14 @@ function InputLaporanPengaduan() {
               <h6 className="text-end">1.</h6>
             </div>
             <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                Alamat
-              </label>
+              <label className="form-label">Alamat</label>
             </div>
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
                 rows="4"
+                value={lokasiKejadian}
+                onChange={onLokasiKejadianChangeHandler}
               ></textarea>
             </div>
           </div>
@@ -106,7 +166,7 @@ function InputLaporanPengaduan() {
               <h6 className="text-end">1.</h6>
             </div>
             <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
+              <label className="form-label">
                 Jenis Kegiatan<br></br>
                 <i>(jika diketahui)</i>
               </label>
@@ -114,7 +174,8 @@ function InputLaporanPengaduan() {
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={jenisKegiatan}
+                onChange={onJenisKegiatanChangeHandler}
                 rows="2"
               ></textarea>
             </div>
@@ -132,8 +193,9 @@ function InputLaporanPengaduan() {
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={namaKegiatan}
                 rows="2"
+                onChange={onNamaKegiatanChangeHandler}
               ></textarea>
             </div>
           </div>
@@ -162,7 +224,8 @@ function InputLaporanPengaduan() {
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={waktuKejadian}
+                onChange={onWaktuKejadianChangeHandler}
                 rows="2"
               ></textarea>
             </div>
@@ -182,7 +245,8 @@ function InputLaporanPengaduan() {
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={uraianKejadian}
+                onChange={onUraianKejadianChangeHandler}
                 rows="4"
               ></textarea>
             </div>
@@ -203,7 +267,8 @@ function InputLaporanPengaduan() {
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={dampakkejadian}
+                onChange={onDampakKejadianChangeHandler}
                 rows="2"
               ></textarea>
             </div>
@@ -258,7 +323,8 @@ function InputLaporanPengaduan() {
             <div className="col">
               <textarea
                 class="form-control"
-                id="exampleFormControlTextarea1"
+                value={harapanPenyelesaian}
+                onChange={onHarapanPenyelesaianChangeHandler}
                 rows="2"
               ></textarea>
             </div>
@@ -292,8 +358,8 @@ function InputLaporanPengaduan() {
                         type="input"
                         className="form-control"
                         placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
+                        value={nama}
+                        onChange={onNamaChangeHandler}
                       />
                     </td>
                     <td>
@@ -301,8 +367,8 @@ function InputLaporanPengaduan() {
                         type="input"
                         className="form-control"
                         placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
+                        value={nama}
+                        onChange={onNamaChangeHandler}
                       />
                     </td>
                   </tr>
@@ -313,8 +379,8 @@ function InputLaporanPengaduan() {
                         type="input"
                         className="form-control"
                         placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
+                        value={nama}
+                        onChange={onNamaChangeHandler}
                       />
                     </td>
                     <td>
@@ -322,8 +388,8 @@ function InputLaporanPengaduan() {
                         type="input"
                         className="form-control"
                         placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
+                        value={nama}
+                        onChange={onNamaChangeHandler}
                       />
                     </td>
                   </tr>
@@ -334,8 +400,8 @@ function InputLaporanPengaduan() {
                         type="input"
                         className="form-control"
                         placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
+                        value={nama}
+                        onChange={onNamaChangeHandler}
                       />
                     </td>
                     <td>
@@ -343,20 +409,13 @@ function InputLaporanPengaduan() {
                         type="input"
                         className="form-control"
                         placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
+                        value={nama}
+                        onChange={onNamaChangeHandler}
                       />
                     </td>
                   </tr>
                 </tbody>
               </table>
-              {/* <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama_tempat}
-                        onChange={onNamaTempatChangeHandler}
-                      /> */}
             </div>
           </div>
         </div>
@@ -384,8 +443,8 @@ function InputLaporanPengaduan() {
                 type="input"
                 className="form-control"
                 placeholder="Masukan nama tempat ..."
-                value={nama_tempat}
-                onChange={onNamaTempatChangeHandler}
+                value={informasiSms}
+                onChange={onInformasiSmsChangeHandler}
               />
             </div>
           </div>
@@ -403,8 +462,8 @@ function InputLaporanPengaduan() {
                 type="input"
                 className="form-control"
                 placeholder="Masukan nama tempat ..."
-                value={nama_tempat}
-                onChange={onNamaTempatChangeHandler}
+                value={informasiEmail}
+                onChange={onInformasiEmailChangeHandler}
               />
             </div>
           </div>
@@ -422,33 +481,15 @@ function InputLaporanPengaduan() {
                 type="input"
                 className="form-control"
                 placeholder="Masukan nama tempat ..."
-                value={nama_tempat}
-                onChange={onNamaTempatChangeHandler}
+                value={informasiMediaSosial}
+                onChange={onInformasiMediaSosialChangeHandler}
               />
             </div>
           </div>
+
           <div className="row mb-2">
             <div className="col-1">
               <h6 className="text-end">4.</h6>
-            </div>
-            <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                Aplikasi Pengaduan
-              </label>
-            </div>
-            <div className="col">
-              <input
-                type="input"
-                className="form-control"
-                placeholder="Masukan nama tempat ..."
-                value={nama_tempat}
-                onChange={onNamaTempatChangeHandler}
-              />
-            </div>
-          </div>
-          <div className="row mb-2">
-            <div className="col-1">
-              <h6 className="text-end">5.</h6>
             </div>
             <div className="col-3">
               <label htmlFor=" nam" className="form-label">
@@ -460,8 +501,8 @@ function InputLaporanPengaduan() {
                 type="input"
                 className="form-control"
                 placeholder="Masukan nama tempat ..."
-                value={nama_tempat}
-                onChange={onNamaTempatChangeHandler}
+                value={informasiLain}
+                onChange={onInformasiLainChangeHandler}
               />
             </div>
           </div>
@@ -527,13 +568,11 @@ function InputLaporanPengaduan() {
             Soreang, 9 Oktober 2024
             <br></br>Pengadu
             <SignaturePad ref={signCanva} />
-            <br></br>( {nama_tempat} )
+            <br></br>( {nama} )
           </div>
         </div>
         <div className="mb-3 m-3 d-grid">
-          <button type="button" class="btn btn-primary">
-            Laporkan
-          </button>
+          <button class="btn btn-primary">Laporkan</button>
         </div>
       </form>
     </div>
