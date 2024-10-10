@@ -5,3 +5,8 @@ a {
 .full-height {
   height: 100vh;
 }
+
+#map {
+  height: 500px;
+  width: 100%;
+}

@@ -2,15 +2,47 @@ import axios from "axios";
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMapEvents,
+} from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
 function TPAInput({ isUpdate = false }) {
   const [nama_tempat, setNamaTempat] = React.useState("");
   const [jenis_tong, setJenisTong] = React.useState("");
   const [unit_pelayanan_teknis, setUnitPelayananTeknis] = React.useState("");
-  const [lokasi, setLokasi] = React.useState("");
+  const [alamat, setAlamat] = React.useState("");
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
-  const [kecamatan, setKecamatan] = React.useState("");
-  const [desa, setDesa] = React.useState("");
+
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  });
+  const [markerPosition, setMarkerPosition] = React.useState(null); // Untuk menyimpan posisi marker
+
+  const ClickableMap = ({ setMarkerPosition }) => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng; // Ambil koordinat klik
+        console.log("Koordinat Klik:", lat, lng); // Cetak koordinat ke konsol
+        setMarkerPosition([lat, lng]);
+        setLatitude(lat);
+        setLongitude(lng);
+        getAddress(lat, lng);
+        // Set posisi marker
+      },
+    });
+
+    return null; // Komponen ini tidak perlu merender apa pun
+  };
 
   const [hari, setHari] = React.useState({
     senin: false,
@@ -33,11 +65,9 @@ function TPAInput({ isUpdate = false }) {
           setNamaTempat(result.nama_tempat);
           setJenisTong(result.jenis_tong);
           setUnitPelayananTeknis(result.unit_pelayanan_teknis);
-          setLokasi(result.lokasi);
+          setAlamat(result.lokasi);
           setLatitude(result.latitude);
           setLongitude(result.longitude);
-          setKecamatan(result.kecamatan);
-          setDesa(result.desa);
           setHari(result.hari[0]);
         })
         .catch((error) => {
@@ -45,6 +75,20 @@ function TPAInput({ isUpdate = false }) {
         });
     }
   }, [id, isUpdate]);
+
+  const getAddress = async (lat, lng) => {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+    );
+    const data = await response.json();
+    if (data && data.display_name) {
+      setAlamat(data.display_name);
+      console.log(data.display_name);
+    } else {
+      // setAddress("Address not found");
+      console.log("alamat tidak ditemukan");
+    }
+  };
 
   const onNamaTempatChangeHandler = (event) => {
     setNamaTempat(event.target.value);
@@ -55,8 +99,8 @@ function TPAInput({ isUpdate = false }) {
   const onUnitPelayananTeknisChangeHandler = (event) => {
     setUnitPelayananTeknis(event.target.value);
   };
-  const onLokasiChangeHandler = (event) => {
-    setLokasi(event.target.value);
+  const onAlamatChangeHandler = (event) => {
+    setAlamat(event.target.value);
   };
   const onLatitudeChangeHandler = (event) => {
     setLatitude(event.target.value);
@@ -64,12 +108,7 @@ function TPAInput({ isUpdate = false }) {
   const onLongitudeChangeHandler = (event) => {
     setLongitude(event.target.value);
   };
-  const onKecamatanChangeHandler = (event) => {
-    setKecamatan(event.target.value);
-  };
-  const onDesaChangeHandler = (event) => {
-    setDesa(event.target.value);
-  };
+
   const oncheckedHariChangeHandler = (event) => {
     const { name, checked } = event.target;
     setHari((prevState) => ({
@@ -84,11 +123,9 @@ function TPAInput({ isUpdate = false }) {
       jenis_tong: jenis_tong,
       unit_pelayanan_teknis: unit_pelayanan_teknis,
       hari: hari,
-      lokasi: lokasi,
+      lokasi: alamat,
       latitude: latitude,
       longitude: longitude,
-      kecamatan: kecamatan,
-      desa: desa,
     };
 
     if (isUpdate) {
@@ -276,30 +313,6 @@ function TPAInput({ isUpdate = false }) {
             </div>
           </div>
           <div className=" row">
-            <label htmlFor="lokasi" className="form-label">
-              Lokasi
-            </label>
-            <div className=" col">
-              <div className="mb-3">
-                <input
-                  type="input"
-                  className="form-control"
-                  placeholder="Masukan lokasi ..."
-                  value={lokasi}
-                  onChange={onLokasiChangeHandler}
-                />
-              </div>
-            </div>
-            <div className="col-1">
-              <div className="mb-3">
-                <button type="button" className="btn btn-primary ">
-                  <i className="bi bi-geo-alt-fill"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className=" row">
             <div className=" col">
               <div className="mb-3">
                 <label htmlFor="latitude" className="form-label">
@@ -329,33 +342,43 @@ function TPAInput({ isUpdate = false }) {
               </div>
             </div>
           </div>
+          <div className="pilih-map mb-3">
+            <MapContainer
+              center={[-6.2, 106.816666]} // Koordinat Jakarta
+              zoom={14}
+              style={{ height: "300px", width: "100%" }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; OpenStreetMap contributors"
+              />
+              <ClickableMap setMarkerPosition={setMarkerPosition} />{" "}
+              {/* Komponen untuk menangkap klik */}
+              {markerPosition && ( // Jika markerPosition tidak null, tampilkan marker
+                <Marker position={markerPosition}>
+                  <Popup>
+                    Koordinat: {markerPosition[0].toFixed(6)},{" "}
+                    {markerPosition[1].toFixed(6)}
+                  </Popup>
+                </Marker>
+              )}
+            </MapContainer>
+          </div>
 
           <div className="mb-3">
-            <label htmlFor="kecamatan" className="form-label">
-              Kecamatan
-            </label>
-            <input
-              type="input"
-              className="form-control"
-              id="kecamatan"
-              placeholder="Masukan Kecamatan ..."
-              value={kecamatan}
-              onChange={onKecamatanChangeHandler}
-            />
-            <div className="mb-5">
+            <div className="mb-3">
               <label htmlFor="desa" className="form-label">
-                Desa
+                Alamat
               </label>
-              <input
-                type="input"
+              <textarea
                 className="form-control"
-                id="desa"
-                placeholder="Masukan desa ..."
-                value={desa}
-                onChange={onDesaChangeHandler}
-              />
+                value={alamat}
+                onChange={onAlamatChangeHandler}
+                rows="4"
+              ></textarea>
             </div>
           </div>
+
           <div className="mb-3 m-3 d-grid">
             <button className={"btn btn-" + (isUpdate ? "success" : "primary")}>
               {isUpdate ? "Perbarui" : "Tambah"}
