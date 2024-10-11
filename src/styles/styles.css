@@ -10,3 +10,9 @@ a {
   height: 500px;
   width: 100%;
 }
+
+.custom-img {
+  height: 300px;
+  width: 100%; /* Atur width sesuai kebutuhan */
+  object-fit: cover; /* Menjaga proporsi gambar sambil memenuhi kotak */
+}

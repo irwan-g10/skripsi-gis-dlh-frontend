@@ -1,6 +1,13 @@
 import axios from "axios";
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+} from "firebase/storage";
 
 import {
   MapContainer,
@@ -19,6 +26,24 @@ function TPAInput({ isUpdate = false }) {
   const [alamat, setAlamat] = React.useState("");
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [imageFile, setImageFile] = React.useState(null);
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXUi0DmcTQYaNevZm9PzA6kePU_5H7DsE",
+    authDomain: "skripsi-gis-c3506.firebaseapp.com",
+    projectId: "skripsi-gis-c3506",
+    storageBucket: "skripsi-gis-c3506.appspot.com",
+    messagingSenderId: "892978799903",
+    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -65,14 +90,17 @@ function TPAInput({ isUpdate = false }) {
           setNamaTempat(result.nama_tempat);
           setJenisTong(result.jenis_tong);
           setUnitPelayananTeknis(result.unit_pelayanan_teknis);
-          setAlamat(result.lokasi);
+          setAlamat(result.alamat);
           setLatitude(result.latitude);
           setLongitude(result.longitude);
           setHari(result.hari[0]);
+          setImageUrl(result.image_url);
         })
         .catch((error) => {
           alert(error.message);
         });
+    } else {
+      setImageUrl("./images/user.png");
     }
   }, [id, isUpdate]);
 
@@ -90,6 +118,12 @@ function TPAInput({ isUpdate = false }) {
     }
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+      setImageUrl(URL.createObjectURL(e.target.files[0]));
+    }
+  };
   const onNamaTempatChangeHandler = (event) => {
     setNamaTempat(event.target.value);
   };
@@ -116,40 +150,65 @@ function TPAInput({ isUpdate = false }) {
       [name]: checked,
     }));
   };
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
-    const postData = {
-      nama_tempat: nama_tempat,
-      jenis_tong: jenis_tong,
-      unit_pelayanan_teknis: unit_pelayanan_teknis,
-      hari: hari,
-      lokasi: alamat,
-      latitude: latitude,
-      longitude: longitude,
-    };
 
-    if (isUpdate) {
-      await axios
-        .patch(`http://localhost:5000/api/titik-tpa/${id}`, postData)
-        .then((response) => {
-          console.log(response.data);
-          alert("sukses");
-          navigate("/titik-tpa-table");
-        })
-        .catch((error) => {
-          alert(error.message);
+    if (!imageFile) return;
+    const storage = getStorage(app);
+    // console.log(imageFile);
+
+    const storageRef = ref(storage, `images/${imageFile.name}`); // Referensi lokasi gambar di Firebase Storage
+    const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
+
+    // Memantau proses upload
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("gambar di upload");
+      },
+      (error) => {
+        console.error("Error during upload:", error);
+      },
+      () => {
+        // Mendapatkan URL download setelah selesai upload
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          const postData = {
+            nama_tempat,
+            jenis_tong,
+            unit_pelayanan_teknis,
+            hari,
+            alamat,
+            latitude,
+            longitude,
+            image_url: url,
+          };
+
+          if (isUpdate) {
+            await axios
+              .patch(`http://localhost:5000/api/titik-tpa/${id}`, postData)
+              .then((response) => {
+                console.log(response.data);
+                alert("sukses");
+                navigate("/titik-tpa-table");
+              })
+              .catch((error) => {
+                alert(error.message);
+              });
+          } else {
+            await axios
+              .post(`http://localhost:5000/api/titik-tpa`, postData)
+              .then((response) => {
+                alert("sukses");
+                navigate("/titik-tpa-table");
+              })
+              .catch((error) => {
+                alert(error.message);
+              });
+          }
+          console.log("File available at", url);
         });
-    } else {
-      await axios
-        .post(`http://localhost:5000/api/titik-tpa`, postData)
-        .then((response) => {
-          alert("sukses");
-          navigate("/titik-tpa-table");
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    }
+      }
+    );
   };
 
   return (
@@ -160,55 +219,90 @@ function TPAInput({ isUpdate = false }) {
         </div>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
         <form onSubmit={onSubmitHandler}>
-          <div className="mb-3">
-            <label htmlFor=" namaTempat" className="form-label">
-              Nama Tempat
-            </label>
-            <input
-              type="input"
-              className="form-control"
-              placeholder="Masukan nama tempat ..."
-              value={nama_tempat}
-              onChange={onNamaTempatChangeHandler}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              Jenis Tong
-            </label>
+          <div className="row">
+            <div className="col-4">
+              <div class="card mb-3">
+                <img src={imageUrl} class="card-img-top custom-img" alt="..." />
+              </div>
+            </div>
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor=" namaTempat" className="form-label">
+                  Nama Tempat
+                </label>
+                <input
+                  type="input"
+                  className="form-control"
+                  placeholder="Masukan nama tempat ..."
+                  value={nama_tempat}
+                  onChange={onNamaTempatChangeHandler}
+                />
+              </div>
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlInput1"
+                  className="form-label"
+                >
+                  Jenis Tong
+                </label>
 
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={onJenisTongChangeHandler}
-            >
-              <option value={jenis_tong}>
-                {isUpdate ? jenis_tong : "--- Pilih ---"}
-              </option>
-              <option value="Tong Besar">Tong Besar</option>
-              <option value="Tong Sedang">Tong Sedang</option>
-              <option value="Tong Kecil">Tong Kecil</option>
-            </select>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={onJenisTongChangeHandler}
+                >
+                  <option value={jenis_tong}>
+                    {isUpdate ? jenis_tong : "--- Pilih ---"}
+                  </option>
+                  <option value="Tong Besar">Tong Besar</option>
+                  <option value="Tong Sedang">Tong Sedang</option>
+                  <option value="Tong Kecil">Tong Kecil</option>
+                </select>
+              </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlInput1"
+                  className="form-label"
+                >
+                  Unit Pelayanan Teknis
+                </label>
+
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={onUnitPelayananTeknisChangeHandler}
+                >
+                  <option value={unit_pelayanan_teknis}>
+                    {isUpdate ? unit_pelayanan_teknis : "--- Pilih ---"}
+                  </option>
+                  <option value="UPT Banjaran">UPT Banjaran</option>
+                  <option value="UPT Baleendah">UPT Baleendah</option>
+                  <option value="UPT Soreang">UPT Soreang</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="desa" className="form-label">
+                  Upload Gambar
+                </label>
+                <div className="input-group">
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="inputGroupFile02"
+                    onChange={handleImageChange}
+                  />
+                  <label
+                    className="input-group-text"
+                    htmlFor="inputGroupFile02"
+                  >
+                    Upload
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              Unit Pelayanan Teknis
-            </label>
-
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={onUnitPelayananTeknisChangeHandler}
-            >
-              <option value={unit_pelayanan_teknis}>
-                {isUpdate ? unit_pelayanan_teknis : "--- Pilih ---"}
-              </option>
-              <option value="UPT Banjaran">UPT Banjaran</option>
-              <option value="UPT Baleendah">UPT Baleendah</option>
-              <option value="UPT Soreang">UPT Soreang</option>
-            </select>
-          </div>
           <div className="mb-3 row">
             <label htmlFor="exampleFormControlInput1" className="form-label">
               Hari Pengangkutan
