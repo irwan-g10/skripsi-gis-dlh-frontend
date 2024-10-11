@@ -13,7 +13,7 @@ function TPATable({ data }) {
               <th scope="col">#</th>
               <th scope="col">Nama Tempat</th>
               <th scope="col">Jenis Tong</th>
-              <th scope="col">Lokasi</th>
+              <th scope="col">Alamat</th>
               <th scope="col">Jadwal Pengangkutan</th>
               <th scope="col">Option</th>
             </tr>
@@ -27,7 +27,7 @@ function TPATable({ data }) {
                 nama_tempat={item.nama_tempat}
                 jenis_tong={item.jenis_tong}
                 jadwal_pengangkutan={item.hari[0]}
-                lokasi={item.lokasi}
+                alamat={item.alamat}
               />
             ))}
           </tbody>

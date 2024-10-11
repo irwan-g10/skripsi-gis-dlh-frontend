@@ -3,9 +3,9 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-function TPAMaps() {
-  const positionMonas = [-6.17511, 106.865039]; // Monas
-  const positionGBK = [-6.218607, 106.801445];
+function TPAMaps({ data }) {
+  // const positionMonas = [-6.17511, 106.865039]; // Monas
+  // const positionGBK = [-6.218607, 106.801445];
   // Gelora Bung Karno (GBK)
 
   delete L.Icon.Default.prototype._getIconUrl;
@@ -17,8 +17,9 @@ function TPAMaps() {
 
   return (
     <div className="AdminMaps">
+      {/* {console.log(data)} */}
       <MapContainer
-        center={positionMonas}
+        center={[-7.047407, 107.583554]}
         zoom={13}
         style={{ height: "500px", width: "100%" }}
       >
@@ -26,12 +27,28 @@ function TPAMaps() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
-        <Marker position={positionMonas}>
+
+        {data.map((item) => {
+          // console.log(item.latitude);
+          return (
+            <div key={item.id}>
+              <Marker
+                position={[
+                  parseFloat(item.latitude),
+                  parseFloat(item.longitude),
+                ]}
+              >
+                <Popup>{item.nama_tempat}</Popup>
+              </Marker>
+            </div>
+          );
+        })}
+        {/* <Marker position={positionMonas}>
           <Popup>Ini Monas</Popup>
-        </Marker>
-        <Marker position={positionGBK}>
+        </Marker> */}
+        {/* <Marker position={positionGBK}>
           <Popup>Ini GBK</Popup>
-        </Marker>
+        </Marker> */}
       </MapContainer>
     </div>
   );

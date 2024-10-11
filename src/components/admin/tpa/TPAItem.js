@@ -8,7 +8,7 @@ function TPAItem({
   nomor,
   nama_tempat,
   jenis_tong,
-  lokasi,
+  alamat,
   jadwal_pengangkutan,
 }) {
   async function onDeleteHandler(id) {
@@ -35,7 +35,7 @@ function TPAItem({
       <th scope="row">{nomor}</th>
       <td>{nama_tempat}</td>
       <td>{jenis_tong}</td>
-      <td>{lokasi}</td>
+      <td>{alamat}</td>
       <td>
         <label className={filteredHari(jadwal_pengangkutan.senin)}>
           {" "}

@@ -438,7 +438,7 @@ function TPAInput({ isUpdate = false }) {
           </div>
           <div className="pilih-map mb-3">
             <MapContainer
-              center={[-6.2, 106.816666]} // Koordinat Jakarta
+              center={[-7.047407, 107.583554]} // Koordinat Jakarta
               zoom={14}
               style={{ height: "300px", width: "100%" }}
             >

@@ -104,7 +104,13 @@ function AdminDataTPA() {
             </div>
           </div>
         </div>
-        {loading ? true : isTable ? <TPATable data={data} /> : <TPAMaps />}
+        {loading ? (
+          true
+        ) : isTable ? (
+          <TPATable data={data} />
+        ) : (
+          <TPAMaps data={data} />
+        )}
       </div>
     </div>
   );
