@@ -4,10 +4,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 function TPAMaps({ data }) {
-  // const positionMonas = [-6.17511, 106.865039]; // Monas
-  // const positionGBK = [-6.218607, 106.801445];
-  // Gelora Bung Karno (GBK)
-
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
     iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -17,7 +13,6 @@ function TPAMaps({ data }) {
 
   return (
     <div className="AdminMaps">
-      {/* {console.log(data)} */}
       <MapContainer
         center={[-7.047407, 107.583554]}
         zoom={13}
@@ -43,12 +38,6 @@ function TPAMaps({ data }) {
             </div>
           );
         })}
-        {/* <Marker position={positionMonas}>
-          <Popup>Ini Monas</Popup>
-        </Marker> */}
-        {/* <Marker position={positionGBK}>
-          <Popup>Ini GBK</Popup>
-        </Marker> */}
       </MapContainer>
     </div>
   );

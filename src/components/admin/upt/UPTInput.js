@@ -2,13 +2,20 @@ import axios from "axios";
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMapEvents,
+} from "react-leaflet";
+
 function UPTInput({ isUpdate = false }) {
   const [nama_upt, setNamaUpt] = React.useState("");
-  const [lokasi, setLokasi] = React.useState("");
+  const [alamat, setAlamat] = React.useState("");
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
-  const [kecamatan, setKecamatan] = React.useState("");
-  const [desa, setDesa] = React.useState("");
+  const [markerPosition, setMarkerPosition] = React.useState(null);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,11 +27,9 @@ function UPTInput({ isUpdate = false }) {
         .then((response) => {
           const result = response.data.result;
           setNamaUpt(result.nama_upt);
-          setLokasi(result.lokasi);
+          setAlamat(result.alamat);
           setLatitude(result.latitude);
           setLongitude(result.longitude);
-          setKecamatan(result.kecamatan);
-          setDesa(result.desa);
         })
         .catch((error) => {
           alert(error.message);
@@ -36,8 +41,8 @@ function UPTInput({ isUpdate = false }) {
     setNamaUpt(event.target.value);
   };
 
-  const onLokasiChangeHandler = (event) => {
-    setLokasi(event.target.value);
+  const onAlamatChangeHandler = (event) => {
+    setAlamat(event.target.value);
   };
   const onLatitudeChangeHandler = (event) => {
     setLatitude(event.target.value);
@@ -45,23 +50,45 @@ function UPTInput({ isUpdate = false }) {
   const onLongitudeChangeHandler = (event) => {
     setLongitude(event.target.value);
   };
-  const onKecamatanChangeHandler = (event) => {
-    setKecamatan(event.target.value);
+
+  const ClickableMap = ({ setMarkerPosition }) => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng; // Ambil koordinat klik
+        console.log("Koordinat Klik:", lat, lng); // Cetak koordinat ke konsol
+        setMarkerPosition([lat, lng]);
+        setLatitude(lat);
+        setLongitude(lng);
+        getAddress(lat, lng);
+        // Set posisi marker
+      },
+    });
+
+    return null; // Komponen ini tidak perlu merender apa pun
   };
-  const onDesaChangeHandler = (event) => {
-    setDesa(event.target.value);
+  const getAddress = async (lat, lng) => {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+    );
+    const data = await response.json();
+    if (data && data.display_name) {
+      setAlamat(data.display_name);
+      console.log(data.display_name);
+    } else {
+      // setAddress("Address not found");
+      console.log("alamat tidak ditemukan");
+    }
   };
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const postData = {
       nama_upt: nama_upt,
-      lokasi: lokasi,
+      alamat: alamat,
       latitude: latitude,
       longitude: longitude,
-      kecamatan: kecamatan,
-      desa: desa,
     };
+    console.log(postData);
 
     if (isUpdate) {
       await axios
@@ -112,30 +139,6 @@ function UPTInput({ isUpdate = false }) {
             />
           </div>
           <div className=" row">
-            <label htmlFor="lokasi" className="form-label">
-              Lokasi
-            </label>
-            <div className=" col">
-              <div className="mb-3">
-                <input
-                  type="input"
-                  className="form-control"
-                  placeholder="Masukan lokasi ..."
-                  value={lokasi}
-                  onChange={onLokasiChangeHandler}
-                />
-              </div>
-            </div>
-            <div className="col-1">
-              <div className="mb-3">
-                <button type="button" className="btn btn-primary ">
-                  <i className="bi bi-geo-alt-fill"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className=" row">
             <div className=" col">
               <div className="mb-3">
                 <label htmlFor="latitude" className="form-label">
@@ -165,31 +168,40 @@ function UPTInput({ isUpdate = false }) {
               </div>
             </div>
           </div>
+          <div className="pilih-map mb-3">
+            <MapContainer
+              center={[-7.047407, 107.583554]} // Koordinat Jakarta
+              zoom={14}
+              style={{ height: "300px", width: "100%" }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; OpenStreetMap contributors"
+              />
+              <ClickableMap setMarkerPosition={setMarkerPosition} />{" "}
+              {/* Komponen untuk menangkap klik */}
+              {markerPosition && ( // Jika markerPosition tidak null, tampilkan marker
+                <Marker position={markerPosition}>
+                  <Popup>
+                    Koordinat: {markerPosition[0].toFixed(6)},{" "}
+                    {markerPosition[1].toFixed(6)}
+                  </Popup>
+                </Marker>
+              )}
+            </MapContainer>
+          </div>
 
           <div className="mb-3">
-            <label htmlFor="kecamatan" className="form-label">
-              Kecamatan
-            </label>
-            <input
-              type="input"
-              className="form-control"
-              id="kecamatan"
-              placeholder="Masukan Kecamatan ..."
-              value={kecamatan}
-              onChange={onKecamatanChangeHandler}
-            />
-            <div className="mb-5">
+            <div className="mb-3">
               <label htmlFor="desa" className="form-label">
-                Desa
+                Alamat
               </label>
-              <input
-                type="input"
+              <textarea
                 className="form-control"
-                id="desa"
-                placeholder="Masukan desa ..."
-                value={desa}
-                onChange={onDesaChangeHandler}
-              />
+                value={alamat}
+                onChange={onAlamatChangeHandler}
+                rows="4"
+              ></textarea>
             </div>
           </div>
           <div className="mb-3 m-3 d-grid">

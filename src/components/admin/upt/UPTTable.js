@@ -22,7 +22,7 @@ function UPTTable({ data }) {
                 nomor={index + 1}
                 id={item.id}
                 nama_upt={item.nama_upt}
-                lokasi={item.lokasi}
+                alamat={item.alamat}
               />
             ))}
           </tbody>

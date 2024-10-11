@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function UPTItem({ id, nomor, nama_upt, lokasi }) {
+function UPTItem({ id, nomor, nama_upt, alamat }) {
   async function onDeleteHandler(id) {
     await axios
       .delete(`http://localhost:5000/api/titik-upt/${id}`)
@@ -19,7 +19,7 @@ function UPTItem({ id, nomor, nama_upt, lokasi }) {
     <tr>
       <th scope="row">{nomor}</th>
       <td>{nama_upt}</td>
-      <td>{lokasi}</td>
+      <td>{alamat}</td>
 
       <td>
         <div className="container  text-center">

@@ -221,8 +221,12 @@ function TPAInput({ isUpdate = false }) {
         <form onSubmit={onSubmitHandler}>
           <div className="row">
             <div className="col-4">
-              <div class="card mb-3">
-                <img src={imageUrl} class="card-img-top custom-img" alt="..." />
+              <div className="card mb-3">
+                <img
+                  src={imageUrl}
+                  className="card-img-top custom-img"
+                  alt="..."
+                />
               </div>
             </div>
             <div className="col">

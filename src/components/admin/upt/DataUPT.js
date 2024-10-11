@@ -103,7 +103,13 @@ function AdminDataUPT() {
             </div>
           </div>
         </div>
-        {loading ? true : isTable ? <UPTTable data={data} /> : <UPTMaps />}
+        {loading ? (
+          true
+        ) : isTable ? (
+          <UPTTable data={data} />
+        ) : (
+          <UPTMaps data={data} />
+        )}
         {/*  */}
         {/* <AdminMaps /> */}
       </div>
