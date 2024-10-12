@@ -97,9 +97,10 @@ function TPAInput({ isUpdate = false }) {
         .get(`http://localhost:5000/api/titik-tpa/${id}`)
         .then((response) => {
           const result = response.data.result;
+          console.log(response.data.result);
           setNamaTempat(result.nama_tempat);
           setJenisTong(result.jenis_tong);
-          setUnitPelayananTeknis(result.unit_pelayanan_teknis);
+          setUnitPelayananTeknis(result.unit_pelayanan_teknis.nama_upt);
           setAlamat(result.alamat);
           setLatitude(result.latitude);
           setLongitude(result.longitude);
@@ -298,7 +299,7 @@ function TPAInput({ isUpdate = false }) {
 
                   {listUpt.map((item) => {
                     return (
-                      <option value={item.nama_upt} key={item.id}>
+                      <option value={item.id} key={item.id}>
                         {item.nama_upt}
                       </option>
                     );

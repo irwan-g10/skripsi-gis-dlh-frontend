@@ -22,11 +22,11 @@ function Pengangkutan() {
   const onIsTableOptionChange = (event) => {
     // Memastikan nilai event target diambil dengan benar
     setIstable(event.target.value === "table");
-    console.log(event.target.value); // Debug untuk melihat nilai yang dipilih
   };
 
   return (
     <div className="Pengangkutan">
+      {/* {console.log(data)} */}
       <div className="row">
         <div className="col">
           <h1>this is Pengangkutan</h1>
