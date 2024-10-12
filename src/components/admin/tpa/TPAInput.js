@@ -28,6 +28,7 @@ function TPAInput({ isUpdate = false }) {
   const [longitude, setLongitude] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
   const [imageFile, setImageFile] = React.useState(null);
+  const [listUpt, setListUpt] = React.useState([]);
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -82,6 +83,15 @@ function TPAInput({ isUpdate = false }) {
   const navigate = useNavigate();
 
   React.useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/titik-upt`)
+      .then((response) => {
+        setListUpt(response.data.result);
+        // console.log(response.data.result);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
     if (isUpdate) {
       axios
         .get(`http://localhost:5000/api/titik-tpa/${id}`)
@@ -157,7 +167,7 @@ function TPAInput({ isUpdate = false }) {
     const storage = getStorage(app);
     // console.log(imageFile);
 
-    const storageRef = ref(storage, `images/${imageFile.name}`); // Referensi lokasi gambar di Firebase Storage
+    const storageRef = ref(storage, `images/${imageFile.name}-${Date.now()}`); // Referensi lokasi gambar di Firebase Storage
     const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
 
     // Memantau proses upload
@@ -247,7 +257,7 @@ function TPAInput({ isUpdate = false }) {
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
                 >
-                  Jenis Tong
+                  Jenis Tempat Pembuangan
                 </label>
 
                 <select
@@ -258,9 +268,14 @@ function TPAInput({ isUpdate = false }) {
                   <option value={jenis_tong}>
                     {isUpdate ? jenis_tong : "--- Pilih ---"}
                   </option>
-                  <option value="Tong Besar">Tong Besar</option>
-                  <option value="Tong Sedang">Tong Sedang</option>
-                  <option value="Tong Kecil">Tong Kecil</option>
+
+                  <option value="Tempat Pembuangan Sampah ">
+                    Tempat Pembuangan Sampah
+                  </option>
+                  <option value="Indurstri">Industri</option>
+                  <option value="Pasar">Pasar</option>
+                  <option value="Fasilitas Umum">Fasilitas Umum</option>
+                  <option value="Acara dan Festival">Acara dan Festival</option>
                 </select>
               </div>
 
@@ -280,9 +295,14 @@ function TPAInput({ isUpdate = false }) {
                   <option value={unit_pelayanan_teknis}>
                     {isUpdate ? unit_pelayanan_teknis : "--- Pilih ---"}
                   </option>
-                  <option value="UPT Banjaran">UPT Banjaran</option>
-                  <option value="UPT Baleendah">UPT Baleendah</option>
-                  <option value="UPT Soreang">UPT Soreang</option>
+
+                  {listUpt.map((item) => {
+                    return (
+                      <option value={item.nama_upt} key={item.id}>
+                        {item.nama_upt}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="mb-3">

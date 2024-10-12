@@ -9,6 +9,8 @@ import {
   TileLayer,
   useMapEvents,
 } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 function UPTInput({ isUpdate = false }) {
   const [nama_upt, setNamaUpt] = React.useState("");
@@ -19,6 +21,13 @@ function UPTInput({ isUpdate = false }) {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  });
 
   React.useEffect(() => {
     if (isUpdate) {

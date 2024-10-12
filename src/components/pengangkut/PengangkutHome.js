@@ -1,9 +1,10 @@
 import React from "react";
+import Pengangkutan from "./pengangkutan/pengangkutan";
 
 function PengangkutHome() {
   return (
     <div className="PenggunaHome">
-      <h1>this is PengangkutHome</h1>
+      <Pengangkutan />
     </div>
   );
 }

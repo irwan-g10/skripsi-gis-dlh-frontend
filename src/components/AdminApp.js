@@ -7,7 +7,7 @@ class AdminApp extends React.Component {
   render() {
     return (
       <div className="AdminApp">
-        <AdminPage />
+        <PengangkutPage />
       </div>
     );
   }
