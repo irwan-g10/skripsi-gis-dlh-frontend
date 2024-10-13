@@ -14,30 +14,32 @@ class AdminApp extends React.Component {
     };
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    console.log(this.state.localRole);
+  }
 
   render() {
-    // if (this.state.localID === null) {
-    //   return (
-    //     <div className="AdminApp">
-    //       <LoginPage />
-    //     </div>
-    //   );
-    // } else {
-    //   if (this.state.role === "admin") {
-    return (
-      <div className="AdminApp">
-        <AdminPage />
-      </div>
-    );
-    //   } else if (this.state.role === "pengangkut") {
-    //     return (
-    //       <div className="AdminApp">
-    //         <PengangkutPage />
-    //       </div>
-    //     );
-    //   }
-    // }
+    if (this.state.localID === null) {
+      return (
+        <div className="AdminApp">
+          <LoginPage />
+        </div>
+      );
+    } else {
+      if (this.state.localRole === "Admin") {
+        return (
+          <div className="AdminApp">
+            <AdminPage />
+          </div>
+        );
+      } else if (this.state.localRole === "Pengangkut") {
+        return (
+          <div className="AdminApp">
+            <PengangkutPage />
+          </div>
+        );
+      }
+    }
   }
 }
 

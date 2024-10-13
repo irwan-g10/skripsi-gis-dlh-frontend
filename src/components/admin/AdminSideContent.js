@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AdminSideContent() {
+  const navigate = useNavigate();
+  const onClickKeluarHandler = async (event) => {
+    localStorage.removeItem("id");
+    localStorage.removeItem("role");
+    window.location.reload();
+  };
+
   return (
     <div className="AdminSideContent shadow">
       <ul className="list-group">
@@ -92,7 +99,12 @@ function AdminSideContent() {
           </li>
         </Link>
 
-        <li className="list-group-item text-center">Keluar</li>
+        <li
+          onClick={onClickKeluarHandler}
+          className="list-group-item text-center"
+        >
+          Keluar
+        </li>
       </ul>
     </div>
   );

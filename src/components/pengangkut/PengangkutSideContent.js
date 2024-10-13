@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function PengangkutSideContent() {
+  const onClickKeluarHandler = async (event) => {
+    localStorage.removeItem("id");
+    localStorage.removeItem("role");
+    window.location.reload();
+  };
+
   return (
     <div className="PengangkutSideContent shadow">
       <ul className="list-group">
@@ -64,7 +70,12 @@ function PengangkutSideContent() {
           </li>
         </Link>
 
-        <li className="list-group-item text-center">Keluar</li>
+        <li
+          onClick={onClickKeluarHandler}
+          className="list-group-item text-center"
+        >
+          Keluar
+        </li>
       </ul>
     </div>
   );
