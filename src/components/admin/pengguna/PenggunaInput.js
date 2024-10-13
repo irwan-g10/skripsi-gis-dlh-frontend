@@ -185,7 +185,7 @@ function PenggunaInput({ isUpdate = false }) {
               password
             </label>
             <input
-              type="input"
+              type="password"
               className="form-control"
               placeholder="Masukan Password ..."
               value={password}
