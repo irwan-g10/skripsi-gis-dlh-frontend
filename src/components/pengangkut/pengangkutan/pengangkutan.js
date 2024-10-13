@@ -10,7 +10,7 @@ function Pengangkutan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa`)
+      .get(`http://localhost:5000/api/titik-tpa?status=Belum Diangkut`)
       .then((response) => {
         setData(response.data.result);
         setIsLoading(false);

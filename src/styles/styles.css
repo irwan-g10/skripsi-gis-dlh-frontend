@@ -16,3 +16,9 @@ a {
   width: 100%; /* Atur width sesuai kebutuhan */
   object-fit: cover; /* Menjaga proporsi gambar sambil memenuhi kotak */
 }
+
+.custom-img-list-pengangkutan {
+  height: 150px;
+  width: 100%; /* Atur width sesuai kebutuhan */
+  object-fit: cover; /* Menjaga proporsi gambar sambil memenuhi kotak */
+}
