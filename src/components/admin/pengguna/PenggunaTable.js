@@ -12,7 +12,6 @@ function PenggunaTable({ data }) {
               <th scope="col">#</th>
               <th scope="col">Nama</th>
               <th scope="col">UPT Pengelola</th>
-              <th scope="col">Unit Kerja</th>
               <th scope="col">Role</th>
               <th scope="col">Option</th>
             </tr>
@@ -24,8 +23,7 @@ function PenggunaTable({ data }) {
                 nomor={index + 1}
                 id={item.id}
                 nama={item.nama}
-                upt_pengelola={item.upt_pengelola}
-                unit_kerja={item.unit_kerja}
+                upt_pengelola={item.upt_pengelola.nama_upt}
                 role={item.role}
               />
             ))}

@@ -21,11 +21,6 @@ function DataPengguna() {
       });
   }, []);
 
-  const onIsTableOptionChange = (event) => {
-    // Memastikan nilai event target diambil dengan benar
-    setIstable(event.target.value === "table");
-  };
-
   return (
     <div className="DataPengguna">
       <div className="container">
@@ -56,47 +51,6 @@ function DataPengguna() {
                     Search
                   </button>
                 </form>
-              </div>
-              <div className="col-3 ">
-                <div
-                  className="btn-group"
-                  role="group"
-                  aria-label="Basic radio toggle button group"
-                >
-                  <input
-                    type="radio"
-                    className="btn-check"
-                    // name="btnradio"
-                    value="table"
-                    id="btnradio1"
-                    checked={isTable === true}
-                    onChange={onIsTableOptionChange}
-                    // autoComplete="off"
-                  />
-                  <label
-                    className="btn btn-outline-secondary"
-                    htmlFor="btnradio1"
-                  >
-                    Tabel
-                  </label>
-
-                  <input
-                    type="radio"
-                    className="btn-check"
-                    // name="btnradio"
-                    value="maps"
-                    id="btnradio2"
-                    checked={isTable === false}
-                    onChange={onIsTableOptionChange}
-                    // autoComplete="off"
-                  />
-                  <label
-                    className="btn btn-outline-secondary"
-                    htmlFor="btnradio2"
-                  >
-                    Maps
-                  </label>
-                </div>
               </div>
             </div>
           </div>

@@ -22,7 +22,6 @@ function PenggunaItem({ id, nomor, nama, upt_pengelola, unit_kerja, role }) {
       <th scope="row">{nomor}</th>
       <td>{nama}</td>
       <td>{upt_pengelola}</td>
-      <td>{unit_kerja}</td>
       <td>{role}</td>
 
       <td>

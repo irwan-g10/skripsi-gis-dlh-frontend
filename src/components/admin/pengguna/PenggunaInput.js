@@ -6,22 +6,35 @@ function PenggunaInput({ isUpdate = false }) {
   const [nip, setNip] = React.useState("");
   const [nama, setNama] = React.useState("");
   const [upt_pengelola, setUptPengelola] = React.useState("");
-  const [unit_kerja, setUnitKerja] = React.useState("");
   const [role, setRole] = React.useState("");
+  const [kontak, setKontak] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [listUpt, setListUpt] = React.useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
   React.useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/titik-upt`)
+      .then((response) => {
+        setListUpt(response.data.result);
+        // console.log(response.data.result);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
     if (isUpdate) {
       axios
         .get(`http://localhost:5000/api/pengguna/${id}`)
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           setNip(result.nip);
           setNama(result.nama);
           setUptPengelola(result.upt_pengelola);
-          setUnitKerja(result.unit_kerja);
+          setKontak(result.kontak);
+          setPassword(result.password);
           setRole(result.role);
         })
         .catch((error) => {
@@ -39,11 +52,14 @@ function PenggunaInput({ isUpdate = false }) {
   const onUptPengelolaChangeHandler = (event) => {
     setUptPengelola(event.target.value);
   };
-  const onUnitKerjaChangeHandler = (event) => {
-    setUnitKerja(event.target.value);
+  const onKontakChangeHandler = (event) => {
+    setKontak(event.target.value);
   };
   const onRoleChangeHandler = (event) => {
     setRole(event.target.value);
+  };
+  const onPasswordChangeHandler = (event) => {
+    setPassword(event.target.value);
   };
 
   const onSubmitHandler = async (event) => {
@@ -52,9 +68,11 @@ function PenggunaInput({ isUpdate = false }) {
       nip: nip,
       nama: nama,
       upt_pengelola: upt_pengelola,
-      unit_kerja: unit_kerja,
+      password: password,
+      kontak: kontak,
       role: role,
     };
+    console.log(postData);
 
     if (isUpdate) {
       await axios
@@ -94,7 +112,7 @@ function PenggunaInput({ isUpdate = false }) {
             <input
               type="input"
               className="form-control"
-              placeholder="Masukan nama tempat ..."
+              placeholder="Masukan NIP ..."
               value={nip}
               onChange={onNipChangeHandler}
             />
@@ -106,7 +124,7 @@ function PenggunaInput({ isUpdate = false }) {
             <input
               type="input"
               className="form-control"
-              placeholder="Masukan nama tempat ..."
+              placeholder="Masukan Nama Lengkap ..."
               value={nama}
               onChange={onNamaChangeHandler}
             />
@@ -121,33 +139,19 @@ function PenggunaInput({ isUpdate = false }) {
               aria-label="Default select example"
               onChange={onUptPengelolaChangeHandler}
             >
-              <option value={upt_pengelola}>
-                {isUpdate ? upt_pengelola : "--- Pilih ---"}
+              <option value={isUpdate ? upt_pengelola.id : ""}>
+                {isUpdate ? upt_pengelola.nama_upt : "--- Pilih ---"}
               </option>
-              <option value=" UPT 1"> UPT 1</option>
-              <option value=" UPT 2"> UPT 2</option>
-              <option value=" UPT 3"> UPT 3</option>
+              {listUpt.map((item) => {
+                return (
+                  <option value={item.id} key={item.id}>
+                    {item.nama_upt}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              Unit Kerja
-            </label>
-
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={onUnitKerjaChangeHandler}
-            >
-              <option value={unit_kerja}>
-                {isUpdate ? unit_kerja : "--- Pilih ---"}
-              </option>
-              <option value="Unit Kerja 1">Unit Kerja</option>
-              <option value="Unit Kerja 2">Unit Kerja 2</option>
-              <option value="Unit Kerja3">Unit Kerja3</option>
-            </select>
-          </div>
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">
               Role
@@ -159,10 +163,34 @@ function PenggunaInput({ isUpdate = false }) {
               onChange={onRoleChangeHandler}
             >
               <option value={role}>{isUpdate ? role : "--- Pilih ---"}</option>
-              <option value="UPT Banjaran">UPT Banjaran</option>
-              <option value="UPT Baleendah">UPT Baleendah</option>
-              <option value="UPT Soreang">UPT Soreang</option>
+              <option value="Admin">Admin</option>
+              <option value="Pengangkut">Pengangkut</option>
+              <option value="Pengguna">Pengguna</option>
             </select>
+          </div>
+          <div className="mb-3">
+            <label htmlFor=" namaTempat" className="form-label">
+              Kontak
+            </label>
+            <input
+              type="input"
+              className="form-control"
+              placeholder="Masukan Kontak ..."
+              value={kontak}
+              onChange={onKontakChangeHandler}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor=" namaTempat" className="form-label">
+              password
+            </label>
+            <input
+              type="input"
+              className="form-control"
+              placeholder="Masukan Password ..."
+              value={password}
+              onChange={onPasswordChangeHandler}
+            />
           </div>
 
           <div className="mb-3 m-3 d-grid">
