@@ -8,6 +8,8 @@ import AdminDataUPT from "../components/admin/upt/DataUPT";
 import UPTInput from "../components/admin/upt/UPTInput";
 import DataPengguna from "../components/admin/pengguna/DataPengguna";
 import PenggunaInput from "../components/admin/pengguna/PenggunaInput";
+import AdminDataPengangkutan from "../components/admin/laporan/pengangkutan/AdminDataPengangkutan";
+import AdminDataPengaduan from "../components/admin/laporan/pengaduan/AdminDataPengaduan";
 
 function AdminPage() {
   return (
@@ -32,6 +34,14 @@ function AdminPage() {
               <Route
                 path="/titik-upt-update/:id"
                 element={<UPTInput isUpdate={true} />}
+              ></Route>
+              <Route
+                path="/laporan-pengangkutan"
+                element={<AdminDataPengangkutan />}
+              ></Route>
+              <Route
+                path="/laporan-pengaduan"
+                element={<AdminDataPengaduan />}
               ></Route>
               <Route path="/pengguna" element={<DataPengguna />}></Route>
               <Route path="/pengguna-input" element={<PenggunaInput />}></Route>

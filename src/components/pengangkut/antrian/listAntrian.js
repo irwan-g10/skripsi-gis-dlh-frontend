@@ -18,7 +18,7 @@ function ListAntrian({ data }) {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const status = {
-      status: "Dalam Proses",
+      status: "Belum Diangkut",
     };
     await axios
       .patch(
@@ -50,11 +50,11 @@ function ListAntrian({ data }) {
                   alt="..."
                 />
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-warning"
                   value={item.id}
                   onClick={onSubmitHandler}
                 >
-                  Tambah Antrian
+                  Hapus Antrian
                 </button>
               </div>
             </div>
