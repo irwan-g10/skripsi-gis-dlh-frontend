@@ -5,24 +5,24 @@ import PengangkutanTable from "./PengangkutanTable";
 // import PropTypes from "prop-types";
 // import TPATable from "./TPATable";
 // import TPAMaps from "./TPAMaps";
-// import axios from "axios";
+import axios from "axios";
 
 function AdminDataPengangkutan() {
-  // const [data, setData] = React.useState([]);
-  // const [loading, setLoading] = React.useState(true);
-  // const [isTable, setIstable] = React.useState(true);
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [isTable, setIstable] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5000/api/titik-tpa`)
-  //     .then((response) => {
-  //       setData(response.data.result);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //     });
-  // }, []);
+  React.useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/laporan`)
+      .then((response) => {
+        setData(response.data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
 
   // const onIsTableOptionChange = (event) => {
   //   // Memastikan nilai event target diambil dengan benar
@@ -105,7 +105,7 @@ function AdminDataPengangkutan() {
             </div>
           </div>
         </div>
-        <PengangkutanTable />
+        <PengangkutanTable data={data} />
         {/* {loading ? (
           true
         ) : isTable ? (

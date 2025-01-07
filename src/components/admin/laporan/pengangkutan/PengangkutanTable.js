@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import PengangkutItem from "./PengangkutItem";
 // import TPAItem from "./TPAItem";
 
 function PengangkutanTable({ data }) {
-  // console.log(data);
+  console.log(data);
   return (
     <div className="PengangkutanTable">
       <div className="container mb-1">
@@ -12,24 +13,25 @@ function PengangkutanTable({ data }) {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nama Tempat</th>
-              <th scope="col">Jenis Tong</th>
-              <th scope="col">Alamat</th>
+              <th scope="col">Pengangkut</th>
               <th scope="col">Tanggal Pengangkutan</th>
+              <th scope="col">Keterangan</th>
               <th scope="col">Status Angkutan</th>
             </tr>
           </thead>
           <tbody>
-            {/* {data.map((item, index) => (
-              <TPAItem
+            {data.map((item, index) => (
+              <PengangkutItem
                 key={item.id}
                 nomor={index + 1}
                 id={item.id}
                 nama_tempat={item.nama_tempat}
-                jenis_tong={item.jenis_tong}
-                jadwal_pengangkutan={item.hari[0]}
-                alamat={item.alamat}
+                pengangkut={item.id_pengangkut}
+                tanggal={item.tanggal}
+                keterangan={item.keterangan}
+                status={item.status}
               />
-            ))} */}
+            ))}
           </tbody>
         </table>
       </div>
