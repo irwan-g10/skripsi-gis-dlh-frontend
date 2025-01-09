@@ -26,7 +26,7 @@ function TPAInput({ isUpdate = false }) {
   const [alamat, setAlamat] = React.useState("");
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
-  const [statusPengangkutan, setStatusPengangkutan] = React.useState("");
+  // const [statusPengangkutan, setStatusPengangkutan] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
   const [imageFile, setImageFile] = React.useState(null);
   const [listUpt, setListUpt] = React.useState([]);
@@ -104,7 +104,7 @@ function TPAInput({ isUpdate = false }) {
           setUnitPelayananTeknis(result.unit_pelayanan_teknis.nama_upt);
           setAlamat(result.alamat);
           setLatitude(result.latitude);
-          setStatusPengangkutan(result.status);
+          // setStatusPengangkutan(result.status);
           setLongitude(result.longitude);
           setHari(result.hari[0]);
           setImageUrl(result.image_url);
@@ -155,9 +155,9 @@ function TPAInput({ isUpdate = false }) {
   const onLongitudeChangeHandler = (event) => {
     setLongitude(event.target.value);
   };
-  const onStatusPengangkutanChangeHandler = (event) => {
-    setStatusPengangkutan(event.target.value);
-  };
+  // const onStatusPengangkutanChangeHandler = (event) => {
+  //   setStatusPengangkutan(event.target.value);
+  // };
   const oncheckedHariChangeHandler = (event) => {
     const { name, checked } = event.target;
     setHari((prevState) => ({
@@ -195,7 +195,7 @@ function TPAInput({ isUpdate = false }) {
             alamat,
             latitude,
             longitude,
-            status: statusPengangkutan,
+            // status: statusPengangkutan,
             image_url: url,
           };
 
@@ -284,7 +284,7 @@ function TPAInput({ isUpdate = false }) {
                   <option value="Acara dan Festival">Acara dan Festival</option>
                 </select>
               </div>
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
@@ -305,7 +305,7 @@ function TPAInput({ isUpdate = false }) {
                   <option value="Dalam Proses">Dalam Proses</option>
                   <option value="Sudah Diangkut">Sudah Diangkut</option>
                 </select>
-              </div>
+              </div> */}
 
               <div className="mb-3">
                 <label

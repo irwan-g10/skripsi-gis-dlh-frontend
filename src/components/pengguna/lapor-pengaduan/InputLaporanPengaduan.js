@@ -1,6 +1,16 @@
 import React, { useRef } from "react";
 import SignaturePad from "react-signature-canvas";
 
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMapEvents,
+} from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
 function InputLaporanPengaduan() {
   const [nama, setNama] = React.useState("");
   const [alamatPengadu, setAlamatPengadu] = React.useState("");
@@ -10,12 +20,48 @@ function InputLaporanPengaduan() {
   const [waktuKejadian, setWaktuKejadian] = React.useState("");
   const [uraianKejadian, setUraianKejadian] = React.useState("");
   const [dampakkejadian, setDampakKejadian] = React.useState("");
-  const [informasiSms, setInformasiSms] = React.useState("");
-  const [informasiEmail, setInformasiEmail] = React.useState("");
-  const [informasiMediaSosial, setInformasiMediaSosial] = React.useState("");
-  const [informasiLain, setInformasiLain] = React.useState("");
+  const [lampiran, setLampiran] = React.useState("");
   const [harapanPenyelesaian, setHarapanPenyelesaian] = React.useState("");
+  const [informasiPengadu, setInformasiPengadu] = React.useState("");
+  const [latitude, setLatitude] = React.useState("");
+  const [longitude, setLongitude] = React.useState("");
 
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  });
+  const [markerPosition, setMarkerPosition] = React.useState(null); // Untuk menyimpan posisi marker
+
+  const ClickableMap = ({ setMarkerPosition }) => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng; // Ambil koordinat klik
+        console.log("Koordinat Klik:", lat, lng); // Cetak koordinat ke konsol
+        setMarkerPosition([lat, lng]);
+        setLatitude(lat);
+        setLongitude(lng);
+        getAddress(lat, lng);
+        // Set posisi marker
+      },
+    });
+
+    return null; // Komponen ini tidak perlu merender apa pun
+  };
+  const getAddress = async (lat, lng) => {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+    );
+    const data = await response.json();
+    if (data && data.display_name) {
+      setLokasiKejadian(data.display_name);
+      console.log(data.display_name);
+    } else {
+      // setAddress("Address not found");
+      console.log("alamat tidak ditemukan");
+    }
+  };
   const onNamaChangeHandler = (event) => {
     setNama(event.target.value);
   };
@@ -40,21 +86,17 @@ function InputLaporanPengaduan() {
   const onDampakKejadianChangeHandler = (event) => {
     setDampakKejadian(event.target.value);
   };
-  const onInformasiSmsChangeHandler = (event) => {
-    setInformasiSms(event.target.value);
-  };
-  const onInformasiEmailChangeHandler = (event) => {
-    setInformasiEmail(event.target.value);
-  };
-  const onInformasiMediaSosialChangeHandler = (event) => {
-    setInformasiMediaSosial(event.target.value);
-  };
-  const onInformasiLainChangeHandler = (event) => {
-    setInformasiLain(event.target.value);
+  const onLampiranChangeHandler = (event) => {
+    setLampiran(event.target.value);
   };
   const onHarapanPenyelesaianChangeHandler = (event) => {
     setHarapanPenyelesaian(event.target.value);
   };
+
+  const onInformasiPengaduChangeHandler = (event) => {
+    setInformasiPengadu(event.target.value);
+  };
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const postData = {
@@ -67,10 +109,9 @@ function InputLaporanPengaduan() {
       uraian_kejadian: uraianKejadian,
       dampak_kejadian: dampakkejadian,
       harapan_penyelesaian: harapanPenyelesaian,
-      informasi_telepon: informasiSms,
-      informasi_email: informasiEmail,
-      informasi_media_sosial: informasiMediaSosial,
-      informasi_lain: informasiLain,
+      latitude,
+      longitude,
+      informasi_pengadu: informasiPengadu,
     };
     console.log(postData);
   };
@@ -118,7 +159,7 @@ function InputLaporanPengaduan() {
             </div>
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={alamatPengadu}
                 onChange={onAlamatPengaduChangeHandler}
                 rows="4"
@@ -139,16 +180,42 @@ function InputLaporanPengaduan() {
             <div className="col-1">
               <h6 className="text-end">1.</h6>
             </div>
-            <div className="col-3">
-              <label className="form-label">Alamat</label>
+            <div className="col">
+              <div className="col-3">
+                <label className="form-label">Alamat</label>
+              </div>
+              <div className="col">
+                <textarea
+                  className="form-control"
+                  rows="4"
+                  value={lokasiKejadian}
+                  onChange={onLokasiKejadianChangeHandler}
+                ></textarea>
+              </div>
             </div>
             <div className="col">
-              <textarea
-                class="form-control"
-                rows="4"
-                value={lokasiKejadian}
-                onChange={onLokasiKejadianChangeHandler}
-              ></textarea>
+              <div className="pilih-map mb-3">
+                <MapContainer
+                  center={[-7.047407, 107.583554]} // Koordinat Jakarta
+                  zoom={14}
+                  style={{ height: "200px", width: "100%" }}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; OpenStreetMap contributors"
+                  />
+                  <ClickableMap setMarkerPosition={setMarkerPosition} />{" "}
+                  {/* Komponen untuk menangkap klik */}
+                  {markerPosition && ( // Jika markerPosition tidak null, tampilkan marker
+                    <Marker position={markerPosition}>
+                      <Popup>
+                        Koordinat: {markerPosition[0].toFixed(6)},{" "}
+                        {markerPosition[1].toFixed(6)}
+                      </Popup>
+                    </Marker>
+                  )}
+                </MapContainer>
+              </div>
             </div>
           </div>
         </div>
@@ -173,7 +240,7 @@ function InputLaporanPengaduan() {
             </div>
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={jenisKegiatan}
                 onChange={onJenisKegiatanChangeHandler}
                 rows="2"
@@ -192,7 +259,7 @@ function InputLaporanPengaduan() {
             </div>
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={namaKegiatan}
                 rows="2"
                 onChange={onNamaKegiatanChangeHandler}
@@ -223,7 +290,7 @@ function InputLaporanPengaduan() {
             <div className="col-1"></div>
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={waktuKejadian}
                 onChange={onWaktuKejadianChangeHandler}
                 rows="2"
@@ -244,7 +311,7 @@ function InputLaporanPengaduan() {
             <div className="col-1"></div>
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={uraianKejadian}
                 onChange={onUraianKejadianChangeHandler}
                 rows="4"
@@ -266,7 +333,7 @@ function InputLaporanPengaduan() {
             <div className="col-1"></div>
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={dampakkejadian}
                 onChange={onDampakKejadianChangeHandler}
                 rows="2"
@@ -287,21 +354,13 @@ function InputLaporanPengaduan() {
             <div className="col-1"></div>
 
             <div className="col">
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02" />
-                <label class="input-group-text" for="inputGroupFile02">
-                  Upload
-                </label>
-              </div>
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02" />
-                <label class="input-group-text" for="inputGroupFile02">
-                  Upload
-                </label>
-              </div>
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02" />
-                <label class="input-group-text" for="inputGroupFile02">
+              <div className="input-group mb-3">
+                <input
+                  type="file"
+                  className="form-control"
+                  id="inputGroupFile02"
+                />
+                <label className="input-group-text" htmlFor="inputGroupFile02">
                   Upload
                 </label>
               </div>
@@ -322,7 +381,7 @@ function InputLaporanPengaduan() {
 
             <div className="col">
               <textarea
-                class="form-control"
+                className="form-control"
                 value={harapanPenyelesaian}
                 onChange={onHarapanPenyelesaianChangeHandler}
                 rows="2"
@@ -330,99 +389,11 @@ function InputLaporanPengaduan() {
             </div>
           </div>
         </div>
+
         <div className="bagian-input mb-4">
           <div className="row">
             <div className="col-1">
               <h6>G.</h6>
-            </div>
-            <div className="col">
-              <h6>Pernah Menyampaikan Pengaduan:</h6>
-            </div>
-          </div>
-          <div className="row mb-2">
-            <div className="col-1"></div>
-            <div className="col">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama Instansi</th>
-                    <th scope="col">Tanggal/Bulan/Tahun</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>
-                      <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama}
-                        onChange={onNamaChangeHandler}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama}
-                        onChange={onNamaChangeHandler}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>
-                      <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama}
-                        onChange={onNamaChangeHandler}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama}
-                        onChange={onNamaChangeHandler}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>
-                      <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama}
-                        onChange={onNamaChangeHandler}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="input"
-                        className="form-control"
-                        placeholder="Masukan nama tempat ..."
-                        value={nama}
-                        onChange={onNamaChangeHandler}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div className="bagian-input mb-4">
-          <div className="row">
-            <div className="col-1">
-              <h6>H.</h6>
             </div>
             <div className="col">
               <h6>Informasi Pengaduan</h6>
@@ -431,11 +402,11 @@ function InputLaporanPengaduan() {
           </div>
           <div className="row mb-2">
             <div className="col-1">
-              <h6 className="text-end">1.</h6>
+              <h6 className="text-end"></h6>
             </div>
             <div className="col-3">
               <label htmlFor=" nam" className="form-label">
-                SMS/Tlp
+                SMS/Tlp, E-mail, Media Sosial, Lain-lain
               </label>
             </div>
             <div className="col">
@@ -443,126 +414,20 @@ function InputLaporanPengaduan() {
                 type="input"
                 className="form-control"
                 placeholder="Masukan nama tempat ..."
-                value={informasiSms}
-                onChange={onInformasiSmsChangeHandler}
-              />
-            </div>
-          </div>
-          <div className="row mb-2">
-            <div className="col-1">
-              <h6 className="text-end">2.</h6>
-            </div>
-            <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                E-mail
-              </label>
-            </div>
-            <div className="col">
-              <input
-                type="input"
-                className="form-control"
-                placeholder="Masukan nama tempat ..."
-                value={informasiEmail}
-                onChange={onInformasiEmailChangeHandler}
-              />
-            </div>
-          </div>
-          <div className="row mb-2">
-            <div className="col-1">
-              <h6 className="text-end">3.</h6>
-            </div>
-            <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                Media Sosial
-              </label>
-            </div>
-            <div className="col">
-              <input
-                type="input"
-                className="form-control"
-                placeholder="Masukan nama tempat ..."
-                value={informasiMediaSosial}
-                onChange={onInformasiMediaSosialChangeHandler}
-              />
-            </div>
-          </div>
-
-          <div className="row mb-2">
-            <div className="col-1">
-              <h6 className="text-end">4.</h6>
-            </div>
-            <div className="col-3">
-              <label htmlFor=" nam" className="form-label">
-                Lain lain
-              </label>
-            </div>
-            <div className="col">
-              <input
-                type="input"
-                className="form-control"
-                placeholder="Masukan nama tempat ..."
-                value={informasiLain}
-                onChange={onInformasiLainChangeHandler}
+                value={informasiPengadu}
+                onChange={onInformasiPengaduChangeHandler}
               />
             </div>
           </div>
         </div>
-        <div className="bagian-input mb-4">
-          <div className="row">
-            <div className="col-1">
-              <h6>I.</h6>
-            </div>
-            <div className="col">
-              <h6>Kerahasiaan Pengadu</h6>
-              <p>
-                Pengadu menginginkan informasi pengaduan untuk dirahasiakan :
-              </p>
-            </div>
-          </div>
-          <div className="row mb-2">
-            <div className="col-1"></div>
 
-            <div className="col">
-              <div className="mb-3 row">
-                <div className="form-check  col-3 mx-3">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="senin"
-                    value="senin"
-                    id="senin"
-                    // checked={hari.senin}
-                    // onChange={oncheckedHariChangeHandler}
-                  />
-                  <label className="form-check-label" htmlFor="senin">
-                    Ya
-                  </label>
-                </div>
-                <div className="form-check  col">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="selasa"
-                    value="selasa"
-                    id="selasa"
-                    // checked={hari.selasa}
-                    // onChange={oncheckedHariChangeHandler}
-                  />
-                  <label className="form-check-label" htmlFor="selasa">
-                    Tidak
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="tanda-tangan row">
           <div className="col"></div>
           <button
             onClick={clearSignature}
             className="col-1 bg-transparent border-0 justify-content-center align-items-center d-flex"
           >
-            <i class="bi bi-eraser fs-1"></i>
+            <i className="bi bi-eraser fs-1"></i>
           </button>
           <div className="col-5 text-center">
             Soreang, 9 Oktober 2024
@@ -572,7 +437,7 @@ function InputLaporanPengaduan() {
           </div>
         </div>
         <div className="mb-3 m-3 d-grid">
-          <button class="btn btn-primary">Laporkan</button>
+          <button className="btn btn-primary">Laporkan</button>
         </div>
       </form>
     </div>

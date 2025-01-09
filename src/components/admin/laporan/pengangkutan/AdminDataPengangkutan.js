@@ -14,7 +14,7 @@ function AdminDataPengangkutan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/laporan`)
+      .get(`http://localhost:5000/api/laporan-pengangkutan`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);

@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ItemAntrian({ data }) {
+function ItemPengaduan({ data }) {
   const [distance, setDistance] = React.useState(null);
 
   // React.useEffect(() => {
@@ -35,24 +35,27 @@ function ItemAntrian({ data }) {
   return (
     <tbody>
       <tr>
-        <th scope="row">Nama</th>
+        <th scope="row">Nama Pemohon</th>
         <td className="text-end">{data.nama_tempat}</td>
       </tr>
-
+      {/* <tr>
+        <th scope="row">Jenis</th>
+        <td className="text-end">{data.jenis_tong}</td>
+      </tr> */}
       <tr>
-        <th scope="row">Alamat</th>
-        <td className="text-end">{data.alamat}</td>
+        <th scope="row">Lokasi Kejadian</th>
+        <td className="text-end">{data.lokasi_kejadian}</td>
       </tr>
       <tr>
         <th scope="row">jarak</th>
-        <td className="text-end">... km</td>
+        <td className="text-end">..... km</td>
       </tr>
       <tr>
-        <th scope="row">tanggal laporan</th>
-        <td className="text-end">{data.tanggal}</td>
+        <th scope="row">Tanggal Pengaduan</th>
+        <td className="text-end">{data.tanggal_pengaduan}</td>
       </tr>
     </tbody>
   );
 }
 
-export default ItemAntrian;
+export default ItemPengaduan;

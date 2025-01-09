@@ -11,10 +11,10 @@ function PengaduanTable({ data }) {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Nama Tempat</th>
-              <th scope="col">Jenis Tong</th>
+              <th scope="col">Nama Pengadu</th>
               <th scope="col">Alamat</th>
               <th scope="col">Tanggal Pengaduan</th>
+              <th scope="col">Pengangkut</th>
               <th scope="col">Status Aduan</th>
             </tr>
           </thead>

@@ -9,7 +9,7 @@ function Antrian() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa?status=Dalam Proses`)
+      .get(`http://localhost:5000/api/antrian`)
       .then((response) => {
         setData(response.data.result);
         setIsLoading(false);

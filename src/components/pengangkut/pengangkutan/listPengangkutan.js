@@ -15,16 +15,20 @@ function ListPengangkutan({ data }) {
     shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   });
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    const status = {
-      status: "Dalam Proses",
+  const onSubmitHandler = async (item) => {
+    const data = {
+      id_lokasi: item.id,
+      nama_tempat: item.nama_tempat,
+      alamat: item.alamat,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      pengangkut: localStorage.getItem("id"),
+      image_url: item.image_url,
+      tanggal: new Date().toISOString(),
     };
+    // console.log(data);
     await axios
-      .patch(
-        `http://localhost:5000/api/titik-tpa/${event.target.value}`,
-        status
-      )
+      .post(`http://localhost:5000/api/antrian`, data)
       .then((response) => {
         console.log(response.data);
         alert("sukses");
@@ -51,8 +55,9 @@ function ListPengangkutan({ data }) {
                 />
                 <button
                   className="btn btn-primary"
-                  value={item.id}
-                  onClick={onSubmitHandler}
+                  onClick={() => {
+                    onSubmitHandler(item);
+                  }}
                 >
                   Tambah Antrian
                 </button>

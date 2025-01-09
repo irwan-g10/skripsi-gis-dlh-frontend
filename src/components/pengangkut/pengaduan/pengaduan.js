@@ -1,9 +1,10 @@
 import axios from "axios";
 import React from "react";
-import ListPengaduan from "./ListPengaduan";
+import ListPengaduan from "./listPengaduan";
 
 function Pengaduan() {
   const [data, setData] = React.useState([]);
+  const [isTable, setIstable] = React.useState(true);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -17,12 +18,63 @@ function Pengaduan() {
         alert(error.message);
       });
   }, []);
+  const onIsTableOptionChange = (event) => {
+    // Memastikan nilai event target diambil dengan benar
+    setIstable(event.target.value === "table");
+  };
 
   return (
     <div className="Pengaduan">
       {/* {console.log(data)} */}
-      <h1>this is Pengaduan</h1>
-      {isLoading ? true : <ListPengaduan data={data} />}
+      <div className="row">
+        <div className="col">
+          <h1>this is Pengaduan</h1>
+        </div>
+        <div className="col-3 ">
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Basic radio toggle button group"
+          >
+            <input
+              type="radio"
+              className="btn-check"
+              // name="btnradio"
+              value="table"
+              id="btnradio1"
+              checked={isTable === true}
+              onChange={onIsTableOptionChange}
+              // autoComplete="off"
+            />
+            <label className="btn btn-outline-secondary" htmlFor="btnradio1">
+              Tabel
+            </label>
+
+            <input
+              type="radio"
+              className="btn-check"
+              // name="btnradio"
+              value="maps"
+              id="btnradio2"
+              checked={isTable === false}
+              onChange={onIsTableOptionChange}
+              // autoComplete="off"
+            />
+            <label className="btn btn-outline-secondary" htmlFor="btnradio2">
+              Maps
+            </label>
+          </div>
+        </div>
+      </div>
+      {/* {isLoading ? (
+        true
+      ) : isTable ? (
+        <ListPengaduan data={data} />
+      ) : (
+        <ListPengaduan data={data} />
+        // <PengaduanMap data={data} />
+        )} */}
+      <ListPengaduan data={data} />
     </div>
   );
 }

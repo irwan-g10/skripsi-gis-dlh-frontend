@@ -17,14 +17,11 @@ function ListAntrian({ data }) {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    const status = {
-      status: "Belum Diangkut",
-    };
+    // const status = {
+    //   status: "Belum Diangkut",
+    // };
     await axios
-      .patch(
-        `http://localhost:5000/api/titik-tpa/${event.target.value}`,
-        status
-      )
+      .delete(`http://localhost:5000/api/antrian/${event.target.value}`)
       .then((response) => {
         console.log(response.data);
         alert("sukses");
