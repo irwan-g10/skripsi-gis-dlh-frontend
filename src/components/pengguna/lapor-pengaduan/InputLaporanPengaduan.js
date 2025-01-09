@@ -1,6 +1,14 @@
 import React, { useRef } from "react";
+import axios from "axios";
 import SignaturePad from "react-signature-canvas";
-
+import { initializeApp } from "firebase/app";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+  uploadString,
+} from "firebase/storage";
 import {
   MapContainer,
   Marker,
@@ -20,11 +28,13 @@ function InputLaporanPengaduan() {
   const [waktuKejadian, setWaktuKejadian] = React.useState("");
   const [uraianKejadian, setUraianKejadian] = React.useState("");
   const [dampakkejadian, setDampakKejadian] = React.useState("");
-  const [lampiran, setLampiran] = React.useState("");
   const [harapanPenyelesaian, setHarapanPenyelesaian] = React.useState("");
   const [informasiPengadu, setInformasiPengadu] = React.useState("");
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [imageFile, setImageFile] = React.useState(null);
+  const [signature, setSignature] = React.useState(null);
 
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -62,6 +72,18 @@ function InputLaporanPengaduan() {
       console.log("alamat tidak ditemukan");
     }
   };
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXUi0DmcTQYaNevZm9PzA6kePU_5H7DsE",
+    authDomain: "skripsi-gis-c3506.firebaseapp.com",
+    projectId: "skripsi-gis-c3506",
+    storageBucket: "skripsi-gis-c3506.appspot.com",
+    messagingSenderId: "892978799903",
+    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
   const onNamaChangeHandler = (event) => {
     setNama(event.target.value);
   };
@@ -86,8 +108,11 @@ function InputLaporanPengaduan() {
   const onDampakKejadianChangeHandler = (event) => {
     setDampakKejadian(event.target.value);
   };
-  const onLampiranChangeHandler = (event) => {
-    setLampiran(event.target.value);
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+      setImageUrl(URL.createObjectURL(e.target.files[0]));
+    }
   };
   const onHarapanPenyelesaianChangeHandler = (event) => {
     setHarapanPenyelesaian(event.target.value);
@@ -99,26 +124,71 @@ function InputLaporanPengaduan() {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    const postData = {
-      nama,
-      alamat_pengadu: alamatPengadu,
-      lokasi_kejadian: lokasiKejadian,
-      jenis_kegiatan: jenisKegiatan,
-      nama_kegiatan: namaKegiatan,
-      waktu_kejadian: waktuKejadian,
-      uraian_kejadian: uraianKejadian,
-      dampak_kejadian: dampakkejadian,
-      harapan_penyelesaian: harapanPenyelesaian,
-      latitude,
-      longitude,
-      informasi_pengadu: informasiPengadu,
-    };
-    console.log(postData);
+
+    if (!imageFile) return;
+    const storage = getStorage(app);
+    // console.log(imageFile);
+
+    const storageRef = ref(storage, `images/${imageFile.name}-${Date.now()}`); // Referensi lokasi gambar di Firebase Storage
+    const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
+
+    // Memantau proses upload
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("gambar di upload");
+      },
+      (error) => {
+        console.error("Error during upload:", error);
+      },
+      () => {
+        // Mendapatkan URL download setelah selesai upload
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          const dataURL = signCanva.current.toDataURL("image/png");
+          const storageRefSignature = ref(
+            storage,
+            `images/signature-${Date.now()}.png`
+          );
+
+          await uploadString(storageRefSignature, dataURL, "data_url");
+
+          // Ambil URL download untuk gambar
+          const signature = await getDownloadURL(storageRefSignature);
+          const postData = {
+            nama,
+            alamat_pengadu: alamatPengadu,
+            lokasi_kejadian: lokasiKejadian,
+            jenis_kegiatan: jenisKegiatan,
+            nama_kegiatan: namaKegiatan,
+            waktu_kejadian: waktuKejadian,
+            uraian_kejadian: uraianKejadian,
+            dampak_kejadian: dampakkejadian,
+            harapan_penyelesaian: harapanPenyelesaian,
+            latitude,
+            longitude,
+            informasi_pengadu: informasiPengadu,
+            image_url: url,
+            signature,
+          };
+
+          await axios
+            .post(`http://localhost:5000/api/laporan-pengaduan`, postData)
+            .then((response) => {
+              alert("sukses");
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+
+          console.log("File available at", url);
+        });
+      }
+    );
   };
   const signCanva = useRef({});
 
   const clearSignature = () => {
-    console.log("button ditekan");
+    // console.log("button ditekan");
     signCanva.current.clear();
   };
   return (
@@ -359,6 +429,7 @@ function InputLaporanPengaduan() {
                   type="file"
                   className="form-control"
                   id="inputGroupFile02"
+                  onChange={handleImageChange}
                 />
                 <label className="input-group-text" htmlFor="inputGroupFile02">
                   Upload
