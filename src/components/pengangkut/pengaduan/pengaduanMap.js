@@ -3,7 +3,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-function AntrianMap({ data }) {
+function PengaduanMap({ data }) {
   const [location, setLocation] = React.useState({
     latitude: null,
     longitude: null,
@@ -38,7 +38,7 @@ function AntrianMap({ data }) {
   });
   if (location.longitude && location.latitude) {
     return (
-      <div className="AntrianMap">
+      <div className="pengaduanMap">
         <MapContainer
           center={[location.latitude, location.longitude]}
           zoom={13}
@@ -80,4 +80,4 @@ function AntrianMap({ data }) {
   }
 }
 
-export default AntrianMap;
+export default PengaduanMap;

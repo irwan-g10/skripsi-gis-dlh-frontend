@@ -20,15 +20,15 @@ function PengaduanTable({ data }) {
           </thead>
           <tbody>
             {/* {data.map((item, index) => (
-              <TPAItem
-                key={item.id}
-                nomor={index + 1}
-                id={item.id}
-                nama_tempat={item.nama_tempat}
-                jenis_tong={item.jenis_tong}
-                jadwal_pengangkutan={item.hari[0]}
-                alamat={item.alamat}
-              />
+              // <TPAItem
+              //   key={item.id}
+              //   nomor={index + 1}
+              //   id={item.id}
+              //   nama_tempat={item.nama_tempat}
+              //   jenis_tong={item.jenis_tong}
+              //   jadwal_pengangkutan={item.hari[0]}
+              //   alamat={item.alamat}
+              // />
             ))} */}
           </tbody>
         </table>

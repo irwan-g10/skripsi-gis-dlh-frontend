@@ -6,30 +6,30 @@ import PengaduanTable from "./PengaduanTable";
 // import PropTypes from "prop-types";
 // import TPATable from "./TPATable";
 // import TPAMaps from "./TPAMaps";
-// import axios from "axios";
+import axios from "axios";
 
 function AdminDataPengaduan() {
-  // const [data, setData] = React.useState([]);
-  // const [loading, setLoading] = React.useState(true);
-  // const [isTable, setIstable] = React.useState(true);
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [isTable, setIstable] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5000/api/titik-tpa`)
-  //     .then((response) => {
-  //       setData(response.data.result);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //     });
-  // }, []);
+  React.useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/laporan-pengaduan`)
+      .then((response) => {
+        setData(response.data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
 
-  // const onIsTableOptionChange = (event) => {
-  //   // Memastikan nilai event target diambil dengan benar
-  //   setIstable(event.target.value === "table");
-  //   console.log(event.target.value); // Debug untuk melihat nilai yang dipilih
-  // };
+  const onIsTableOptionChange = (event) => {
+    // Memastikan nilai event target diambil dengan benar
+    setIstable(event.target.value === "table");
+    console.log(event.target.value); // Debug untuk melihat nilai yang dipilih
+  };
 
   return (
     <div className="AdminDataTPA">
@@ -106,7 +106,7 @@ function AdminDataPengaduan() {
             </div>
           </div>
         </div>
-        <PengaduanTable />
+        <PengaduanTable data={data} />
         {/* {loading ? (
           true
         ) : isTable ? (

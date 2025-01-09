@@ -17,7 +17,7 @@ function ListPengangkutan({ data }) {
 
   const onSubmitHandler = async (item) => {
     const data = {
-      id_lokasi: item.id,
+      lokasi_pengangkutan: item.id,
       nama_tempat: item.nama_tempat,
       alamat: item.alamat,
       latitude: item.latitude,

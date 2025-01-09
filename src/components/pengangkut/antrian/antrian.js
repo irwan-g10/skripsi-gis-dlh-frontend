@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ListAntrian from "./listAntrian";
+import AntrianMap from "./antrianMap";
 
 function Antrian() {
   const [data, setData] = React.useState([]);
@@ -66,14 +67,14 @@ function Antrian() {
           </div>
         </div>
       </div>
-      <ListAntrian data={data} />
-      {/* {isLoading ? (
+      {/* <ListAntrian data={data} /> */}
+      {isLoading ? (
         true
       ) : isTable ? (
         <ListAntrian data={data} />
       ) : (
-        <PengangkutanMap data={data} />
-      )} */}
+        <AntrianMap data={data} />
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ListPengaduan from "./listPengaduan";
+import PengaduanMap from "./pengaduanMap";
 
 function Pengaduan() {
   const [data, setData] = React.useState([]);
@@ -66,15 +67,13 @@ function Pengaduan() {
           </div>
         </div>
       </div>
-      {/* {isLoading ? (
+      {isLoading ? (
         true
       ) : isTable ? (
         <ListPengaduan data={data} />
       ) : (
-        <ListPengaduan data={data} />
-        // <PengaduanMap data={data} />
-        )} */}
-      <ListPengaduan data={data} />
+        <PengaduanMap data={data} />
+      )}
     </div>
   );
 }

@@ -8,16 +8,17 @@ import axios from "axios";
 import ItemPengaduan from "./itemPengaduan";
 
 function ListPengaduan({ data }) {
-  // delete L.Icon.Default.prototype._getIconUrl;
-  // L.Icon.Default.mergeOptions({
-  //   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  //   iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  //   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-  // });
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  });
 
   const onSubmitHandler = async (item) => {
     const data = {
-      id_lokasi: item.id,
+      lokasi_pengaduan: item.id,
+      is_pengaduan: true,
       nama_tempat: "Permohonan Pengangkutan " + item.nama,
       alamat: item.lokasi_kejadian,
       latitude: item.latitude,
