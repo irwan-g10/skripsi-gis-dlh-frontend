@@ -155,7 +155,7 @@ function InputLaporanPengaduan() {
           // Ambil URL download untuk gambar
           const signature = await getDownloadURL(storageRefSignature);
           const postData = {
-            nama,
+            nama: nama,
             alamat_pengadu: alamatPengadu,
             lokasi_kejadian: lokasiKejadian,
             jenis_kegiatan: jenisKegiatan,

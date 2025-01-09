@@ -24,7 +24,6 @@ function ListPengaduan({ data }) {
       longitude: item.longitude,
       pengangkut: localStorage.getItem("id"),
       image_url: item.image_url,
-      tanggal: new Date().toISOString(),
     };
     // console.log(data);
     await axios
