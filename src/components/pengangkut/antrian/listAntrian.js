@@ -15,13 +15,30 @@ function ListAntrian({ data }) {
     shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   });
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    // const status = {
-    //   status: "Belum Diangkut",
-    // };
+  const onSubmitHandler = async (item) => {
+    if (item.is_pengaduan) {
+      console.log("update");
+      const dataLaporan = {
+        status: "Belum ditindak lanjuti",
+        tanggal_pengangkutan: null,
+        pengangkut: null,
+      };
+      await axios
+        .patch(
+          `http://localhost:5000/api/laporan-pengaduan/${item.lokasi_pengaduan.id}`,
+          dataLaporan
+        )
+        .then((response) => {
+          console.log(response.data);
+          alert("sukses");
+          // window.location.reload();
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
     await axios
-      .delete(`http://localhost:5000/api/antrian/${event.target.value}`)
+      .delete(`http://localhost:5000/api/antrian/${item.id}`)
       .then((response) => {
         console.log(response.data);
         alert("sukses");
@@ -48,8 +65,9 @@ function ListAntrian({ data }) {
                 />
                 <button
                   className="btn btn-warning"
-                  value={item.id}
-                  onClick={onSubmitHandler}
+                  onClick={() => {
+                    onSubmitHandler(item);
+                  }}
                 >
                   Hapus Antrian
                 </button>

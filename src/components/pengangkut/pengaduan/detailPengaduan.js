@@ -58,7 +58,12 @@ function DetailPengaduan() {
       pengangkut: localStorage.getItem("id"),
       image_url: item.image_url,
     };
-    // console.log(data);
+    const dataLaporan = {
+      status: "Sedang diangkut",
+      tanggal_pengangkutan: new Date(),
+      pengangkut: localStorage.getItem("id"),
+    };
+    console.log(`http://localhost:5000/api/laporan-pengaduan/${item.id}`);
     await axios
       .post(`http://localhost:5000/api/antrian`, data)
       .then((response) => {
@@ -69,6 +74,11 @@ function DetailPengaduan() {
       .catch((error) => {
         alert(error.message);
       });
+
+    await axios.patch(
+      `http://localhost:5000/api/laporan-pengaduan/${item.id}`,
+      dataLaporan
+    );
   };
   if (
     location.longitude &&
@@ -83,8 +93,8 @@ function DetailPengaduan() {
           <div className="col-5">
             <div className="card">
               <img
-                src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
-                className="card-img-top"
+                src={data.image_url}
+                className="card-img-top custom-img"
                 alt="..."
               />
               <div className="card-body">

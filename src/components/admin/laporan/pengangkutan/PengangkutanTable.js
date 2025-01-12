@@ -25,9 +25,9 @@ function PengangkutanTable({ data }) {
                 key={item.id}
                 nomor={index + 1}
                 id={item.id}
-                nama_tempat={item.nama_tempat}
-                pengangkut={item.id_pengangkut}
-                tanggal={item.tanggal}
+                nama_tempat={item.titik_tpa.nama_tempat}
+                pengangkut={item.pengangkut.nama}
+                tanggal={item.tanggal_pengangkutan}
                 keterangan={item.keterangan}
                 status={item.status}
               />

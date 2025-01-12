@@ -43,11 +43,9 @@ function ListPengangkutan({ data }) {
       });
 
     await axios
-      .post(`http://localhost:5000/api/laporan-pengangkutan`, data)
+      .post(`http://localhost:5000/api/laporan-pengangkutan`, dataLaporan)
       .then((response) => {
         console.log(response.data);
-        alert("sukses");
-        window.location.reload();
       })
       .catch((error) => {
         alert(error.message);

@@ -22,7 +22,7 @@ class AdminApp extends React.Component {
     if (this.state.localID === null) {
       return (
         <div className="AdminApp">
-          <PenggunaPage />
+          <LoginPage />
         </div>
       );
     } else {

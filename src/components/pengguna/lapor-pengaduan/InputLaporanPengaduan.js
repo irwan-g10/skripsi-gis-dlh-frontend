@@ -169,6 +169,7 @@ function InputLaporanPengaduan() {
             informasi_pengadu: informasiPengadu,
             image_url: url,
             signature,
+            status: "Belum ditindak lanjuti",
           };
 
           await axios
