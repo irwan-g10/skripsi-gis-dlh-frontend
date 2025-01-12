@@ -5,11 +5,12 @@ import Profil from "../components/pengangkut/profil/profil";
 import Pengaduan from "../components/pengangkut/pengaduan/pengaduan";
 import Antrian from "../components/pengangkut/antrian/antrian";
 import DetailPengangkutan from "../components/pengangkut/pengangkutan/detailPengangkutan";
+import DetailPengaduan from "../components/pengangkut/pengaduan/detailPengaduan";
 
 function PengangkutPage() {
   return (
     <div className="Pengangkut container-fluid">
-      <div className="row">
+      <div className="row m-4">
         <div className="col-3">
           <PengangkutSideContent />
         </div>
@@ -19,8 +20,8 @@ function PengangkutPage() {
               <Route path="/" element={<PengangkutHome />}></Route>
 
               <Route
-                path="/pengangkutan-detail/:id"
-                element={<DetailPengangkutan />}
+                path="/detail-pengaduan/:id"
+                element={<DetailPengaduan />}
               ></Route>
               <Route path="/antrian" element={<Antrian />}></Route>
               <Route path="/pengaduan" element={<Pengaduan />}></Route>

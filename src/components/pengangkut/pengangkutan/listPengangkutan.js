@@ -24,11 +24,26 @@ function ListPengangkutan({ data }) {
       longitude: item.longitude,
       pengangkut: localStorage.getItem("id"),
       image_url: item.image_url,
-      tanggal: new Date().toISOString(),
+    };
+    const dataLaporan = {
+      titik_tpa: item.id,
+      status: "Sedang di ambil",
+      pengangkut: localStorage.getItem("id"),
     };
     // console.log(data);
     await axios
       .post(`http://localhost:5000/api/antrian`, data)
+      .then((response) => {
+        console.log(response.data);
+        alert("sukses");
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+
+    await axios
+      .post(`http://localhost:5000/api/laporan-pengangkutan`, data)
       .then((response) => {
         console.log(response.data);
         alert("sukses");

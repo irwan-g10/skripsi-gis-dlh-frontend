@@ -19,6 +19,7 @@ function Antrian() {
         alert(error.message);
       });
   }, []);
+  // console.log(data);
   const onIsTableOptionChange = (event) => {
     // Memastikan nilai event target diambil dengan benar
     setIstable(event.target.value === "table");
