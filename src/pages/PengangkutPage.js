@@ -6,6 +6,7 @@ import Pengaduan from "../components/pengangkut/pengaduan/pengaduan";
 import Antrian from "../components/pengangkut/antrian/antrian";
 import DetailPengangkutan from "../components/pengangkut/pengangkutan/detailPengangkutan";
 import DetailPengaduan from "../components/pengangkut/pengaduan/detailPengaduan";
+import DetailAntrianPengaduan from "../components/pengangkut/antrian/detailAntrianPengaduan";
 
 function PengangkutPage() {
   return (
@@ -24,6 +25,10 @@ function PengangkutPage() {
                 element={<DetailPengaduan />}
               ></Route>
               <Route path="/antrian" element={<Antrian />}></Route>
+              <Route
+                path="/detail-antrian-pengaduan/:id"
+                element={<DetailAntrianPengaduan />}
+              ></Route>
               <Route path="/pengaduan" element={<Pengaduan />}></Route>
               <Route path="/profile" element={<Profil />}></Route>
             </Routes>

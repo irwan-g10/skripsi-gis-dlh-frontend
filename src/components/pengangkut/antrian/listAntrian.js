@@ -52,51 +52,59 @@ function ListAntrian({ data }) {
   return (
     <div className="ListAntrian">
       {data.map((item) => {
+        // console.log(item.lokasi_pengaduan?.id);
         return (
-          //   <Link to={"/pengangkutan-detail/" + item.id}>
-          <div className="row border rounded p-3 shadow m-5" key={item.id}>
-            <div className="col-3 justify-content-center align-items-center d-flex ">
-              <div className="row">
-                <img
-                  src={item.image_url}
-                  width="200"
-                  className="custom-img-list-pengangkutan mb-3"
-                  alt="..."
-                />
-                <button
-                  className="btn btn-warning"
-                  onClick={() => {
-                    onSubmitHandler(item);
-                  }}
-                >
-                  Hapus Antrian
-                </button>
+          <Link
+            to={"/detail-antrian-pengaduan/" + item.lokasi_pengaduan?.id}
+            key={item.id}
+          >
+            <div className="row border rounded p-3 shadow m-5">
+              <div className="col-3 justify-content-center align-items-center d-flex ">
+                <div className="row">
+                  <img
+                    src={item.image_url}
+                    width="200"
+                    className="custom-img-list-pengangkutan mb-3"
+                    alt="..."
+                  />
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => {
+                      onSubmitHandler(item);
+                    }}
+                  >
+                    Hapus Antrian
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="col">
-              <table className="table">
-                <ItemAntrian data={item} />
-              </table>
-            </div>
-            <div className="col-3">
-              <MapContainer
-                center={[parseFloat(item.latitude), parseFloat(item.longitude)]}
-                zoom={13}
-                style={{ height: "200px", width: "100%" }}
-              >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker
-                  position={[
+              <div className="col">
+                <table className="table">
+                  <ItemAntrian data={item} />
+                </table>
+              </div>
+              <div className="col-3">
+                <MapContainer
+                  center={[
                     parseFloat(item.latitude),
                     parseFloat(item.longitude),
                   ]}
+                  zoom={13}
+                  style={{ height: "200px", width: "100%" }}
                 >
-                  <Popup>{item.nama_tempat}</Popup>
-                </Marker>
-              </MapContainer>
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker
+                    position={[
+                      parseFloat(item.latitude),
+                      parseFloat(item.longitude),
+                    ]}
+                  >
+                    <Popup>{item.nama_tempat}</Popup>
+                  </Marker>
+                </MapContainer>
+              </div>
             </div>
-          </div>
-          //   </Link>
+            //{" "}
+          </Link>
         );
       })}
     </div>
