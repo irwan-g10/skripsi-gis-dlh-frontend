@@ -77,7 +77,8 @@ function DetailAntrianPengangkutan() {
   // console.log(loading);
   const onSubmitDeleteHandler = async (item) => {
     // if (item.is_pengaduan) {
-    //   // console.log("update");
+    // console.log(item.lokasi_pengangkutan.id);
+    // console.log(localStorage.getItem("id"));
     //   const dataLaporan = {
     //     status: "Belum ditindak lanjuti",
     //     tanggal_pengangkutan: null,
@@ -97,20 +98,25 @@ function DetailAntrianPengangkutan() {
     //       alert(error.message);
     //     });
     // }
-    // await axios
-    //   .delete(`http://localhost:5000/api/antrian/${item.id}`)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     alert("sukses");
-    //     window.location.href = "/antrian";
-    //   })
-    //   .catch((error) => {
-    //     alert(error.message);
-    //   });
     await axios
-      .delete(`http://localhost:5000/api/laporan-pengangkutan/${item.id}`)
+      .delete(`http://localhost:5000/api/antrian/${item.id}`)
       .then((response) => {
-        console.log(item.id);
+        console.log(response.data);
+        alert("sukses");
+        window.location.href = "/antrian";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+    await axios
+      .delete("http://localhost:5000/api/laporan-pengangkutan/", {
+        params: {
+          titik_tpa: item.lokasi_pengangkutan.id,
+          pengangkut: localStorage.getItem("id"),
+        }, // Kirim jenis data melalui query string
+      })
+      .then((response) => {
+        console.log(response.data);
       })
       .catch((error) => {
         alert(error.message);
