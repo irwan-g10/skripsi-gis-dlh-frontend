@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PengaduanItem from "./PengaduanItem";
+import { Link } from "react-router-dom";
 // import TPAItem from "./TPAItem";
 
 function PengaduanTable({ data }) {

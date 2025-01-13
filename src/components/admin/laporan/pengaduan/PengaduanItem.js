@@ -1,6 +1,6 @@
 import React from "react";
 import PropTyoe from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 
 function PengaduanItem({
@@ -17,7 +17,11 @@ function PengaduanItem({
   return (
     <tr>
       <th scope="row">{nomor}</th>
-      <td>{nama_pengadu}</td>
+      <td>
+        <Link to={`/detail-laporan-pengaduan/${id}`} key={id}>
+          {nama_pengadu}
+        </Link>
+      </td>
       <td>{alamat}</td>
       <td>{tanggal_pengaduan}</td>
       <td>{pengangkut}</td>
