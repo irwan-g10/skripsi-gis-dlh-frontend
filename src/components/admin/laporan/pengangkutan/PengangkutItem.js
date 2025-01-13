@@ -15,7 +15,11 @@ function PengangkutItem({
   return (
     <tr>
       <th scope="row">{nomor}</th>
-      <td>{nama_tempat}</td>
+      <td>
+        <Link to={`/detail-laporan-pengangkutan/${id}`} key={id}>
+          {nama_tempat}
+        </Link>
+      </td>
       <td>{pengangkut}</td>
       <td>{tanggal}</td>
       <td>{keterangan}</td>

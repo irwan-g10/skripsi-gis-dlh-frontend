@@ -10,7 +10,8 @@ import DataPengguna from "../components/admin/pengguna/DataPengguna";
 import PenggunaInput from "../components/admin/pengguna/PenggunaInput";
 import AdminDataPengangkutan from "../components/admin/laporan/pengangkutan/AdminDataPengangkutan";
 import AdminDataPengaduan from "../components/admin/laporan/pengaduan/AdminDataPengaduan";
-import DetailAntrianPengaduan from "../components/admin/laporan/pengaduan/detailAntrianPengaduan";
+import DetailLaporanPengaduan from "../components/admin/laporan/pengaduan/detailLaporanPengaduan";
+import DetailLaporanPengangkutan from "../components/admin/laporan/pengangkutan/detailLaporanPengangkutan";
 
 function AdminPage() {
   return (
@@ -46,7 +47,12 @@ function AdminPage() {
               ></Route>
               <Route
                 path="/detail-laporan-pengaduan/:id"
-                element={<DetailAntrianPengaduan />}
+                element={<DetailLaporanPengaduan />}
+              ></Route>
+
+              <Route
+                path="/detail-laporan-pengangkutan/:id"
+                element={<DetailLaporanPengangkutan />}
               ></Route>
               <Route path="/pengguna" element={<DataPengguna />}></Route>
               <Route path="/pengguna-input" element={<PenggunaInput />}></Route>
