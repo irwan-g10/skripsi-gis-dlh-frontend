@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 
 import SignaturePad from "react-signature-canvas";
 
-function DetailAntrianPengaduan() {
+function DetailAntrianPengangkutan() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState("");
@@ -73,10 +73,10 @@ function DetailAntrianPengaduan() {
       console.log("Geolocation is not supported by your browser.");
     }
   }, [id]);
-  console.log(loading);
+  // console.log(loading);
   const onSubmitDeleteHandler = async (item) => {
     if (item.is_pengaduan) {
-      console.log("update");
+      // console.log("update");
       const dataLaporan = {
         status: "Belum ditindak lanjuti",
         tanggal_pengangkutan: null,
@@ -84,7 +84,7 @@ function DetailAntrianPengaduan() {
       };
       await axios
         .patch(
-          `http://localhost:5000/api/laporan-pengaduan/${item.lokasi_pengaduan.id}`,
+          `http://localhost:5000/api/laporan-pengaduan/${item.lokasi_pengangkutan.id}`,
           dataLaporan
         )
         .then((response) => {
@@ -107,22 +107,22 @@ function DetailAntrianPengaduan() {
         alert(error.message);
       });
   };
+
   if (loading) {
     if (
       location.longitude &&
       location.latitude &&
-      data.lokasi_pengaduan.latitude &&
-      data.lokasi_pengaduan.longitude
+      data.lokasi_pengangkutan.latitude &&
+      data.lokasi_pengangkutan.longitude
     ) {
       return (
-        <div className="detail-antrian-pengaduan container p-5 lh">
-          {/* {console.log("halo")} */}
-          <h1 className="mb-5">Detail Antrian Pengaduan</h1>
+        <div className="detail-antrian-pengangkutan container p-5 lh">
+          <h1 className="mb-5">Detail Antrian Pengangkutan</h1>
           <div className="row mb-4">
             <div className="col-5">
               <div className="card">
                 <img
-                  src={data.lokasi_pengaduan.image_url}
+                  src={data.lokasi_pengangkutan.image_url}
                   className="card-img-top custom-img"
                   alt="..."
                 />
@@ -132,7 +132,7 @@ function DetailAntrianPengaduan() {
                       <tr>
                         <th scope="row">Status</th>
                         <td className="text-end">
-                          {data.lokasi_pengaduan.status}
+                          {data.lokasi_pengangkutan.status}
                         </td>
                       </tr>
                       <tr>
@@ -142,7 +142,7 @@ function DetailAntrianPengaduan() {
                       <tr>
                         <th scope="row">Tanggal Pengaduan</th>
                         <td className="text-end">
-                          {data.lokasi_pengaduan.tanggal_pengaduan}
+                          {data.lokasi_pengangkutan.tanggal_pengaduan}
                         </td>
                       </tr>
                     </tbody>
@@ -159,123 +159,49 @@ function DetailAntrianPengaduan() {
               </div>
             </div>
             <div className="col ">
-              <h5 className="card-title">A. Identitas Pengadu</h5>
+              <h5 className="card-title">A. Informasi TPA</h5>
               <div className="row">
                 <div className="col-1"></div>
                 <div className="col">
                   <table className="table">
                     <tbody>
                       <tr>
-                        <th scope="row">Nama </th>
+                        <th scope="row">Nama Tempat</th>
                         <td className="text-end">
-                          {data.lokasi_pengaduan.nama}
+                          {data.lokasi_pengangkutan.nama_tempat}
                         </td>
                       </tr>
                       <tr>
                         <th scope="row">Alamat </th>
                         <td className="text-end">
-                          {data.lokasi_pengaduan.alamat_pengadu}
+                          {data.lokasi_pengangkutan.alamat}
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row">Informasi Pengadu </th>
+                        <th scope="row">Jenis Tong </th>
                         <td className="text-end">
-                          {data.lokasi_pengaduan.informasi_pengadu}
+                          {data.lokasi_pengangkutan.jenis_tong}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Unit Pelayanan Teknis </th>
+                        <td className="text-end">
+                          {
+                            data.lokasi_pengangkutan.unit_pelayanan_teknis
+                              .nama_upt
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Jadwal Pengangkutan</th>
+                        <td className="text-end">
+                          Isi dari jadwal pengangkutan
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <h5 className="card-title">B. Lokasi Kejadian</h5>
-              <div className="row">
-                <div className="col-1"></div>
-                <div className="col">
-                  <table className="table">
-                    <tbody>
-                      <tr>
-                        <th scope="row">Alamat </th>
-                        <td className="text-end">
-                          {data.lokasi_pengaduan.lokasi_kejadian}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <h5 className="card-title">C. Dugaan Sumber atau Penyebab</h5>
-              <div className="row">
-                <div className="col-1"></div>
-                <div className="col">
-                  <table className="table">
-                    <tbody>
-                      <tr>
-                        <th scope="row">Jenis Kegiatan</th>
-                        <td className="text-end">
-                          {data.lokasi_pengaduan.jenis_kegiatan}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Nama Kegiatan dan/atau Usaha </th>
-                        <td className="text-end">
-                          {data.lokasi_pengaduan.nama_kegiatan}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <h5 className="card-title">D. Waktu dan Uraian kejadian</h5>
-          <div className="row ">
-            <div className="col-1"></div>
-            <div className="col">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      Waktu diketahuinya pencemaran dan/atau <br></br>perusakan
-                      lingkungan{" "}
-                    </th>
-                    <td className="text-end">
-                      {data.lokasi_pengaduan.waktu_kejadian}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Uraian Kejadian </th>
-                    <td className="text-end">
-                      {data.lokasi_pengaduan.uraian_kejadian}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Dampak yang dirasakan akibat pencemaran dan/atau perusakan
-                      lingkungan dan/atau perusakan hutan
-                    </th>
-                    <td className="text-end">
-                      {data.lokasi_pengaduan.dampak_kejadian}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <h5 className="card-title">E. Penyelesaian yang di inginkan</h5>
-          <div className="row">
-            <div className="col-1"></div>
-            <div className="col">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <th scope="row"> </th>
-                    <td className="text-end">
-                      {data.lokasi_pengaduan.harapan_penyelesaian}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
 
@@ -293,11 +219,11 @@ function DetailAntrianPengaduan() {
                 key={data.id}
                 //   icon={red}
                 position={[
-                  parseFloat(data.lokasi_pengaduan.latitude),
-                  parseFloat(data.lokasi_pengaduan.longitude),
+                  parseFloat(data.lokasi_pengangkutan.latitude),
+                  parseFloat(data.lokasi_pengangkutan.longitude),
                 ]}
               >
-                <Popup>Permohonan Pengaduan {data.lokasi_pengaduan.nama}</Popup>
+                <Popup>{data.lokasi_pengangkutan.nama_tempat}</Popup>
               </Marker>
               <Marker
                 icon={redIcon}
@@ -349,7 +275,7 @@ function DetailAntrianPengaduan() {
                 aria-label="Default select example"
                 onChange={onStatusChangeHandler}
               >
-                <option value={data.lokasi_pengaduan.status}>
+                <option value={data.lokasi_pengangkutan.status}>
                   --- Pilih ---
                 </option>
 
@@ -359,7 +285,7 @@ function DetailAntrianPengaduan() {
               </select>
             </div>
           </div>
-          <div className="tanda-tangan row">
+          <div className="tanda-tangan row mb-3">
             <div className="col"></div>
             <button
               onClick={clearSignature}
@@ -374,9 +300,17 @@ function DetailAntrianPengaduan() {
               <br></br>( {data.pengangkut.nama} )
             </div>
           </div>
+          <button
+            className="btn btn-primary  w-100"
+            onClick={() => {
+              // onSubmitDeleteHandler(data);
+            }}
+          >
+            Tambah Antrian
+          </button>
         </div>
       );
     }
   }
 }
-export default DetailAntrianPengaduan;
+export default DetailAntrianPengangkutan;

@@ -43,8 +43,8 @@ function ListPengaduan({ data }) {
     <div className="ListPengaduan">
       {data.map((item) => {
         return (
-          <Link to={"/detail-pengaduan/" + item.id}>
-            <div className="row border rounded p-3 shadow m-5" key={item.id}>
+          <Link to={"/detail-pengaduan/" + item.id} key={item.id}>
+            <div className="row border rounded p-3 shadow m-5">
               <div className="col-3 justify-content-center align-items-center d-flex ">
                 <div className="row">
                   <img

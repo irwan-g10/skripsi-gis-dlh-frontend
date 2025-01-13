@@ -15,47 +15,17 @@ function ListAntrian({ data }) {
     shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   });
 
-  const onSubmitHandler = async (item) => {
-    if (item.is_pengaduan) {
-      console.log("update");
-      const dataLaporan = {
-        status: "Belum ditindak lanjuti",
-        tanggal_pengangkutan: null,
-        pengangkut: null,
-      };
-      await axios
-        .patch(
-          `http://localhost:5000/api/laporan-pengaduan/${item.lokasi_pengaduan.id}`,
-          dataLaporan
-        )
-        .then((response) => {
-          console.log(response.data);
-          alert("sukses");
-          // window.location.reload();
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    }
-    await axios
-      .delete(`http://localhost:5000/api/antrian/${item.id}`)
-      .then((response) => {
-        console.log(response.data);
-        alert("sukses");
-        window.location.reload();
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-
   return (
     <div className="ListAntrian">
       {data.map((item) => {
         // console.log(item.lokasi_pengaduan?.id);
         return (
           <Link
-            to={"/detail-antrian-pengaduan/" + item.lokasi_pengaduan?.id}
+            to={
+              item.is_pengaduan
+                ? "/detail-antrian-pengaduan/" + item.id
+                : "/detail-antrian-pengangkutan/" + item.id
+            }
             key={item.id}
           >
             <div className="row border rounded p-3 shadow m-5">
@@ -67,14 +37,6 @@ function ListAntrian({ data }) {
                     className="custom-img-list-pengangkutan mb-3"
                     alt="..."
                   />
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => {
-                      onSubmitHandler(item);
-                    }}
-                  >
-                    Hapus Antrian
-                  </button>
                 </div>
               </div>
               <div className="col">

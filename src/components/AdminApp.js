@@ -15,7 +15,7 @@ class AdminApp extends React.Component {
   }
 
   async componentDidMount() {
-    console.log(this.state.localRole);
+    // console.log(this.state.localRole);
   }
 
   render() {
