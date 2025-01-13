@@ -15,6 +15,8 @@ function DetailAntrianPengaduan() {
     latitude: null,
     longitude: null,
   });
+
+  const [distance, setDistance] = React.useState(null);
   const [keterangan, setKeterangan] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
   const [imageFile, setImageFile] = React.useState(null);
@@ -89,8 +91,6 @@ function DetailAntrianPengaduan() {
         )
         .then((response) => {
           console.log(response.data);
-          // alert("sukses");
-          // window.location.reload();
         })
         .catch((error) => {
           alert(error.message);
@@ -101,7 +101,7 @@ function DetailAntrianPengaduan() {
       .then((response) => {
         console.log(response.data);
         alert("sukses");
-        window.location.reload();
+        window.location.href = "/antrian";
       })
       .catch((error) => {
         alert(error.message);
@@ -114,6 +114,25 @@ function DetailAntrianPengaduan() {
       data.lokasi_pengaduan.latitude &&
       data.lokasi_pengaduan.longitude
     ) {
+      const latA = parseFloat(data.latitude);
+      const logA = parseFloat(data.longitude);
+      const latB = parseFloat(location.latitude);
+      const logB = parseFloat(location.longitude);
+
+      const pointA = { lat: latA, lon: logA }; // Contoh titik A (Bandung)
+      const pointB = { lat: latB, lon: logB }; // Contoh titik B (Bandung)
+      const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
+      axios
+        .get(url)
+        .then((response) => {
+          const route = response.data.routes[0];
+          const distanceInMeters = route.distance;
+          const distanceInKm = distanceInMeters / 1000;
+          setDistance(distanceInKm.toFixed(2)); // Set jarak dan bulatkan ke 2 angka desimal
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
       return (
         <div className="detail-antrian-pengaduan container p-5 lh">
           {/* {console.log("halo")} */}
@@ -137,7 +156,7 @@ function DetailAntrianPengaduan() {
                       </tr>
                       <tr>
                         <th scope="row">jarak</th>
-                        <td className="text-end">...km</td>
+                        <td className="text-end">{distance} km</td>
                       </tr>
                       <tr>
                         <th scope="row">Tanggal Pengaduan</th>

@@ -10,6 +10,7 @@ function DetailPengaduan() {
     latitude: null,
     longitude: null,
   });
+  const [distance, setDistance] = React.useState(null);
   const { id } = useParams(); // Ambil parameter id dari URL
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -86,6 +87,25 @@ function DetailPengaduan() {
     data.latitude &&
     data.longitude
   ) {
+    const latA = parseFloat(data.latitude);
+    const logA = parseFloat(data.longitude);
+    const latB = parseFloat(location.latitude);
+    const logB = parseFloat(location.longitude);
+
+    const pointA = { lat: latA, lon: logA }; // Contoh titik A (Bandung)
+    const pointB = { lat: latB, lon: logB }; // Contoh titik B (Bandung)
+    const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
+    axios
+      .get(url)
+      .then((response) => {
+        const route = response.data.routes[0];
+        const distanceInMeters = route.distance;
+        const distanceInKm = distanceInMeters / 1000;
+        setDistance(distanceInKm.toFixed(2)); // Set jarak dan bulatkan ke 2 angka desimal
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
     return (
       <div className="Detail Pengaduan container p-5 lh">
         <h1 className="mb-5">Detail Pengaduan</h1>
@@ -106,7 +126,7 @@ function DetailPengaduan() {
                     </tr>
                     <tr>
                       <th scope="row">jarak</th>
-                      <td className="text-end">...km</td>
+                      <td className="text-end">{distance} km</td>
                     </tr>
                     <tr>
                       <th scope="row">Tanggal Pengaduan</th>
