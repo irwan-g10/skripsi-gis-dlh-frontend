@@ -25,11 +25,11 @@ function ListPengangkutan({ data }) {
       pengangkut: localStorage.getItem("id"),
       image_url: item.image_url,
     };
-    const dataLaporan = {
-      titik_tpa: item.id,
-      status: "Sedang di ambil",
-      pengangkut: localStorage.getItem("id"),
-    };
+    // const dataLaporan = {
+    //   titik_tpa: item.id,
+    //   status: "Sedang di ambil",
+    //   pengangkut: localStorage.getItem("id"),
+    // };
     // console.log(data);
     await axios
       .post(`http://localhost:5000/api/antrian`, data)
@@ -42,14 +42,14 @@ function ListPengangkutan({ data }) {
         alert(error.message);
       });
 
-    await axios
-      .post(`http://localhost:5000/api/laporan-pengangkutan`, dataLaporan)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    // await axios
+    //   .post(`http://localhost:5000/api/laporan-pengangkutan`, dataLaporan)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     alert(error.message);
+    //   });
   };
 
   return (

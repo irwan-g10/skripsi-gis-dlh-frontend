@@ -6,6 +6,14 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import SignaturePad from "react-signature-canvas";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  uploadString,
+} from "firebase/storage";
+import { initializeApp } from "firebase/app";
 
 function DetailAntrianPengaduan() {
   const [data, setData] = React.useState([]);
@@ -16,6 +24,15 @@ function DetailAntrianPengaduan() {
     longitude: null,
   });
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXUi0DmcTQYaNevZm9PzA6kePU_5H7DsE",
+    authDomain: "skripsi-gis-c3506.firebaseapp.com",
+    projectId: "skripsi-gis-c3506",
+    storageBucket: "skripsi-gis-c3506.appspot.com",
+    messagingSenderId: "892978799903",
+    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
+  };
+  const app = initializeApp(firebaseConfig);
   const [distance, setDistance] = React.useState(null);
   const [keterangan, setKeterangan] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
@@ -75,7 +92,71 @@ function DetailAntrianPengaduan() {
       console.log("Geolocation is not supported by your browser.");
     }
   }, [id]);
-  console.log(loading);
+
+  const onSubmitKirimHandler = async (item) => {
+    if (!imageFile) return;
+    const storage = getStorage(app);
+
+    const storageRef = ref(storage, `images/${imageFile.name}-${Date.now()}`); // Referensi lokasi gambar di Firebase Storage
+    const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("gambar di upload");
+      },
+      (error) => {
+        console.error("Error during upload:", error);
+      },
+      () => {
+        // Mendapatkan URL download setelah selesai upload
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          const dataURL = signCanva.current.toDataURL("image/png");
+          const storageRefSignature = ref(
+            storage,
+            `images/signature-${Date.now()}.png`
+          );
+
+          await uploadString(storageRefSignature, dataURL, "data_url");
+
+          // Ambil URL download untuk gambar
+          const signature = await getDownloadURL(storageRefSignature);
+          const dataLaporan = {
+            status: status,
+            tanggal_pengangkutan: new Date(),
+            pengangkut: localStorage.getItem("id"),
+            signature: signature,
+            keterangan: keterangan,
+            image_url_petugas: url,
+          };
+          await axios
+            .patch(
+              `http://localhost:5000/api/laporan-pengaduan/${item.lokasi_pengaduan.id}`,
+              dataLaporan
+            )
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+          await axios
+            .delete(`http://localhost:5000/api/antrian/${item.id}`)
+            .then((response) => {
+              console.log(response.data);
+              alert("sukses");
+              window.location.href = "/antrian";
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+
+          console.log("File available at", url);
+        });
+      }
+    );
+  };
+
   const onSubmitDeleteHandler = async (item) => {
     if (item.is_pengaduan) {
       console.log("update");
@@ -400,7 +481,7 @@ function DetailAntrianPengaduan() {
               <button
                 className="btn btn-primary  w-100"
                 onClick={() => {
-                  // onSubmitDeleteHandler(data);
+                  onSubmitKirimHandler(data);
                 }}
               >
                 Kirim Laporan

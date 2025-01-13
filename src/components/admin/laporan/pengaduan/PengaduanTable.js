@@ -4,7 +4,7 @@ import PengaduanItem from "./PengaduanItem";
 // import TPAItem from "./TPAItem";
 
 function PengaduanTable({ data }) {
-  // console.log(data);
+  console.log(data);
   return (
     <div className="PengaduanTable">
       <div className="container mb-1">
@@ -30,9 +30,9 @@ function PengaduanTable({ data }) {
                 nama_pengadu={item.nama}
                 alamat={item.lokasi_kejadian}
                 tanggal_pengaduan={item.tanggal_pengaduan}
-                pengangkut={item.alamat}
-                status={item.alamat}
-                keterangan={item.alamat}
+                pengangkut={item.pengangkut.nama}
+                status={item.status}
+                keterangan={item.keterangan}
                 tanggal_pengangkutan={item.tanggal_pengangkutan}
               />
             ))}

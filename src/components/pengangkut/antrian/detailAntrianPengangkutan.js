@@ -123,25 +123,35 @@ function DetailAntrianPengangkutan() {
           // Ambil URL download untuk gambar
           const signature = await getDownloadURL(storageRefSignature);
           const dataLaporan = {
+            titik_tpa: item.lokasi_pengangkutan.id,
             status: status,
             tanggal_pengangkutan: new Date(),
+            pengangkut: localStorage.getItem("id"),
             signature: signature,
             keterangan: keterangan,
             image_url: url,
           };
+          await axios
+            .post(`http://localhost:5000/api/laporan-pengangkutan`, dataLaporan)
+            .then((response) => {
+              console.log(response.data);
 
-          // await axios
-          //   .patch(
-          //     `http://localhost:5000/api/laporan-pengangkutan/${item.lokasi_pengangkutan.id}`,
-          //     dataLaporan
-          //   )
-          //   .then((response) => {
-          alert("data berhasil di kirim");
-          console.log(dataLaporan);
-          //   })
-          //   .catch((error) => {
-          //     alert(error.message);
-          //   });
+              alert("sukses");
+              window.location.href = "/antrian";
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+          await axios
+            .delete(`http://localhost:5000/api/antrian/${item.id}`)
+            .then((response) => {
+              console.log(response.data);
+              alert("sukses");
+              window.location.href = "/antrian";
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
 
           console.log("File available at", url);
         });
