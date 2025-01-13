@@ -3,9 +3,17 @@ import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
+import { initializeApp } from "firebase/app";
 import "leaflet/dist/leaflet.css";
 
 import SignaturePad from "react-signature-canvas";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  uploadString,
+} from "firebase/storage";
 
 function DetailAntrianPengangkutan() {
   const [data, setData] = React.useState([]);
@@ -31,6 +39,16 @@ function DetailAntrianPengangkutan() {
     html: '<div style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>',
     iconSize: [20, 20],
   });
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXUi0DmcTQYaNevZm9PzA6kePU_5H7DsE",
+    authDomain: "skripsi-gis-c3506.firebaseapp.com",
+    projectId: "skripsi-gis-c3506",
+    storageBucket: "skripsi-gis-c3506.appspot.com",
+    messagingSenderId: "892978799903",
+    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
+  };
+  const app = initializeApp(firebaseConfig);
   const onKeteranganChangeHandler = (event) => {
     setKeterangan(event.target.value);
   };
@@ -75,29 +93,62 @@ function DetailAntrianPengangkutan() {
     }
   }, [id]);
   // console.log(loading);
+
+  const onSubmitKirimHandler = async (item) => {
+    if (!imageFile) return;
+    const storage = getStorage(app);
+
+    const storageRef = ref(storage, `images/${imageFile.name}-${Date.now()}`); // Referensi lokasi gambar di Firebase Storage
+    const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("gambar di upload");
+      },
+      (error) => {
+        console.error("Error during upload:", error);
+      },
+      () => {
+        // Mendapatkan URL download setelah selesai upload
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          const dataURL = signCanva.current.toDataURL("image/png");
+          const storageRefSignature = ref(
+            storage,
+            `images/signature-${Date.now()}.png`
+          );
+
+          await uploadString(storageRefSignature, dataURL, "data_url");
+
+          // Ambil URL download untuk gambar
+          const signature = await getDownloadURL(storageRefSignature);
+          const dataLaporan = {
+            status: status,
+            tanggal_pengangkutan: new Date(),
+            signature: signature,
+            keterangan: keterangan,
+            image_url: url,
+          };
+
+          // await axios
+          //   .patch(
+          //     `http://localhost:5000/api/laporan-pengangkutan/${item.lokasi_pengangkutan.id}`,
+          //     dataLaporan
+          //   )
+          //   .then((response) => {
+          alert("data berhasil di kirim");
+          console.log(dataLaporan);
+          //   })
+          //   .catch((error) => {
+          //     alert(error.message);
+          //   });
+
+          console.log("File available at", url);
+        });
+      }
+    );
+  };
   const onSubmitDeleteHandler = async (item) => {
-    // if (item.is_pengaduan) {
-    // console.log(item.lokasi_pengangkutan.id);
-    // console.log(localStorage.getItem("id"));
-    //   const dataLaporan = {
-    //     status: "Belum ditindak lanjuti",
-    //     tanggal_pengangkutan: null,
-    //     pengangkut: null,
-    //   };
-    //   await axios
-    //     .patch(
-    //       `http://localhost:5000/api/laporan-pengaduan/${item.lokasi_pengangkutan.id}`,
-    //       dataLaporan
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       // alert("sukses");
-    //       // window.location.reload();
-    //     })
-    //     .catch((error) => {
-    //       alert(error.message);
-    //     });
-    // }
     await axios
       .delete(`http://localhost:5000/api/antrian/${item.id}`)
       .then((response) => {
@@ -179,14 +230,6 @@ function DetailAntrianPengangkutan() {
                       </tr>
                     </tbody>
                   </table>
-                  <button
-                    className="btn btn-warning  w-100"
-                    onClick={() => {
-                      onSubmitDeleteHandler(data);
-                    }}
-                  >
-                    Hapus Antrian
-                  </button>
                 </div>
               </div>
             </div>
@@ -332,14 +375,28 @@ function DetailAntrianPengangkutan() {
               <br></br>( {data.pengangkut.nama} )
             </div>
           </div>
-          <button
-            className="btn btn-primary  w-100"
-            onClick={() => {
-              // onSubmitDeleteHandler(data);
-            }}
-          >
-            Tambah Antrian
-          </button>
+          <div className="row">
+            <div className="col">
+              <button
+                className="btn btn-warning  w-100"
+                onClick={() => {
+                  onSubmitDeleteHandler(data);
+                }}
+              >
+                Hapus Antrian
+              </button>
+            </div>
+            <div className="col">
+              <button
+                className="btn btn-primary  w-100"
+                onClick={() => {
+                  onSubmitKirimHandler(data);
+                }}
+              >
+                Kirim Laporan
+              </button>
+            </div>
+          </div>
         </div>
       );
     }

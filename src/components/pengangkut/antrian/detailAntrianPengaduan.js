@@ -166,14 +166,6 @@ function DetailAntrianPengaduan() {
                       </tr>
                     </tbody>
                   </table>
-                  <button
-                    className="btn btn-warning  w-100"
-                    onClick={() => {
-                      onSubmitDeleteHandler(data);
-                    }}
-                  >
-                    Hapus Antrian
-                  </button>
                 </div>
               </div>
             </div>
@@ -391,6 +383,28 @@ function DetailAntrianPengaduan() {
               <br></br>Pengadu
               <SignaturePad ref={signCanva} />
               <br></br>( {data.pengangkut.nama} )
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <button
+                className="btn btn-warning  w-100"
+                onClick={() => {
+                  onSubmitDeleteHandler(data);
+                }}
+              >
+                Hapus Antrian
+              </button>
+            </div>
+            <div className="col">
+              <button
+                className="btn btn-primary  w-100"
+                onClick={() => {
+                  // onSubmitDeleteHandler(data);
+                }}
+              >
+                Kirim Laporan
+              </button>
             </div>
           </div>
         </div>
