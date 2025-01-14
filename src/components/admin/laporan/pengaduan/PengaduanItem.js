@@ -14,6 +14,41 @@ function PengaduanItem({
   status,
   keterangan,
 }) {
+  function formatDateTime(date) {
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const dayName = days[date.getDay()]; // Nama hari
+    const day = date.getDate(); // Tanggal
+    const month = months[date.getMonth()]; // Nama bulan
+    const year = date.getFullYear(); // Tahun
+    const hours = String(date.getHours()).padStart(2, "0"); // Jam (2 digit)
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Menit (2 digit)
+
+    // Format: 22.00 / Sabtu, 18 Agustus 2020
+    return `${hours}.${minutes} / ${dayName}, ${day} ${month} ${year}`;
+  }
   return (
     <tr>
       <th scope="row">{nomor}</th>
@@ -23,11 +58,11 @@ function PengaduanItem({
         </Link>
       </td>
       <td>{alamat}</td>
-      <td>{tanggal_pengaduan}</td>
+      <td>{formatDateTime(new Date(tanggal_pengaduan))}</td>
       <td>{pengangkut}</td>
       <td>{status}</td>
       <td>{keterangan}</td>
-      <td>{tanggal_pengangkutan}</td>
+      <td>{formatDateTime(new Date(tanggal_pengangkutan))}</td>
     </tr>
   );
 }

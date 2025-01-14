@@ -183,6 +183,41 @@ function DetailAntrianPengangkutan() {
         alert(error.message);
       });
   };
+  function formatDateTime(date) {
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const dayName = days[date.getDay()]; // Nama hari
+    const day = date.getDate(); // Tanggal
+    const month = months[date.getMonth()]; // Nama bulan
+    const year = date.getFullYear(); // Tahun
+    const hours = String(date.getHours()).padStart(2, "0"); // Jam (2 digit)
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Menit (2 digit)
+
+    // Format: 22.00 / Sabtu, 18 Agustus 2020
+    return `${hours}.${minutes} / ${dayName}, ${day} ${month} ${year}`;
+  }
 
   if (loading) {
     if (
@@ -235,7 +270,7 @@ function DetailAntrianPengangkutan() {
                       <tr>
                         <th scope="row">Tanggal Pengaduan</th>
                         <td className="text-end">
-                          {new Date().toLocaleDateString()}
+                          {formatDateTime(new Date())}
                         </td>
                       </tr>
                     </tbody>
@@ -379,7 +414,7 @@ function DetailAntrianPengangkutan() {
               <i className="bi bi-eraser fs-1"></i>
             </button>
             <div className="col-5 text-center">
-              Soreang, 9 Oktober 2024
+              Bandung, {formatDateTime(new Date()).split(",")[1].trim()}
               <br></br>Pengadu
               <SignaturePad ref={signCanva} />
               <br></br>( {data.pengangkut.nama} )

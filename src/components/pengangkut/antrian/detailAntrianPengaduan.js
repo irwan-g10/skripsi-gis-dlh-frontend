@@ -32,6 +32,41 @@ function DetailAntrianPengaduan() {
     messagingSenderId: "892978799903",
     appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
   };
+  function formatDateTime(date) {
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const dayName = days[date.getDay()]; // Nama hari
+    const day = date.getDate(); // Tanggal
+    const month = months[date.getMonth()]; // Nama bulan
+    const year = date.getFullYear(); // Tahun
+    const hours = String(date.getHours()).padStart(2, "0"); // Jam (2 digit)
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Menit (2 digit)
+
+    // Format: 22.00 / Sabtu, 18 Agustus 2020
+    return `${hours}.${minutes} / ${dayName}, ${day} ${month} ${year}`;
+  }
   const app = initializeApp(firebaseConfig);
   const [distance, setDistance] = React.useState(null);
   const [keterangan, setKeterangan] = React.useState("");
@@ -242,7 +277,9 @@ function DetailAntrianPengaduan() {
                       <tr>
                         <th scope="row">Tanggal Pengaduan</th>
                         <td className="text-end">
-                          {data.lokasi_pengaduan.tanggal_pengaduan}
+                          {formatDateTime(
+                            new Date(data.lokasi_pengaduan.tanggal_pengaduan)
+                          )}
                         </td>
                       </tr>
                     </tbody>
@@ -460,7 +497,7 @@ function DetailAntrianPengaduan() {
               <i className="bi bi-eraser fs-1"></i>
             </button>
             <div className="col-5 text-center">
-              Soreang, 9 Oktober 2024
+              Bandung, {formatDateTime(new Date()).split(",")[1].trim()}
               <br></br>Pengadu
               <SignaturePad ref={signCanva} />
               <br></br>( {data.pengangkut.nama} )

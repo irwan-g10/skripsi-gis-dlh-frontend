@@ -64,6 +64,41 @@ function DetailLaporanPengaduan() {
         alert(error.message);
       });
   }, [id]);
+  function formatDateTime(date) {
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const dayName = days[date.getDay()]; // Nama hari
+    const day = date.getDate(); // Tanggal
+    const month = months[date.getMonth()]; // Nama bulan
+    const year = date.getFullYear(); // Tahun
+    const hours = String(date.getHours()).padStart(2, "0"); // Jam (2 digit)
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Menit (2 digit)
+
+    // Format: 22.00 / Sabtu, 18 Agustus 2020
+    return `${hours}.${minutes} / ${dayName}, ${day} ${month} ${year}`;
+  }
 
   if (loading) {
     if (
@@ -72,6 +107,7 @@ function DetailLaporanPengaduan() {
       data.latitude &&
       data.longitude
     ) {
+      console.log(dataUser.upt_pengelola);
       const latA = parseFloat(data.latitude);
       const logA = parseFloat(data.longitude);
       const latB = parseFloat(dataUser.upt_pengelola.latitude);
@@ -116,12 +152,14 @@ function DetailLaporanPengaduan() {
                       </tr>
                       <tr>
                         <th scope="row">Tanggal Pengaduan</th>
-                        <td className="text-end">{data.tanggal_pengaduan}</td>
+                        <td className="text-end">
+                          {formatDateTime(new Date(data.tanggal_pengaduan))}
+                        </td>
                       </tr>
                       <tr>
                         <th scope="row">Tanggal Pengangkutan</th>
                         <td className="text-end">
-                          {data.tanggal_pengangkutan}
+                          {formatDateTime(new Date(data.tanggal_pengangkutan))}
                         </td>
                       </tr>
                       <tr>
@@ -286,15 +324,15 @@ function DetailLaporanPengaduan() {
                   >
                     <Popup>Permohonan Pengaduan {data.nama}</Popup>
                   </Marker>
-                  {/* <Marker
-                icon={redIcon}
-                position={[
-                  parseFloat(dataUser.upt_pengelola.latitude),
-                  parseFloat(dataUser.upt_pengelola.longitude),
-                ]}
-              >
-                <Popup>Lokasi anda</Popup>
-              </Marker> */}
+                  <Marker
+                    icon={redIcon}
+                    position={[
+                      parseFloat(dataUser.upt_pengelola.latitude),
+                      parseFloat(dataUser.upt_pengelola.longitude),
+                    ]}
+                  >
+                    <Popup>{dataUser.upt_pengelola.nama_upt}</Popup>
+                  </Marker>
                 </div>
                 ;
               </MapContainer>
@@ -311,7 +349,10 @@ function DetailLaporanPengaduan() {
 
           <div className="tanda-tangan row mt-5">
             <label className="card-title text-end my-3">
-              Bandung, {data.tanggal_pengangkutan}
+              Bandung,{" "}
+              {formatDateTime(new Date(data.tanggal_pengangkutan))
+                .split(",")[1]
+                .trim()}
             </label>
             <div className="col text-center">
               {/* <br></br> */}

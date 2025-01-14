@@ -31,6 +31,41 @@ function DetailLaporanPengangkutan() {
     html: '<div style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>',
     iconSize: [20, 20],
   });
+  function formatDateTime(date) {
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const dayName = days[date.getDay()]; // Nama hari
+    const day = date.getDate(); // Tanggal
+    const month = months[date.getMonth()]; // Nama bulan
+    const year = date.getFullYear(); // Tahun
+    const hours = String(date.getHours()).padStart(2, "0"); // Jam (2 digit)
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Menit (2 digit)
+
+    // Format: 22.00 / Sabtu, 18 Agustus 2020
+    return `${hours}.${minutes} / ${dayName}, ${day} ${month} ${year}`;
+  }
   // const onKeteranganChangeHandler = (event) => {
   //   setKeterangan(event.target.value);
   // };
@@ -119,7 +154,7 @@ function DetailLaporanPengangkutan() {
                       <tr>
                         <th scope="row">Tanggal Pengangkutan</th>
                         <td className="text-end">
-                          {data.tanggal_pengangkutan}
+                          {formatDateTime(new Date(data.tanggal_pengangkutan))}
                         </td>
                       </tr>
                       <tr>
@@ -205,15 +240,15 @@ function DetailLaporanPengangkutan() {
                   >
                     <Popup>{data.titik_tpa.nama_tempat}</Popup>
                   </Marker>
-                  {/* <Marker
+                  <Marker
                     icon={redIcon}
                     position={[
                       parseFloat(dataUser.upt_pengelola.latitude),
                       parseFloat(dataUser.upt_pengelola.longitude),
                     ]}
                   >
-                    <Popup>Lokasi anda</Popup>
-                  </Marker> */}
+                    <Popup>{dataUser.upt_pengelola.nama_upt}</Popup>
+                  </Marker>
                 </div>
                 ;
               </MapContainer>
@@ -231,7 +266,10 @@ function DetailLaporanPengangkutan() {
             <div className="col"></div>
 
             <div className="col-5 text-center">
-              Bandung, {data.tanggal_pengangkutan}
+              Bandung,{" "}
+              {formatDateTime(new Date(data.tanggal_pengangkutan))
+                .split(",")[1]
+                .trim()}
               <br></br>
               Pengangkut
               <img
