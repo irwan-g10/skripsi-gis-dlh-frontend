@@ -65,7 +65,6 @@ function ListAntrian({ data }) {
                 </MapContainer>
               </div>
             </div>
-            //{" "}
           </Link>
         );
       })}
