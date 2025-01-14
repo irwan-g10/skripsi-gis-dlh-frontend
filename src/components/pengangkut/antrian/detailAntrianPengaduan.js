@@ -125,7 +125,7 @@ function DetailAntrianPengaduan() {
             status: status,
             tanggal_pengangkutan: new Date(),
             pengangkut: localStorage.getItem("id"),
-            signature: signature,
+            signature_petugas: signature,
             keterangan: keterangan,
             image_url_petugas: url,
           };
