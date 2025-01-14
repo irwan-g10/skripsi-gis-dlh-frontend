@@ -232,30 +232,61 @@ function DetailLaporanPengaduan() {
               </table>
             </div>
           </div>
-          <MapContainer
-            center={[
-              dataUser.upt_pengelola.latitude,
-              dataUser.upt_pengelola.longitude,
-            ]}
-            zoom={13}
-            style={{ height: "500px", width: "100%" }}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="&copy; OpenStreetMap contributors"
-            />
-            <div className="item-data">
-              <Marker
-                key={data.id}
-                //   icon={red}
-                position={[
-                  parseFloat(data.latitude),
-                  parseFloat(data.longitude),
+          <h5 className="card-title mt-3">F. Keterangan Petugas</h5>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col">
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <th scope="row"> </th>
+                    <td className="text-end">{data.keterangan}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <h5 className="card-title">G. Status</h5>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col">
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <th scope="row"> </th>
+                    <td className="text-end">{data.status}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col">
+              <MapContainer
+                center={[
+                  dataUser.upt_pengelola.latitude,
+                  dataUser.upt_pengelola.longitude,
                 ]}
+                zoom={13}
+                style={{ height: "350px", width: "100%" }}
               >
-                <Popup>Permohonan Pengaduan {data.nama}</Popup>
-              </Marker>
-              {/* <Marker
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution="&copy; OpenStreetMap contributors"
+                />
+                <div className="item-data">
+                  <Marker
+                    key={data.id}
+                    //   icon={red}
+                    position={[
+                      parseFloat(data.latitude),
+                      parseFloat(data.longitude),
+                    ]}
+                  >
+                    <Popup>Permohonan Pengaduan {data.nama}</Popup>
+                  </Marker>
+                  {/* <Marker
                 icon={redIcon}
                 position={[
                   parseFloat(dataUser.upt_pengelola.latitude),
@@ -264,26 +295,49 @@ function DetailLaporanPengaduan() {
               >
                 <Popup>Lokasi anda</Popup>
               </Marker> */}
+                </div>
+                ;
+              </MapContainer>
             </div>
-            ;
-          </MapContainer>
-          <h5 className="card-title mt-5">F. Keterangan Petugas</h5>
-          {data.keterangan}
-          <h5 className="card-title">G. Lampiran Foto</h5>
-          <img
-            src={data.image_url_petugas}
-            className="card-img-top custom-img w"
-            alt="..."
-          />
-          <h5 className="card-title">H. Status</h5>
-          {data.status}
-          <div className="tanda-tangan row">tanda tangan</div>
-          <img
-            src={data.signature}
-            className="card-img-top custom-img"
-            alt="..."
-          />
+            <div className="col">
+              <h5 className="card-title mb-3">Lampiran Foto</h5>
+              <img
+                src={data.image_url_petugas}
+                className="card-img-top custom-img w"
+                alt="..."
+              />
+            </div>
+          </div>
+
+          <div className="tanda-tangan row mt-5">
+            <label className="card-title text-end my-3">
+              Bandung, {data.tanggal_pengangkutan}
+            </label>
+            <div className="col text-center">
+              {/* <br></br> */}
+              Pengadu
+              <img
+                src={data.signature}
+                className="card-img-top custom-img"
+                alt="..."
+              />
+              <br></br>
+              {data.nama}
+            </div>
+            <div className="col text-center">
+              {/* <br></br> */}
+              Pengangkut
+              <img
+                src={data.signature_petugas}
+                className="card-img-top custom-img"
+                alt="..."
+              />
+              <br></br>
+              {data.pengangkut.nama}
+            </div>
+          </div>
         </div>
+        // </div>
       );
     }
   }
