@@ -31,7 +31,7 @@ function PengaduanTable({ data }) {
                 nama_pengadu={item.nama}
                 alamat={item.lokasi_kejadian}
                 tanggal_pengaduan={item.tanggal_pengaduan}
-                pengangkut={item.pengangkut.nama}
+                pengangkut={item.pengangkut?.nama}
                 status={item.status}
                 keterangan={item.keterangan}
                 tanggal_pengangkutan={item.tanggal_pengangkutan}

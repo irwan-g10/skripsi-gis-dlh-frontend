@@ -5,7 +5,7 @@ import PengangkutanMap from "./pengangkutanMap";
 
 function Pengangkutan() {
   const [data, setData] = React.useState([]);
-  const [isTable, setIstable] = React.useState(false);
+  const [isTable, setIstable] = React.useState(true);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -71,11 +71,7 @@ function Pengangkutan() {
           </div>
         </div>
       </div>
-      {/* <ListPengangkutan data={data} /> */}
-      {/* {isLoading ? (
-        false
-      ) : 
-      */}
+
       {isTable ? (
         <ListPengangkutan data={data} />
       ) : (

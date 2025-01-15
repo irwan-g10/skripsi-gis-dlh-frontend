@@ -10,9 +10,12 @@ function Pengaduan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/laporan-pengaduan`)
+      .get(
+        `http://localhost:5000/api/laporan-pengaduan?status=Belum+ditindak+lanjuti`
+      )
       .then((response) => {
         setData(response.data.result);
+        console.log(response.data.query);
         setIsLoading(false);
       })
       .catch((error) => {

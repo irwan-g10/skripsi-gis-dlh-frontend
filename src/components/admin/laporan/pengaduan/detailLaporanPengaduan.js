@@ -49,16 +49,17 @@ function DetailLaporanPengaduan() {
       .get(`http://localhost:5000/api/laporan-pengaduan/${id}`)
       .then((response) => {
         setData(response.data.result);
-        setLoading(true);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-    axios
-      .get(`http://localhost:5000/api/pengguna/${localStorage.getItem("id")}`)
-      .then((response) => {
-        setDataUser(response.data.result);
-        setLoading(true);
+        axios
+          .get(
+            `http://localhost:5000/api/pengguna/${localStorage.getItem("id")}`
+          )
+          .then((response) => {
+            setDataUser(response.data.result);
+            setLoading(true);
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
       })
       .catch((error) => {
         alert(error.message);
@@ -107,7 +108,6 @@ function DetailLaporanPengaduan() {
       data.latitude &&
       data.longitude
     ) {
-      console.log(dataUser.upt_pengelola);
       const latA = parseFloat(data.latitude);
       const logA = parseFloat(data.longitude);
       const latB = parseFloat(dataUser.upt_pengelola.latitude);
@@ -164,7 +164,7 @@ function DetailLaporanPengaduan() {
                       </tr>
                       <tr>
                         <th scope="row">Pengangkut</th>
-                        <td className="text-end">{data.pengangkut.nama}</td>
+                        <td className="text-end">{data.pengangkut?.nama}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -374,7 +374,7 @@ function DetailLaporanPengaduan() {
                 alt="..."
               />
               <br></br>
-              {data.pengangkut.nama}
+              {data.pengangkut?.nama}
             </div>
           </div>
         </div>
