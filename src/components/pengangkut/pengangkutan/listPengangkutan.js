@@ -14,6 +14,7 @@ function ListPengangkutan({ data }) {
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
     shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   });
+  console.log(data);
 
   const onSubmitHandler = async (item) => {
     const data = {

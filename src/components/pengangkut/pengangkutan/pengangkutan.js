@@ -5,15 +5,16 @@ import PengangkutanMap from "./pengangkutanMap";
 
 function Pengangkutan() {
   const [data, setData] = React.useState([]);
-  const [isTable, setIstable] = React.useState(true);
+  const [isTable, setIstable] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa`)
+      .get(`http://localhost:5000/api/titik-tpa/filter`)
       .then((response) => {
+        setIsLoading(true);
         setData(response.data.result);
-        setIsLoading(false);
+        // console.log(response.data.result);
       })
       .catch((error) => {
         alert(error.message);
@@ -23,6 +24,9 @@ function Pengangkutan() {
     // Memastikan nilai event target diambil dengan benar
     setIstable(event.target.value === "table");
   };
+  // if (isLoading) {
+  //   console.log(data);
+  // }
 
   return (
     <div className="Pengangkutan">
@@ -67,9 +71,12 @@ function Pengangkutan() {
           </div>
         </div>
       </div>
-      {isLoading ? (
-        true
-      ) : isTable ? (
+      {/* <ListPengangkutan data={data} /> */}
+      {/* {isLoading ? (
+        false
+      ) : 
+      */}
+      {isTable ? (
         <ListPengangkutan data={data} />
       ) : (
         <PengangkutanMap data={data} />
