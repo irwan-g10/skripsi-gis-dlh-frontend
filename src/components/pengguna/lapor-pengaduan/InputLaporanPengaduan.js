@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useRef } from "react";
 import axios from "axios";
 import SignaturePad from "react-signature-canvas";
@@ -20,6 +21,72 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 function InputLaporanPengaduan() {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [nearestCity, setNearestCity] = React.useState("");
+  const [distance, setDistance] = React.useState("");
+  React.useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.latitude,
+          });
+          axios
+            .get(
+              `http://localhost:5000/api/titik-upt/nearest?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+            )
+            .then((response) => {
+              const upt = response.data.result;
+              setData(upt);
+              const graph = {
+                Start: {},
+              };
+              upt.forEach((item) => {
+                graph.Start[item.id] = parseFloat(item.distance);
+              });
+
+              const { nearestCity, distance } = dijkstra(graph, "Start");
+              setNearestCity(nearestCity);
+              setDistance(distance);
+              setIsLoading(true);
+              //   const pointA = { lat: item.latitude, lon: item.longitude }; // Contoh titik A (Bandung)
+              //   const pointB = {
+              //     lat: position.coords.latitude,
+              //     lon: position.coords.longitude,
+              //   }; // Contoh titik B (Bandung)
+              //   const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
+              //   const a = await axios
+              //     .get(url)
+              //     .then((response) => {
+              //       const route = response.data.routes[0];
+              //       const distanceInMeters = route.distance;
+              //       const distanceInKm = distanceInMeters / 1000;
+              //       return {
+              //         ...item,
+              //         jarak: distanceInKm.toFixed(2),
+              //       };
+              //     })
+              //     .catch((error) => {
+              //       alert(error.message);
+              //     });
+              //   setData(a);
+              //   console.log(a);
+              // });
+              // setData(response.data.result);
+              // console.log(response.data.query);
+              // setLoading(false);
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+        },
+        (err) => console.log(err.message)
+      );
+    } else {
+      console.log("Geolocation is not supported by your browser.");
+    }
+  }, []);
   const [nama, setNama] = React.useState("");
   const [alamatPengadu, setAlamatPengadu] = React.useState("");
   const [lokasiKejadian, setLokasiKejadian] = React.useState("");
@@ -35,6 +102,11 @@ function InputLaporanPengaduan() {
   const [imageUrl, setImageUrl] = React.useState("");
   const [imageFile, setImageFile] = React.useState(null);
   const [signature, setSignature] = React.useState(null);
+  const [data, setData] = React.useState([]);
+  const [location, setLocation] = React.useState({
+    latitude: null,
+    longitude: null,
+  });
 
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -122,8 +194,68 @@ function InputLaporanPengaduan() {
     setInformasiPengadu(event.target.value);
   };
 
+  function dijkstra(graph, start) {
+    // Inisialisasi jarak awal
+    const distances = {};
+    const visited = new Set();
+
+    // Tetapkan jarak awal ke Infinity, kecuali node start
+    for (let neighbor in graph[start]) {
+      distances[neighbor] = graph[start][neighbor];
+    }
+
+    // Inisialisasi jarak node awal ke dirinya sendiri dengan 0
+    distances[start] = 0;
+
+    // Cari node dengan jarak terpendek yang belum dikunjungi
+    const findNearestCity = () => {
+      let nearest = null;
+
+      for (let city in distances) {
+        if (!visited.has(city)) {
+          if (nearest === null || distances[city] < distances[nearest]) {
+            nearest = city;
+          }
+        }
+      }
+
+      return nearest;
+    };
+
+    // Mulai pencarian
+    while (visited.size < Object.keys(graph[start]).length) {
+      const nearestCity = findNearestCity();
+      visited.add(nearestCity);
+    }
+
+    // Temukan kota dengan jarak terpendek
+    const nearestCity = Object.keys(distances).reduce((nearest, city) => {
+      if (
+        city !== start &&
+        (nearest === null || distances[city] < distances[nearest])
+      ) {
+        return city;
+      }
+      return nearest;
+    }, null);
+
+    return { nearestCity, distance: distances[nearestCity] };
+  }
+
+  // Data graf
+  // const graph = {
+  //   Start: {},
+  // };
+
+  // Eksekusi algoritma
+  // Eksekusi algoritma
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    console.log(
+      `UPT terdekat adalah ${nearestCity} dengan jarak ${distance} km`
+    );
+    console.log(data);
 
     if (!imageFile) return;
     const storage = getStorage(app);
@@ -156,6 +288,7 @@ function InputLaporanPengaduan() {
           const signature = await getDownloadURL(storageRefSignature);
           const postData = {
             nama: nama,
+            upt_tujuan: nearestCity,
             alamat_pengadu: alamatPengadu,
             lokasi_kejadian: lokasiKejadian,
             jenis_kegiatan: jenisKegiatan,
@@ -495,12 +628,12 @@ function InputLaporanPengaduan() {
 
         <div className="tanda-tangan row">
           <div className="col"></div>
-          <button
+          <div
             onClick={clearSignature}
             className="col-1 bg-transparent border-0 justify-content-center align-items-center d-flex"
           >
             <i className="bi bi-eraser fs-1"></i>
-          </button>
+          </div>
           <div className="col-5 text-center">
             Soreang, 9 Oktober 2024
             <br></br>Pengadu

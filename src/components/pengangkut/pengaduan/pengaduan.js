@@ -9,14 +9,23 @@ function Pengaduan() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
+    const id = localStorage.getItem("id");
     axios
-      .get(
-        `http://localhost:5000/api/laporan-pengaduan?status=Belum+ditindak+lanjuti`
-      )
+      .get(`http://localhost:5000/api/pengguna/${id}`)
       .then((response) => {
-        setData(response.data.result);
-        console.log(response.data.query);
-        setIsLoading(false);
+        const user = response.data.result;
+        axios
+          .get(
+            `http://localhost:5000/api/laporan-pengaduan?status=Belum+ditindak+lanjuti&upt_tujuan=${user.upt_pengelola.id}`
+          )
+          .then((response) => {
+            setData(response.data.result);
+            // console.log(response.data.query);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
       })
       .catch((error) => {
         alert(error.message);

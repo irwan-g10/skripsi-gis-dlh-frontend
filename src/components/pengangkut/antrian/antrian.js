@@ -9,11 +9,20 @@ function Antrian() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
+    const id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/antrian`)
+      .get(`http://localhost:5000/api/pengguna/${id}`)
       .then((response) => {
-        setData(response.data.result);
-        setIsLoading(false);
+        const user = response.data.result;
+        axios
+          .get(`http://localhost:5000/api/antrian?pengangkut=${id}`)
+          .then((response) => {
+            setData(response.data.result);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
       })
       .catch((error) => {
         alert(error.message);

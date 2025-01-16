@@ -9,12 +9,24 @@ function Pengangkutan() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
+    const id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/titik-tpa/filter`)
+      .get(`http://localhost:5000/api/pengguna/${id}`)
       .then((response) => {
-        setIsLoading(true);
-        setData(response.data.result);
-        // console.log(response.data.result);
+        const user = response.data.result;
+
+        axios
+          .get(
+            `http://localhost:5000/api/titik-tpa/filter?unit_pelayanan_teknis=${user.upt_pengelola.id}`
+          )
+          .then((response) => {
+            setIsLoading(true);
+            setData(response.data.result);
+            // console.log(response.data.result);
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
       })
       .catch((error) => {
         alert(error.message);
