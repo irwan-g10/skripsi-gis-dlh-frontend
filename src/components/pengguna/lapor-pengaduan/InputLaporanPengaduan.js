@@ -50,32 +50,6 @@ function InputLaporanPengaduan() {
               setNearestCity(nearestCity);
               setDistance(distance);
               setIsLoading(true);
-              //   const pointA = { lat: item.latitude, lon: item.longitude }; // Contoh titik A (Bandung)
-              //   const pointB = {
-              //     lat: position.coords.latitude,
-              //     lon: position.coords.longitude,
-              //   }; // Contoh titik B (Bandung)
-              //   const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
-              //   const a = await axios
-              //     .get(url)
-              //     .then((response) => {
-              //       const route = response.data.routes[0];
-              //       const distanceInMeters = route.distance;
-              //       const distanceInKm = distanceInMeters / 1000;
-              //       return {
-              //         ...item,
-              //         jarak: distanceInKm.toFixed(2),
-              //       };
-              //     })
-              //     .catch((error) => {
-              //       alert(error.message);
-              //     });
-              //   setData(a);
-              //   console.log(a);
-              // });
-              // setData(response.data.result);
-              // console.log(response.data.query);
-              // setLoading(false);
             })
             .catch((error) => {
               alert(error.message);

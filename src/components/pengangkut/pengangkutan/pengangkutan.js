@@ -17,7 +17,7 @@ function Pengangkutan() {
 
         axios
           .get(
-            `http://localhost:5000/api/titik-tpa/filter?unit_pelayanan_teknis=${user.upt_pengelola.id}`
+            `http://localhost:5000/api/titik-tpa/filter?unit_pelayanan_teknis=${user.upt_pengelola.id}&pengangkut=${id}`
           )
           .then((response) => {
             setIsLoading(true);

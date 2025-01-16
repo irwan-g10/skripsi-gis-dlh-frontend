@@ -10,23 +10,55 @@ function Antrian() {
 
   React.useEffect(() => {
     const id = localStorage.getItem("id");
-    axios
-      .get(`http://localhost:5000/api/pengguna/${id}`)
-      .then((response) => {
-        const user = response.data.result;
-        axios
-          .get(`http://localhost:5000/api/antrian?pengangkut=${id}`)
-          .then((response) => {
-            setData(response.data.result);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            alert(error.message);
-          });
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // console.log({
+          //   latitude: position.coords.latitude,
+          //   longitude: position.coords.latitude,
+          // });
+          axios
+            .get(`http://localhost:5000/api/pengguna/${id}`)
+            .then((response) => {
+              const user = response.data.result;
+              axios
+                .get(
+                  `http://localhost:5000/api/antrian/filter?pengangkut=${id}&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+                )
+                .then((response) => {
+                  setData(response.data.result);
+                  setIsLoading(false);
+                })
+                .catch((error) => {
+                  alert(error.message);
+                });
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+        },
+        (err) => console.log(err.message)
+      );
+    } else {
+      console.log("Geolocation is not supported by your browser.");
+    }
+    // axios
+    //   .get(`http://localhost:5000/api/pengguna/${id}`)
+    //   .then((response) => {
+    //     const user = response.data.result;
+    //     axios
+    //       .get(`http://localhost:5000/api/antrian?pengangkut=${id}`)
+    //       .then((response) => {
+    //         console.log(response.data.result);
+    //         setIsLoading(false);
+    //       })
+    //       .catch((error) => {
+    //         alert(error.message);
+    //       });
+    //   })
+    //   .catch((error) => {
+    //     alert(error.message);
+    //   });
   }, []);
   // console.log(data);
   const onIsTableOptionChange = (event) => {
