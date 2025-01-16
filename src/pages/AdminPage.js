@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../components/admin/NavigationTPA";
+import Navigation from "../components/admin/NavigationAdmin";
 import AdminSideContent from "../components/admin/AdminSideContent";
 import { Route, Routes } from "react-router-dom";
 import TPAInput from "../components/admin/tpa/TPAInput";

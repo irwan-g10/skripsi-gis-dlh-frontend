@@ -8,10 +8,12 @@ import DetailPengangkutan from "../components/pengangkut/pengangkutan/detailPeng
 import DetailPengaduan from "../components/pengangkut/pengaduan/detailPengaduan";
 import DetailAntrianPengaduan from "../components/pengangkut/antrian/detailAntrianPengaduan";
 import DetailAntrianPengangkutan from "../components/pengangkut/antrian/detailAntrianPengangkutan";
+import Navigation from "../components/pengangkut/NavigationPengangkut";
 
 function PengangkutPage() {
   return (
     <div className="Pengangkut container-fluid">
+      <Navigation />
       <div className="row m-4">
         <div className="col-3">
           <PengangkutSideContent />

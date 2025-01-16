@@ -41,7 +41,7 @@ function Pengaduan() {
       {/* {console.log(data)} */}
       <div className="row">
         <div className="col">
-          <h1>this is Pengaduan</h1>
+          <h1>Laporan Pengaduan</h1>
         </div>
         <div className="col-3 ">
           <div

@@ -45,7 +45,7 @@ function Pengangkutan() {
       {/* {console.log(data)} */}
       <div className="row">
         <div className="col">
-          <h1>this is Pengangkutan</h1>
+          <h1>Jadwal Pengangkutan Hari Ini</h1>
         </div>
         <div className="col-3 ">
           <div

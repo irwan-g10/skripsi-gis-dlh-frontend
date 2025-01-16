@@ -71,7 +71,7 @@ function Antrian() {
       {/* {console.log(data)} */}
       <div className="row">
         <div className="col">
-          <h1>this is Antrian</h1>
+          <h1>Antrian Pengangkutan Saya</h1>
         </div>
         <div className="col-3 ">
           <div
