@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import {
   MapContainer,
@@ -246,8 +247,13 @@ function InformasiGeografis() {
                         </tbody>
                       </table>
                       <div className="d-flex justify-content-end">
-                        <a href="#" className="btn btn-primary">
-                          Go somewhere
+                        <a
+                          href={`https://www.google.com/maps/dir/${location.latitude},${location.longitude}/${foundItem.latitude},${foundItem.longitude}`}
+                          className="btn btn-primary"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Pergi ke tujuan
                         </a>
                       </div>
                     </div>

@@ -312,6 +312,14 @@ function DetailAntrianPengaduan() {
                           {data.lokasi_pengaduan.informasi_pengadu}
                         </td>
                       </tr>
+                      <a
+                        href={`https://www.google.com/maps/dir/${location.latitude},${location.longitude}/${data.latitude},${data.longitude}`}
+                        className="btn btn-primary "
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Pergi ke tujuan
+                      </a>
                     </tbody>
                   </table>
                 </div>

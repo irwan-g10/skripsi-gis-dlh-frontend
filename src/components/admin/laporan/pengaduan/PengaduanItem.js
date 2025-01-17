@@ -62,7 +62,11 @@ function PengaduanItem({
       <td>{pengangkut}</td>
       <td>{status}</td>
       <td>{keterangan}</td>
-      <td>{formatDateTime(new Date(tanggal_pengangkutan))}</td>
+      <td>
+        {status === "Belum ditindak lanjuti"
+          ? ""
+          : formatDateTime(new Date(tanggal_pengangkutan))}
+      </td>
     </tr>
   );
 }

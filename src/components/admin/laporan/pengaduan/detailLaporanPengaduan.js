@@ -159,7 +159,11 @@ function DetailLaporanPengaduan() {
                       <tr>
                         <th scope="row">Tanggal Pengangkutan</th>
                         <td className="text-end">
-                          {formatDateTime(new Date(data.tanggal_pengangkutan))}
+                          {data.status === "Belum ditindak lanjuti"
+                            ? ""
+                            : formatDateTime(
+                                new Date(data.tanggal_pengangkutan)
+                              )}
                         </td>
                       </tr>
                       <tr>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // import TPAItem from "./TPAItem";
 
 function PengaduanTable({ data }) {
-  console.log(data);
+  // console.log(data);
   return (
     <div className="PengaduanTable">
       <div className="container mb-1">

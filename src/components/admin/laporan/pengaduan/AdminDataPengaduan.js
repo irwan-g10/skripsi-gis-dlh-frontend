@@ -13,6 +13,11 @@ function AdminDataPengaduan() {
   const [loading, setLoading] = React.useState(true);
   const [isTable, setIstable] = React.useState(true);
 
+  const [date, setDate] = React.useState("");
+  const [pengangkut, setPengangkut] = React.useState([]);
+  const [selectedPengangkut, setSelectedPengangkut] = React.useState("");
+  const [status, setStatus] = React.useState("");
+
   React.useEffect(() => {
     axios
       .get(`http://localhost:5000/api/laporan-pengaduan`)
@@ -23,12 +28,60 @@ function AdminDataPengaduan() {
       .catch((error) => {
         alert(error.message);
       });
-  }, []);
 
-  const onIsTableOptionChange = (event) => {
-    // Memastikan nilai event target diambil dengan benar
-    setIstable(event.target.value === "table");
-    console.log(event.target.value); // Debug untuk melihat nilai yang dipilih
+    axios
+      .get(`http://localhost:5000/api/pengguna`)
+      .then((response) => {
+        setPengangkut(response.data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
+  const onStatusChangeHandler = (event) => {
+    setStatus(event.target.value);
+  };
+  const onSelectedPengangkutChangeHandler = (event) => {
+    setSelectedPengangkut(event.target.value);
+  };
+
+  const onDateChangeHandler = (event) => {
+    setDate(event.target.value);
+  };
+  const onSearchHandle = () => {
+    const data = {};
+
+    if (selectedPengangkut) {
+      data.pengangkut = selectedPengangkut;
+    }
+    if (status) {
+      data.status = status;
+    }
+    axios
+      .get(`http://localhost:5000/api/laporan-pengaduan`, {
+        params: { ...data },
+      })
+      .then((response) => {
+        // setData(response.data.result);
+        const result = response.data.result;
+
+        if (date) {
+          const today = new Date(date);
+          const todayStr = today.toISOString().split("T")[0]; // hanya ambil tanggalnya
+
+          const filteredData = result.filter((item) => {
+            const itemDate = item.tanggal_pengaduan.split("T")[0];
+            return itemDate === todayStr;
+          });
+          setData(filteredData);
+        }
+        // console.log(response.data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (
@@ -40,7 +93,7 @@ function AdminDataPengaduan() {
         <div className="AdminOptionBar">
           <div className="container text-center mb-5">
             <div className="row">
-              <div className="col ">
+              <div className="col-3">
                 <Link to="/titik-tpa-input">
                   <div className="col d-grid">
                     <button type="button" className="btn btn-primary d-grid">
@@ -50,17 +103,49 @@ function AdminDataPengaduan() {
                 </Link>
               </div>
               <div className="col">
-                <form className="d-flex" role="search">
+                <div className="d-flex">
                   <input
-                    className="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
+                    id="startDate"
+                    className="form-control mx-2"
+                    type="date"
+                    value={date}
+                    onChange={onDateChangeHandler}
                   />
-                  <button className="btn btn-outline-success" type="submit">
+                  <select
+                    className="form-select mx-2"
+                    aria-label="Default select example"
+                    onChange={onStatusChangeHandler}
+                  >
+                    <option value="">--- Status Aduan ---</option>
+
+                    <option value="Sedang diangkut">Sedang diangkut</option>
+                    <option value="Belum ditindak lanjuti">
+                      Belum ditindak lanjuti
+                    </option>
+                    <option value="Laporan Palsu">Laporan Palsu</option>
+                  </select>
+                  <select
+                    className="form-select mx-2"
+                    aria-label="Default select example"
+                    onChange={onSelectedPengangkutChangeHandler}
+                  >
+                    <option value="">--- Pengangkut ---</option>
+
+                    {pengangkut.map((item) => {
+                      return (
+                        <option value={item.id} key={item.id}>
+                          {item.nama}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <button
+                    className="btn btn-outline-success"
+                    onClick={onSearchHandle}
+                  >
                     Search
                   </button>
-                </form>
+                </div>
               </div>
               {/* <div className="col-3 ">
                 <div
