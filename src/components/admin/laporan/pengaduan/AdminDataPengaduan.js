@@ -75,6 +75,8 @@ function AdminDataPengaduan() {
             return itemDate === todayStr;
           });
           setData(filteredData);
+        } else {
+          setData(result);
         }
         // console.log(response.data.result);
         setLoading(false);
@@ -118,6 +120,7 @@ function AdminDataPengaduan() {
                   >
                     <option value="">--- Status Aduan ---</option>
 
+                    <option value="Sudah diangkut">Sudah diangkut</option>
                     <option value="Sedang diangkut">Sedang diangkut</option>
                     <option value="Belum ditindak lanjuti">
                       Belum ditindak lanjuti

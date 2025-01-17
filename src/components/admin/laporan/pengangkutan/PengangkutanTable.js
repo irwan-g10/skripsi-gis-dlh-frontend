@@ -4,7 +4,7 @@ import PengangkutItem from "./PengangkutItem";
 // import TPAItem from "./TPAItem";
 
 function PengangkutanTable({ data }) {
-  console.log(data);
+  // console.log(data);
   return (
     <div className="PengangkutanTable">
       <div className="container mb-1">
