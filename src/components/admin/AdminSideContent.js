@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,6 +10,22 @@ function AdminSideContent() {
     window.location.href = "/";
   };
 
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    const id = localStorage.getItem("id");
+
+    // });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
+      .then((response) => {
+        const user = response.data.result;
+        setData(user);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
   return (
     <div className="AdminSideContent shadow">
       <ul className="list-group">
@@ -16,7 +33,7 @@ function AdminSideContent() {
           <div className="mb-3">
             <img src="/images/user.png" width="150" alt="..." />
           </div>
-          <h3>Irwan Gumilar</h3>
+          <h3>{data.nama}</h3>
         </li>
         <Link to="/titik-tpa-table">
           <li className="list-group-item " aria-current="true">
