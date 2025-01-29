@@ -5,7 +5,7 @@ import axios from "axios";
 function UPTItem({ id, nomor, nama_upt, alamat }) {
   async function onDeleteHandler(id) {
     await axios
-      .delete(`http://localhost:5000/api/titik-upt/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}api/titik-upt/${id}`)
       .then((response) => {
         alert("Berhasil di Hapus");
         window.location.reload();

@@ -96,13 +96,15 @@ function DetailLaporanPengangkutan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/laporan-pengangkutan/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/laporan-pengangkutan/${id}`)
       .then((response) => {
         setData(response.data.result);
         // setLoading(true);
         axios
           .get(
-            `http://localhost:5000/api/pengguna/${localStorage.getItem("id")}`
+            `${
+              process.env.REACT_APP_API_URL
+            }/api/pengguna/${localStorage.getItem("id")}`
           )
           .then((response) => {
             setDataUser(response.data.result);

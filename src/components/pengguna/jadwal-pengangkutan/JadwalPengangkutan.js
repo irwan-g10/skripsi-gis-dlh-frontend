@@ -7,7 +7,7 @@ function JadwalPengangkutan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa`)
+      .get(`${process.env.REACT_APP_API_URL}api/titik-tpa`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);

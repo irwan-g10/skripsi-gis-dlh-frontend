@@ -35,7 +35,7 @@ function InputLaporanPengaduan() {
           });
           axios
             .get(
-              `http://localhost:5000/api/titik-upt/nearest?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+              `${process.env.REACT_APP_API_URL}api/titik-upt/nearest?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
             )
             .then((response) => {
               const upt = response.data.result;
@@ -122,12 +122,12 @@ function InputLaporanPengaduan() {
   };
 
   const firebaseConfig = {
-    apiKey: "AIzaSyBXUi0DmcTQYaNevZm9PzA6kePU_5H7DsE",
-    authDomain: "skripsi-gis-c3506.firebaseapp.com",
-    projectId: "skripsi-gis-c3506",
-    storageBucket: "skripsi-gis-c3506.appspot.com",
-    messagingSenderId: "892978799903",
-    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
 
   // Initialize Firebase
@@ -283,7 +283,10 @@ function InputLaporanPengaduan() {
           };
 
           await axios
-            .post(`http://localhost:5000/api/laporan-pengaduan`, postData)
+            .post(
+              `${process.env.REACT_APP_API_URL}api/laporan-pengaduan`,
+              postData
+            )
             .then((response) => {
               alert("sukses");
               window.location.href = "/";

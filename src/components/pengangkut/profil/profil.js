@@ -18,7 +18,7 @@ function Profil() {
   React.useEffect(() => {
     const id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/pengguna/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
       .then((response) => {
         setData(response.data.result);
         setNama(response.data.result.nama);
@@ -88,7 +88,7 @@ function Profil() {
     const id = localStorage.getItem("id");
 
     await axios
-      .patch(`http://localhost:5000/api/pengguna/${id}`, postData)
+      .patch(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`, postData)
       .then((response) => {
         alert("sukses");
         window.location.reload();

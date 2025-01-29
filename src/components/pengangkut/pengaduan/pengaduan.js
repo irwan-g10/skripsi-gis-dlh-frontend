@@ -11,12 +11,12 @@ function Pengaduan() {
   React.useEffect(() => {
     const id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/pengguna/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
       .then((response) => {
         const user = response.data.result;
         axios
           .get(
-            `http://localhost:5000/api/laporan-pengaduan?status=Belum+ditindak+lanjuti&upt_tujuan=${user.upt_pengelola.id}`
+            `${process.env.REACT_APP_API_URL}api/laporan-pengaduan?status=Belum+ditindak+lanjuti&upt_tujuan=${user.upt_pengelola.id}`
           )
           .then((response) => {
             setData(response.data.result);

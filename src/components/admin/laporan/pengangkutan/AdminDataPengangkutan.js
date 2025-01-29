@@ -19,7 +19,7 @@ function AdminDataPengangkutan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/laporan-pengangkutan`)
+      .get(`${process.env.REACT_APP_API_URL}api/laporan-pengangkutan`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);
@@ -28,7 +28,7 @@ function AdminDataPengangkutan() {
         alert(error.message);
       });
     axios
-      .get(`http://localhost:5000/api/pengguna`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna`)
       .then((response) => {
         setPengangkut(response.data.result);
         setLoading(false);
@@ -59,7 +59,7 @@ function AdminDataPengangkutan() {
     }
 
     axios
-      .get(`http://localhost:5000/api/laporan-pengangkutan`, {
+      .get(`${process.env.REACT_APP_API_URL}api/laporan-pengangkutan`, {
         params: { ...data },
       })
       .then((response) => {

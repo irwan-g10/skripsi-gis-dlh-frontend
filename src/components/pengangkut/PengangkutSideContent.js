@@ -10,7 +10,7 @@ function PengangkutSideContent() {
 
     // });
     axios
-      .get(`http://localhost:5000/api/pengguna/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
       .then((response) => {
         const user = response.data.result;
         setData(user);

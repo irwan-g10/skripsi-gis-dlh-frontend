@@ -11,13 +11,13 @@ function Pengangkutan() {
   React.useEffect(() => {
     const id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/pengguna/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
       .then((response) => {
         const user = response.data.result;
 
         axios
           .get(
-            `http://localhost:5000/api/titik-tpa/filter?unit_pelayanan_teknis=${user.upt_pengelola.id}&pengangkut=${id}`
+            `${process.env.REACT_APP_API_URL}api/titik-tpa/filter?unit_pelayanan_teknis=${user.upt_pengelola.id}&pengangkut=${id}`
           )
           .then((response) => {
             setIsLoading(true);

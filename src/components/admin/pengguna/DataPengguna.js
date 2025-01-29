@@ -11,7 +11,7 @@ function DataPengguna() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/pengguna`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);

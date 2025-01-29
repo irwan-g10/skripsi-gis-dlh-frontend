@@ -33,7 +33,7 @@ function ListPengangkutan({ data }) {
     // };
     // console.log(data);
     await axios
-      .post(`http://localhost:5000/api/antrian`, data)
+      .post(`${process.env.REACT_APP_API_URL}api/antrian`, data)
       .then((response) => {
         console.log(response.data);
         alert("sukses");
@@ -44,7 +44,7 @@ function ListPengangkutan({ data }) {
       });
 
     // await axios
-    //   .post(`http://localhost:5000/api/laporan-pengangkutan`, dataLaporan)
+    //   .post(`${process.env.REACT_APP_API_URL}api/laporan-pengangkutan`, dataLaporan)
     //   .then((response) => {
     //     console.log(response.data);
     //   })

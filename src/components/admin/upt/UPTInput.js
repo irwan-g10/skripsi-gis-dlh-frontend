@@ -32,7 +32,7 @@ function UPTInput({ isUpdate = false }) {
   React.useEffect(() => {
     if (isUpdate) {
       axios
-        .get(`http://localhost:5000/api/titik-upt/${id}`)
+        .get(`${process.env.REACT_APP_API_URL}api/titik-upt/${id}`)
         .then((response) => {
           const result = response.data.result;
           setNamaUpt(result.nama_upt);
@@ -101,7 +101,7 @@ function UPTInput({ isUpdate = false }) {
 
     if (isUpdate) {
       await axios
-        .patch(`http://localhost:5000/api/titik-upt/${id}`, postData)
+        .patch(`${process.env.REACT_APP_API_URL}api/titik-upt/${id}`, postData)
         .then((response) => {
           console.log(response.data);
           alert("sukses");
@@ -112,7 +112,7 @@ function UPTInput({ isUpdate = false }) {
         });
     } else {
       await axios
-        .post(`http://localhost:5000/api/titik-upt`, postData)
+        .post(`${process.env.REACT_APP_API_URL}api/titik-upt`, postData)
         .then((response) => {
           alert("sukses");
           navigate("/titik-upt-table");

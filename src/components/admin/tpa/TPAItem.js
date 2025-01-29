@@ -13,7 +13,7 @@ function TPAItem({
 }) {
   async function onDeleteHandler(id) {
     await axios
-      .delete(`http://localhost:5000/api/titik-tpa/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}api/titik-tpa/${id}`)
       .then((response) => {
         alert("Berhasil di Hapus");
         window.location.reload();

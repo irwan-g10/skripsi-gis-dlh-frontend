@@ -18,7 +18,10 @@ function LoginInput() {
     event.preventDefault();
 
     await axios
-      .post(`http://localhost:5000/api/pengguna/login`, { nip, password })
+      .post(`${process.env.REACT_APP_API_URL}api/pengguna/login`, {
+        nip,
+        password,
+      })
       .then((response) => {
         const { result } = response.data;
         if (result) {
@@ -108,7 +111,7 @@ function LoginInput() {
 //     event.preventDefault();
 
 //     // await axios
-//     //   .get(`http://localhost:5000/api/pengguna?password=${}`)
+//     //   .get(`${process.env.REACT_APP_API_URL}api/pengguna?password=${}`)
 //     //   .then((response) => {
 //     //     const result = response.data.result;
 //     //     if (this.password === result.password && this.nip === result.nip) {

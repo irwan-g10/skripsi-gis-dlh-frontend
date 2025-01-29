@@ -12,7 +12,7 @@ function AdminDataUPT() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-upt`)
+      .get(`${process.env.REACT_APP_API_URL}api/titik-upt`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);

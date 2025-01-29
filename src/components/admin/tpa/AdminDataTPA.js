@@ -10,10 +10,10 @@ function AdminDataTPA() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [isTable, setIstable] = React.useState(true);
-
+  console.log("API URL:", process.env.REACT_APP_API_URL);
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa`)
+      .get(`${process.env.REACT_APP_API_URL}api/titik-tpa`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);

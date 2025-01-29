@@ -6,7 +6,7 @@ import axios from "axios";
 function PenggunaItem({ id, nomor, nama, upt_pengelola, unit_kerja, role }) {
   async function onDeleteHandler(id) {
     await axios
-      .delete(`http://localhost:5000/api/pengguna/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
       .then((response) => {
         alert("Berhasil di Hapus");
         window.location.reload();

@@ -74,7 +74,7 @@ function DetailPengaduan() {
       console.log("Geolocation is not supported by your browser.");
     }
     axios
-      .get(`http://localhost:5000/api/laporan-pengaduan/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/laporan-pengaduan/${id}`)
       .then((response) => {
         setData(response.data.result);
       })
@@ -99,9 +99,11 @@ function DetailPengaduan() {
       tanggal_pengangkutan: new Date(),
       pengangkut: localStorage.getItem("id"),
     };
-    console.log(`http://localhost:5000/api/laporan-pengaduan/${item.id}`);
+    console.log(
+      `${process.env.REACT_APP_API_URL}api/laporan-pengaduan/${item.id}`
+    );
     await axios
-      .post(`http://localhost:5000/api/antrian`, data)
+      .post(`${process.env.REACT_APP_API_URL}api/antrian`, data)
       .then((response) => {
         console.log(response.data);
         alert("sukses");
@@ -112,7 +114,7 @@ function DetailPengaduan() {
       });
 
     await axios.patch(
-      `http://localhost:5000/api/laporan-pengaduan/${item.id}`,
+      `${process.env.REACT_APP_API_URL}api/laporan-pengaduan/${item.id}`,
       dataLaporan
     );
   };

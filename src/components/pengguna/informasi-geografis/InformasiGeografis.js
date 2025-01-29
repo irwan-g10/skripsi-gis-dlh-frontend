@@ -24,11 +24,11 @@ function InformasiGeografis() {
   });
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-tpa`)
+      .get(`${process.env.REACT_APP_API_URL}api/titik-tpa`)
       .then((response) => {
         setDataTpa(response.data.result);
         axios
-          .get(`http://localhost:5000/api/titik-upt`)
+          .get(`${process.env.REACT_APP_API_URL}api/titik-upt`)
           .then((response) => {
             setDataUpt(response.data.result);
             if (navigator.geolocation) {
@@ -41,7 +41,7 @@ function InformasiGeografis() {
                   });
                   axios
                     .get(
-                      `http://localhost:5000/api/titik-tpa/nearest?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+                      `${process.env.REACT_APP_API_URL}api/titik-tpa/nearest?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
                     )
                     .then((response) => {
                       setDataNearest(response.data.result);

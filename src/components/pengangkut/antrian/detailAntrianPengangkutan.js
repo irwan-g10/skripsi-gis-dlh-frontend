@@ -41,12 +41,12 @@ function DetailAntrianPengangkutan() {
   });
 
   const firebaseConfig = {
-    apiKey: "AIzaSyBXUi0DmcTQYaNevZm9PzA6kePU_5H7DsE",
-    authDomain: "skripsi-gis-c3506.firebaseapp.com",
-    projectId: "skripsi-gis-c3506",
-    storageBucket: "skripsi-gis-c3506.appspot.com",
-    messagingSenderId: "892978799903",
-    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
   const app = initializeApp(firebaseConfig);
   const onKeteranganChangeHandler = (event) => {
@@ -70,7 +70,7 @@ function DetailAntrianPengangkutan() {
   };
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/antrian/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}api/antrian/${id}`)
       .then((response) => {
         setData(response.data.result);
         setLoading(true);
@@ -132,7 +132,10 @@ function DetailAntrianPengangkutan() {
             image_url: url,
           };
           await axios
-            .post(`http://localhost:5000/api/laporan-pengangkutan`, dataLaporan)
+            .post(
+              `${process.env.REACT_APP_API_URL}api/laporan-pengangkutan`,
+              dataLaporan
+            )
             .then((response) => {
               console.log(response.data);
 
@@ -143,7 +146,7 @@ function DetailAntrianPengangkutan() {
               alert(error.message);
             });
           await axios
-            .delete(`http://localhost:5000/api/antrian/${item.id}`)
+            .delete(`${process.env.REACT_APP_API_URL}api/antrian/${item.id}`)
             .then((response) => {
               console.log(response.data);
               alert("sukses");
@@ -160,7 +163,7 @@ function DetailAntrianPengangkutan() {
   };
   const onSubmitDeleteHandler = async (item) => {
     await axios
-      .delete(`http://localhost:5000/api/antrian/${item.id}`)
+      .delete(`${process.env.REACT_APP_API_URL}api/antrian/${item.id}`)
       .then((response) => {
         console.log(response.data);
         alert("sukses");
@@ -170,7 +173,7 @@ function DetailAntrianPengangkutan() {
         alert(error.message);
       });
     await axios
-      .delete("http://localhost:5000/api/laporan-pengangkutan/", {
+      .delete("${process.env.REACT_APP_API_URL}api/laporan-pengangkutan/", {
         params: {
           titik_tpa: item.lokasi_pengangkutan.id,
           pengangkut: localStorage.getItem("id"),

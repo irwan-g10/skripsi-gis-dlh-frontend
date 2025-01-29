@@ -18,12 +18,12 @@ function Antrian() {
           //   longitude: position.coords.latitude,
           // });
           axios
-            .get(`http://localhost:5000/api/pengguna/${id}`)
+            .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
             .then((response) => {
               const user = response.data.result;
               axios
                 .get(
-                  `http://localhost:5000/api/antrian/filter?pengangkut=${id}&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+                  `${process.env.REACT_APP_API_URL}api/antrian/filter?pengangkut=${id}&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
                 )
                 .then((response) => {
                   const dataResult = response.data.result;
@@ -47,11 +47,11 @@ function Antrian() {
       console.log("Geolocation is not supported by your browser.");
     }
     // axios
-    //   .get(`http://localhost:5000/api/pengguna/${id}`)
+    //   .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
     //   .then((response) => {
     //     const user = response.data.result;
     //     axios
-    //       .get(`http://localhost:5000/api/antrian?pengangkut=${id}`)
+    //       .get(`${process.env.REACT_APP_API_URL}api/antrian?pengangkut=${id}`)
     //       .then((response) => {
     //         console.log(response.data.result);
     //         setIsLoading(false);

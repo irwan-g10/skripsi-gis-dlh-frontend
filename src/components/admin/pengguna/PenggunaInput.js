@@ -16,7 +16,7 @@ function PenggunaInput({ isUpdate = false }) {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/titik-upt`)
+      .get(`${process.env.REACT_APP_API_URL}api/titik-upt`)
       .then((response) => {
         setListUpt(response.data.result);
         // console.log(response.data.result);
@@ -26,7 +26,7 @@ function PenggunaInput({ isUpdate = false }) {
       });
     if (isUpdate) {
       axios
-        .get(`http://localhost:5000/api/pengguna/${id}`)
+        .get(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`)
         .then((response) => {
           const result = response.data.result;
           console.log(result);
@@ -76,7 +76,7 @@ function PenggunaInput({ isUpdate = false }) {
 
     if (isUpdate) {
       await axios
-        .patch(`http://localhost:5000/api/pengguna/${id}`, postData)
+        .patch(`${process.env.REACT_APP_API_URL}api/pengguna/${id}`, postData)
         .then((response) => {
           alert("sukses");
           navigate("/pengguna");
@@ -86,7 +86,7 @@ function PenggunaInput({ isUpdate = false }) {
         });
     } else {
       await axios
-        .post(`http://localhost:5000/api/pengguna`, postData)
+        .post(`${process.env.REACT_APP_API_URL}api/pengguna`, postData)
         .then((response) => {
           alert("sukses");
           navigate("/pengguna");
