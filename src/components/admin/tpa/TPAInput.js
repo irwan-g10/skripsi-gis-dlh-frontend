@@ -195,7 +195,6 @@ function TPAInput({ isUpdate = false }) {
             alamat,
             latitude,
             longitude,
-            // status: statusPengangkutan,
             image_url: url,
           };
 

@@ -45,6 +45,7 @@ function InformasiGeografis() {
                     )
                     .then((response) => {
                       setDataNearest(response.data.result);
+                      console.log(response.data.query);
                       // console.log("aaaa");
 
                       setLoadingNearest(false);
@@ -89,12 +90,10 @@ function InformasiGeografis() {
     // Inisialisasi jarak awal
     const distances = {};
     const visited = new Set();
-
     // Tetapkan jarak awal ke Infinity, kecuali node start
     for (let neighbor in graph[start]) {
       distances[neighbor] = graph[start][neighbor];
     }
-
     // Inisialisasi jarak node awal ke dirinya sendiri dengan 0
     distances[start] = 0;
 
@@ -152,8 +151,9 @@ function InformasiGeografis() {
                 {dataTpa.map((item) => {
                   // console.log(item.latitude);
                   return (
-                    <div key={item.id}>
+                    <div>
                       <Marker
+                        key={item.id}
                         position={[
                           parseFloat(item.latitude),
                           parseFloat(item.longitude),
@@ -192,8 +192,8 @@ function InformasiGeografis() {
           <div className="col-4">
             {loadingNearest ? (
               <div className="d-flex justify-content-center align-items-center">
-                <div class="spinner-border" role="status">
-                  <span class="visually-hidden">Loading...</span>
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
             ) : (
@@ -222,7 +222,7 @@ function InformasiGeografis() {
                       className="card-img-top"
                       alt="..."
                     ></img>
-                    <div class="card-body">
+                    <div className="card-body">
                       <h5 className="card-title">Lokasi TPA Terdekat</h5>
                       <table className="table">
                         <tbody>

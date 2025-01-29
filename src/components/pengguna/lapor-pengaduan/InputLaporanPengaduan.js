@@ -81,6 +81,7 @@ function InputLaporanPengaduan() {
     latitude: null,
     longitude: null,
   });
+  const [spinnerLoading, setSpinnerLoading] = React.useState(false);
 
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.mergeOptions({

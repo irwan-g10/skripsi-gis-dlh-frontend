@@ -30,16 +30,30 @@ function JadwalPengangkutan() {
 
   return (
     <div className="JadwalPengangkutan">
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
-            <th scope="col">Senin</th>
-            <th scope="col">Selasa</th>
-            <th scope="col">Rabu</th>
-            <th scope="col">Kamis</th>
-            <th scope="col">Jumat</th>
-            <th scope="col">Sabtu</th>
-            <th scope="col">Minggu</th>
+            <th className="text-center" scope="col">
+              Senin
+            </th>
+            <th className="text-center" scope="col">
+              Selasa
+            </th>
+            <th className="text-center" scope="col">
+              Rabu
+            </th>
+            <th className="text-center" scope="col">
+              Kamis
+            </th>
+            <th className="text-center" scope="col">
+              Jumat
+            </th>
+            <th className="text-center" scope="col">
+              Sabtu
+            </th>
+            <th className="text-center" scope="col">
+              Minggu
+            </th>
           </tr>
         </thead>
         <tbody>
