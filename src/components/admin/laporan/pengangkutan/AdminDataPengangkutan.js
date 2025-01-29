@@ -124,6 +124,7 @@ function AdminDataPengangkutan() {
                       Belum ditindak lanjuti
                     </option>
                     <option value="Laporan Palsu">Laporan Palsu</option>
+                    <option value="Ditunda">Ditunda</option>
                   </select>
                   <select
                     className="form-select mx-2"

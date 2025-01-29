@@ -136,21 +136,19 @@ function DetailAntrianPengangkutan() {
               `${process.env.REACT_APP_API_URL}api/laporan-pengangkutan`,
               dataLaporan
             )
-            .then((response) => {
-              console.log(response.data);
-
-              alert("sukses");
-              window.location.href = "/antrian";
-            })
-            .catch((error) => {
-              alert(error.message);
-            });
-          await axios
-            .delete(`${process.env.REACT_APP_API_URL}api/antrian/${item.id}`)
-            .then((response) => {
-              console.log(response.data);
-              alert("sukses");
-              window.location.href = "/antrian";
+            .then(async (response) => {
+              await axios
+                .delete(
+                  `${process.env.REACT_APP_API_URL}api/antrian/${item.id}`
+                )
+                .then((response) => {
+                  console.log(response.data);
+                  alert("sukses");
+                  window.location.href = "/antrian";
+                })
+                .catch((error) => {
+                  alert(error.message);
+                });
             })
             .catch((error) => {
               alert(error.message);
