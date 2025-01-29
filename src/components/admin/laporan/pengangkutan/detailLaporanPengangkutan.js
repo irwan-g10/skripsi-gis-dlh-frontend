@@ -104,7 +104,7 @@ function DetailLaporanPengangkutan() {
           .get(
             `${
               process.env.REACT_APP_API_URL
-            }/api/pengguna/${localStorage.getItem("id")}`
+            }api/pengguna/${localStorage.getItem("id")}`
           )
           .then((response) => {
             setDataUser(response.data.result);

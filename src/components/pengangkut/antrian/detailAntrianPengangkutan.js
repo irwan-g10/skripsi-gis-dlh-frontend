@@ -46,7 +46,7 @@ function DetailAntrianPengangkutan() {
     projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    appId: "1:892978799903:web:3a9747fcbefc9b11f77c2a",
   };
   const app = initializeApp(firebaseConfig);
   const onKeteranganChangeHandler = (event) => {
@@ -173,7 +173,7 @@ function DetailAntrianPengangkutan() {
         alert(error.message);
       });
     await axios
-      .delete("${process.env.REACT_APP_API_URL}api/laporan-pengangkutan/", {
+      .delete(`${process.env.REACT_APP_API_URL}api/laporan-pengangkutan/`, {
         params: {
           titik_tpa: item.lokasi_pengangkutan.id,
           pengangkut: localStorage.getItem("id"),
