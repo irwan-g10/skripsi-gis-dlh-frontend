@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import ListPengaduan from "./listPengaduan";
+import ListPengaduan from "./ListPengaduan";
 import PengaduanMap from "./pengaduanMap";
 
 function Pengaduan() {
