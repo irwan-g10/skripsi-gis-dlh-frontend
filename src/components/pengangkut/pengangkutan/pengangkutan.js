@@ -22,7 +22,7 @@ function Pengangkutan() {
           .then((response) => {
             setIsLoading(true);
             setData(response.data.result);
-            // console.log(response.data.result);
+            console.log(response.data.query);
           })
           .catch((error) => {
             alert(error.message);

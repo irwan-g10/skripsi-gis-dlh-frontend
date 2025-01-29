@@ -31,6 +31,21 @@ function DetailLaporanPengaduan() {
     html: '<div style="width: 20px; height: 20px; background-color: red; border-radius: 50%;"></div>',
     iconSize: [20, 20],
   });
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius bumi dalam km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Jarak dalam km
+  }
   // const onKeteranganChangeHandler = (event) => {
   //   setKeterangan(event.target.value);
   // };
@@ -65,6 +80,24 @@ function DetailLaporanPengaduan() {
         alert(error.message);
       });
   }, [id]);
+
+  React.useEffect(() => {
+    if (!loading || !data || !dataUser) return;
+
+    const latA = parseFloat(data?.latitude);
+    const logA = parseFloat(data?.longitude);
+    const latB = parseFloat(dataUser.upt_pengelola?.latitude);
+    const logB = parseFloat(dataUser.upt_pengelola?.longitude);
+
+    if (!latA || !logA || !latB || !logB) return;
+
+    const jarak = haversine(latA, logA, latB, logB);
+
+    if (jarak !== distance) {
+      // 🔹 Cegah infinite loop jika jarak sudah sama
+      setDistance(jarak.toFixed(2));
+    }
+  }, [loading, data, dataUser, distance]);
   function formatDateTime(date) {
     const days = [
       "Minggu",
@@ -108,25 +141,25 @@ function DetailLaporanPengaduan() {
       data.latitude &&
       data.longitude
     ) {
-      const latA = parseFloat(data.latitude);
-      const logA = parseFloat(data.longitude);
-      const latB = parseFloat(dataUser.upt_pengelola.latitude);
-      const logB = parseFloat(dataUser.upt_pengelola.longitude);
-
-      const pointA = { lat: latA, lon: logA }; // Contoh titik A (Bandung)
-      const pointB = { lat: latB, lon: logB }; // Contoh titik B (Bandung)
-      const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
-      axios
-        .get(url)
-        .then((response) => {
-          const route = response.data.routes[0];
-          const distanceInMeters = route.distance;
-          const distanceInKm = distanceInMeters / 1000;
-          setDistance(distanceInKm.toFixed(2)); // Set jarak dan bulatkan ke 2 angka desimal
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+      // const latA = parseFloat(data.latitude);
+      // const logA = parseFloat(data.longitude);
+      // const latB = parseFloat(dataUser.upt_pengelola.latitude);
+      // const logB = parseFloat(dataUser.upt_pengelola.longitude);
+      // setDistance(haversine(latA, logA, latB, logB).toFixed(2));
+      // const pointA = { lat: latA, lon: logA }; // Contoh titik A (Bandung)
+      // const pointB = { lat: latB, lon: logB }; // Contoh titik B (Bandung)
+      // const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
+      // axios
+      //   .get(url)
+      //   .then((response) => {
+      //     const route = response.data.routes[0];
+      //     const distanceInMeters = route.distance;
+      //     const distanceInKm = distanceInMeters / 1000;
+      //     setDistance(distanceInKm.toFixed(2)); // Set jarak dan bulatkan ke 2 angka desimal
+      //   })
+      //   .catch((error) => {
+      //     alert(error.message);
+      //   });
       return (
         <div className="detail-antrian-pengaduan container p-5 lh">
           {/* {console.log("halo")} */}

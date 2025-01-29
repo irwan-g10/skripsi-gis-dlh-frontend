@@ -26,7 +26,11 @@ function Antrian() {
                   `http://localhost:5000/api/antrian/filter?pengangkut=${id}&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
                 )
                 .then((response) => {
-                  setData(response.data.result);
+                  const dataResult = response.data.result;
+                  const sortedData = dataResult.sort((a, b) => {
+                    return parseFloat(a.distance) - parseFloat(b.distance);
+                  });
+                  setData(sortedData);
                   setIsLoading(false);
                 })
                 .catch((error) => {
@@ -65,7 +69,7 @@ function Antrian() {
     // Memastikan nilai event target diambil dengan benar
     setIstable(event.target.value === "table");
   };
-
+  console.log(data);
   return (
     <div className="Antrian">
       {/* {console.log(data)} */}

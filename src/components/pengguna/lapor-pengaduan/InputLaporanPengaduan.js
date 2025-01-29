@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 /* eslint-disable array-callback-return */
 import React, { useRef } from "react";
 import axios from "axios";
@@ -227,6 +228,7 @@ function InputLaporanPengaduan() {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    setSpinnerLoading(true);
     console.log(
       `UPT terdekat adalah ${nearestCity} dengan jarak ${distance} km`
     );
@@ -284,6 +286,7 @@ function InputLaporanPengaduan() {
             .post(`http://localhost:5000/api/laporan-pengaduan`, postData)
             .then((response) => {
               alert("sukses");
+              window.location.href = "/";
             })
             .catch((error) => {
               alert(error.message);
@@ -300,6 +303,7 @@ function InputLaporanPengaduan() {
     // console.log("button ditekan");
     signCanva.current.clear();
   };
+
   return (
     <div className="InputLaporanPengaduan">
       <form onSubmit={onSubmitHandler}>
@@ -616,9 +620,17 @@ function InputLaporanPengaduan() {
             <br></br>( {nama} )
           </div>
         </div>
-        <div className="mb-3 m-3 d-grid">
-          <button className="btn btn-primary">Laporkan</button>
-        </div>
+        {spinnerLoading ? (
+          <div class="d-flex justify-content-center align-items-center ">
+            <div class="spinner-border " role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <div className="mb-3 m-3 d-grid">
+            <button className="btn btn-primary">Laporkan</button>
+          </div>
+        )}
       </form>
     </div>
   );

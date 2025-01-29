@@ -32,7 +32,7 @@ function AdminDataTPA() {
   return (
     <div className="AdminDataTPA">
       <div className="container">
-        <h2>Titik TPA</h2>
+        <h2>Titik TPS</h2>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
 
         <div className="AdminOptionBar">

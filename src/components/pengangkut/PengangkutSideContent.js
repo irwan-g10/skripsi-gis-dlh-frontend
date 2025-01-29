@@ -1,11 +1,28 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
 function PengangkutSideContent() {
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    const id = localStorage.getItem("id");
+
+    // });
+    axios
+      .get(`http://localhost:5000/api/pengguna/${id}`)
+      .then((response) => {
+        const user = response.data.result;
+        setData(user);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
   const onClickKeluarHandler = async (event) => {
     localStorage.removeItem("id");
     localStorage.removeItem("role");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   return (
@@ -15,7 +32,7 @@ function PengangkutSideContent() {
           <div className="mb-3">
             <img src="/images/user.png" width="150" alt="..." />
           </div>
-          <h3>Irwan Gumilar</h3>
+          <h3>{data.nama}</h3>
         </li>
         <Link to="/">
           <li className="list-group-item " aria-current="true">

@@ -23,7 +23,7 @@ function PenggunaHome() {
         <div className="list-layanan ">
           <div className="row">
             <div className="col m-2">
-              <a href="/informasi-geografis">
+              <a href="#informasi-geografis">
                 <div className="row border rounded p-2 shadow  px-5">
                   <div className="col-3 my-3">
                     <i className="bi bi-map fs-1"></i>
@@ -35,7 +35,7 @@ function PenggunaHome() {
               </a>
             </div>
             <div className="col m-2">
-              <a href="/jadwal-pengangkutan">
+              <a href="#jadwal-pengangkutan">
                 <div className="row border rounded p-2 shadow px-3">
                   <div className="col-3 my-3 ">
                     <i className="bi bi-card-checklist fs-1"></i>
@@ -47,7 +47,7 @@ function PenggunaHome() {
               </a>
             </div>
             <div className="col m-2">
-              <a href="/lapor-pengaduan">
+              <a href="#lapor-pengaduan">
                 <div className="row border rounded p-2 shadow px-2">
                   <div className="col-3 my-3">
                     <i className="bi bi-megaphone fs-1"></i>
@@ -62,19 +62,21 @@ function PenggunaHome() {
         </div>
       </div>
 
-      <div className=" border rounded p-5 shadow m-3">
+      <div className=" border rounded p-5 shadow m-3" id="informasi-geografis">
         <h2 className="mb-5">Informasi Geografis</h2>
         <div className="list-layanan ">
           <InformasiGeografis />
         </div>
       </div>
-      <div className=" border rounded p-5 shadow m-3">
+      <div className=" border rounded p-5 shadow m-3" id="jadwal-pengangkutan">
         <h2 className="mb-5">Jadwal Pengangkutan</h2>
         <div className="list-layanan ">
           <JadwalPengangkutan />
         </div>
       </div>
-      <LaporPengaduanSampah />
+      <div id="lapor-pengaduan">
+        <LaporPengaduanSampah />
+      </div>
     </div>
   );
 }

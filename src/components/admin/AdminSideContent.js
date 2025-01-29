@@ -6,7 +6,7 @@ function AdminSideContent() {
   const onClickKeluarHandler = async (event) => {
     localStorage.removeItem("id");
     localStorage.removeItem("role");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   return (
@@ -24,7 +24,7 @@ function AdminSideContent() {
               <div className="col-2">
                 <i className="bi bi-geo-alt-fill"></i>
               </div>
-              <div className="col">Titik TPA</div>
+              <div className="col">Titik TPS</div>
               <div className="col-1">
                 <i className="bi bi-caret-right-fill"></i>
               </div>

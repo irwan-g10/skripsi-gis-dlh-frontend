@@ -218,7 +218,38 @@ function DetailAntrianPengangkutan() {
     // Format: 22.00 / Sabtu, 18 Agustus 2020
     return `${hours}.${minutes} / ${dayName}, ${day} ${month} ${year}`;
   }
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius bumi dalam km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
 
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Jarak dalam km
+  }
+  React.useEffect(() => {
+    if (!loading || !data || !location) return;
+
+    const latA = parseFloat(data?.latitude);
+    const logA = parseFloat(data?.longitude);
+    const latB = parseFloat(location?.latitude);
+    const logB = parseFloat(location?.longitude);
+
+    if (!latA || !logA || !latB || !logB) return;
+
+    const jarak = haversine(latA, logA, latB, logB);
+
+    if (jarak !== distance) {
+      // 🔹 Cegah infinite loop jika jarak sudah sama
+      setDistance(jarak.toFixed(2));
+    }
+  }, [loading, data, distance, location]);
   if (loading) {
     if (
       location.longitude &&
@@ -226,25 +257,25 @@ function DetailAntrianPengangkutan() {
       data.lokasi_pengangkutan.latitude &&
       data.lokasi_pengangkutan.longitude
     ) {
-      const latA = parseFloat(data.latitude);
-      const logA = parseFloat(data.longitude);
-      const latB = parseFloat(location.latitude);
-      const logB = parseFloat(location.longitude);
+      // const latA = parseFloat(data.latitude);
+      // const logA = parseFloat(data.longitude);
+      // const latB = parseFloat(location.latitude);
+      // const logB = parseFloat(location.longitude);
 
-      const pointA = { lat: latA, lon: logA }; // Contoh titik A (Bandung)
-      const pointB = { lat: latB, lon: logB }; // Contoh titik B (Bandung)
-      const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
-      axios
-        .get(url)
-        .then((response) => {
-          const route = response.data.routes[0];
-          const distanceInMeters = route.distance;
-          const distanceInKm = distanceInMeters / 1000;
-          setDistance(distanceInKm.toFixed(2)); // Set jarak dan bulatkan ke 2 angka desimal
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+      // const pointA = { lat: latA, lon: logA }; // Contoh titik A (Bandung)
+      // const pointB = { lat: latB, lon: logB }; // Contoh titik B (Bandung)
+      // const url = `http://router.project-osrm.org/route/v1/driving/${pointA.lon},${pointA.lat};${pointB.lon},${pointB.lat}?overview=false`;
+      // axios
+      //   .get(url)
+      //   .then((response) => {
+      //     const route = response.data.routes[0];
+      //     const distanceInMeters = route.distance;
+      //     const distanceInKm = distanceInMeters / 1000;
+      //     setDistance(distanceInKm.toFixed(2)); // Set jarak dan bulatkan ke 2 angka desimal
+      //   })
+      //   .catch((error) => {
+      //     alert(error.message);
+      //   });
       return (
         <div className="detail-antrian-pengangkutan container p-5 lh">
           <h1 className="mb-5">Detail Antrian Pengangkutan</h1>

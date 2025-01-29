@@ -105,7 +105,7 @@ function DetailPengaduan() {
       .then((response) => {
         console.log(response.data);
         alert("sukses");
-        window.location.reload();
+        window.location.href = "/";
       })
       .catch((error) => {
         alert(error.message);

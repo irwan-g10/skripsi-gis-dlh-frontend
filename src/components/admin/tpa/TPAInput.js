@@ -230,7 +230,7 @@ function TPAInput({ isUpdate = false }) {
     <div className="TPAInput">
       <div className="container">
         <div className="mb-5">
-          <h2>{isUpdate ? "Perbarui Lokasi TPA" : "Tambah Lokasi TPA"}</h2>
+          <h2>{isUpdate ? "Perbarui Lokasi TPS" : "Tambah Lokasi TPS"}</h2>
         </div>
         <div className="border-top border-2 border-dark my-4 mx-5"></div>
         <form onSubmit={onSubmitHandler}>
