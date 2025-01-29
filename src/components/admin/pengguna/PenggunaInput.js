@@ -165,7 +165,6 @@ function PenggunaInput({ isUpdate = false }) {
               <option value={role}>{isUpdate ? role : "--- Pilih ---"}</option>
               <option value="Admin">Admin</option>
               <option value="Pengangkut">Pengangkut</option>
-              <option value="Pengguna">Pengguna</option>
             </select>
           </div>
           <div className="mb-3">

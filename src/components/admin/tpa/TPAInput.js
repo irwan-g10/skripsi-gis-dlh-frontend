@@ -101,7 +101,7 @@ function TPAInput({ isUpdate = false }) {
           console.log(response.data.result);
           setNamaTempat(result.nama_tempat);
           setJenisTong(result.jenis_tong);
-          setUnitPelayananTeknis(result.unit_pelayanan_teknis.nama_upt);
+          setUnitPelayananTeknis(result.unit_pelayanan_teknis.id);
           setAlamat(result.alamat);
           setLatitude(result.latitude);
           // setStatusPengangkutan(result.status);
@@ -165,68 +165,107 @@ function TPAInput({ isUpdate = false }) {
       [name]: checked,
     }));
   };
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    if (!imageFile) return;
-    const storage = getStorage(app);
-    // console.log(imageFile);
+    if (imageFile) {
+      const storage = getStorage(app);
+      // console.log(imageFile);
 
-    const storageRef = ref(storage, `images/${imageFile.name}-${Date.now()}`); // Referensi lokasi gambar di Firebase Storage
-    const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
+      const storageRef = ref(storage, `images/${imageFile.name}-${Date.now()}`); // Referensi lokasi gambar di Firebase Storage
+      const uploadTask = uploadBytesResumable(storageRef, imageFile); // Mulai proses upload
 
-    // Memantau proses upload
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log("gambar di upload");
-      },
-      (error) => {
-        console.error("Error during upload:", error);
-      },
-      () => {
-        // Mendapatkan URL download setelah selesai upload
-        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-          const postData = {
-            nama_tempat,
-            jenis_tong,
-            unit_pelayanan_teknis,
-            hari,
-            alamat,
-            latitude,
-            longitude,
-            image_url: url,
-          };
+      // Memantau proses upload
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          console.log("gambar di upload");
+        },
+        (error) => {
+          console.error("Error during upload:", error);
+        },
+        () => {
+          // Mendapatkan URL download setelah selesai upload
+          getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+            const postData = {
+              nama_tempat,
+              jenis_tong,
+              unit_pelayanan_teknis,
+              hari,
+              alamat,
+              latitude,
+              longitude,
+              image_url: url,
+            };
 
-          if (isUpdate) {
-            await axios
-              .patch(
-                `${process.env.REACT_APP_API_URL}api/titik-tpa/${id}`,
-                postData
-              )
-              .then((response) => {
-                console.log(response.data);
-                alert("sukses");
-                navigate("/titik-tpa-table");
-              })
-              .catch((error) => {
-                alert(error.message);
-              });
-          } else {
-            await axios
-              .post(`${process.env.REACT_APP_API_URL}api/titik-tpa`, postData)
-              .then((response) => {
-                alert("sukses");
-                navigate("/titik-tpa-table");
-              })
-              .catch((error) => {
-                alert(error.message);
-              });
-          }
-          console.log("File available at", url);
-        });
+            if (isUpdate) {
+              console.log(postData);
+              await axios
+                .patch(
+                  `${process.env.REACT_APP_API_URL}api/titik-tpa/${id}`,
+                  postData
+                )
+                .then((response) => {
+                  console.log(response.data);
+                  alert("sukses");
+                  navigate("/titik-tpa-table");
+                })
+                .catch((error) => {
+                  alert(error.message);
+                });
+            } else {
+              await axios
+                .post(`${process.env.REACT_APP_API_URL}api/titik-tpa`, postData)
+                .then((response) => {
+                  alert("sukses");
+                  navigate("/titik-tpa-table");
+                })
+                .catch((error) => {
+                  alert(error.message);
+                });
+            }
+            console.log("File available at", url);
+          });
+        }
+      );
+    } else {
+      const postData = {
+        nama_tempat,
+        jenis_tong,
+        unit_pelayanan_teknis,
+        hari,
+        alamat,
+        latitude,
+        longitude,
+      };
+
+      if (isUpdate) {
+        console.log(postData);
+        await axios
+          .patch(
+            `${process.env.REACT_APP_API_URL}api/titik-tpa/${id}`,
+            postData
+          )
+          .then((response) => {
+            console.log(response.data);
+            alert("sukses");
+            navigate("/titik-tpa-table");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      } else {
+        await axios
+          .post(`${process.env.REACT_APP_API_URL}api/titik-tpa`, postData)
+          .then((response) => {
+            alert("sukses");
+            navigate("/titik-tpa-table");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
       }
-    );
+    }
   };
 
   return (

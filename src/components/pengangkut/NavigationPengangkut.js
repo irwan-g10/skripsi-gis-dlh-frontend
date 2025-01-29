@@ -4,7 +4,7 @@ function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg ">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <i className="bi bi-list"></i>
         </a>
         <button

@@ -101,15 +101,7 @@ function AdminDataPengangkutan() {
         <div className="AdminOptionBar">
           <div className="container text-center mb-5">
             <div className="row">
-              <div className="col-3 ">
-                <Link to="/titik-tpa-input">
-                  <div className="col d-grid">
-                    <button type="button" className="btn btn-primary d-grid">
-                      Tambah
-                    </button>
-                  </div>
-                </Link>
-              </div>
+              <div className="col-3 "></div>
               <div className="col">
                 <div className="d-flex">
                   <input
