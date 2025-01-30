@@ -20,7 +20,7 @@ function AdminDataPengaduan() {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/laporan-pengaduan`)
+      .get(`${process.env.REACT_APP_API_URL}api/laporan-pengaduan`)
       .then((response) => {
         setData(response.data.result);
         setLoading(false);
@@ -30,7 +30,7 @@ function AdminDataPengaduan() {
       });
 
     axios
-      .get(`http://localhost:5000/api/pengguna`)
+      .get(`${process.env.REACT_APP_API_URL}api/pengguna`)
       .then((response) => {
         setPengangkut(response.data.result);
         setLoading(false);
@@ -59,7 +59,7 @@ function AdminDataPengaduan() {
       data.status = status;
     }
     axios
-      .get(`http://localhost:5000/api/laporan-pengaduan`, {
+      .get(`${process.env.REACT_APP_API_URL}api/laporan-pengaduan`, {
         params: { ...data },
       })
       .then((response) => {
