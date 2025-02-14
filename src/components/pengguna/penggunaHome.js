@@ -19,6 +19,12 @@ function PenggunaHome() {
           Sampaikan laporan Anda langsung kepada instansi pemerintah berwenang
         </p>
       </div>
+      <div className=" border rounded p-5 shadow m-3" id="informasi-geografis">
+        <h2 className="mb-5">Data Statistik</h2>
+        <div className="list-layanan ">
+          <DataStatistik />
+        </div>
+      </div>
       <div className=" border rounded p-5 shadow m-3">
         <h2 className="mb-5">Layanan Publik</h2>
         <div className="list-layanan ">
@@ -62,12 +68,7 @@ function PenggunaHome() {
           </div>
         </div>
       </div>
-      <div className=" border rounded p-5 shadow m-3" id="informasi-geografis">
-        <h2 className="mb-5">Data Statistik</h2>
-        <div className="list-layanan ">
-          <DataStatistik />
-        </div>
-      </div>
+
       <div className=" border rounded p-5 shadow m-3" id="informasi-geografis">
         <h2 className="mb-5">Informasi Geografis</h2>
         <div className="list-layanan ">
