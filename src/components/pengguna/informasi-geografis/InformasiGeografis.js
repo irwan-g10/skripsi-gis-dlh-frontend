@@ -45,7 +45,7 @@ function InformasiGeografis() {
                     )
                     .then((response) => {
                       setDataNearest(response.data.result);
-                      console.log(response.data.query);
+                      // console.log(response.data.query);
                       // console.log("aaaa");
 
                       setLoadingNearest(false);
@@ -132,7 +132,7 @@ function InformasiGeografis() {
     return { nearestCity, distance: distances[nearestCity] };
   }
   if (loading) {
-    console.log(dataNearest);
+    // console.log(dataNearest);
     return (
       <div className="InformasiGeografis">
         <div className="row">
@@ -214,7 +214,7 @@ function InformasiGeografis() {
                 const foundItem = dataNearest.find(
                   (item) => item.id === nearestCity
                 );
-                console.log(foundItem);
+                // console.log(foundItem);
                 return (
                   <div className="card">
                     <img
