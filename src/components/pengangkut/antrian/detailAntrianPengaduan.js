@@ -19,6 +19,7 @@ function DetailAntrianPengaduan() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState("");
+  const [jumlah, setJumlah] = React.useState("");
   const [location, setLocation] = React.useState({
     latitude: null,
     longitude: null,
@@ -89,6 +90,9 @@ function DetailAntrianPengaduan() {
   };
   const onStatusChangeHandler = (event) => {
     setStatus(event.target.value);
+  };
+  const onJumlahChangeHandler = (event) => {
+    setJumlah(event.target.value);
   };
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
@@ -162,6 +166,8 @@ function DetailAntrianPengaduan() {
             pengangkut: localStorage.getItem("id"),
             signature_petugas: signature,
             keterangan: keterangan,
+
+            jumlah: jumlah,
             image_url_petugas: url,
           };
           await axios
@@ -515,7 +521,7 @@ function DetailAntrianPengaduan() {
             </div>
           </div>
           <h5 className="card-title">H. Status</h5>
-          <div className="row">
+          <div className="row mb-3">
             <div className="col-1"></div>
             <div className="col">
               <select
@@ -533,6 +539,23 @@ function DetailAntrianPengaduan() {
               </select>
             </div>
           </div>
+          <h5 className="card-title mb-3">I. Perkiraan jumlah sampah (Kg)</h5>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col">
+              <div className="mb-5 text-start">
+                <input
+                  type="number"
+                  id="password"
+                  className="form-control"
+                  placeholder="Masukan jumlah ..."
+                  value={jumlah}
+                  onChange={onJumlahChangeHandler}
+                ></input>
+              </div>
+            </div>
+          </div>
+
           <div className="tanda-tangan row">
             <div className="col"></div>
             <button

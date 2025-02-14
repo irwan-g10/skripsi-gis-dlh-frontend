@@ -186,6 +186,10 @@ function DetailLaporanPengaduan() {
                         <td className="text-end">{distance} km</td>
                       </tr>
                       <tr>
+                        <th scope="row">Total angkutan (Kg)</th>
+                        <td className="text-end">{data.jumlah} Kg</td>
+                      </tr>
+                      <tr>
                         <th scope="row">Tanggal Pengaduan</th>
                         <td className="text-end">
                           {formatDateTime(new Date(data.tanggal_pengaduan))}

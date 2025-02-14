@@ -276,6 +276,7 @@ function InputLaporanPengaduan() {
             harapan_penyelesaian: harapanPenyelesaian,
             latitude,
             longitude,
+            jumlah: "0",
             informasi_pengadu: informasiPengadu,
             image_url: url,
             signature,

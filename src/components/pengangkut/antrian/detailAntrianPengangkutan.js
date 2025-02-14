@@ -19,6 +19,7 @@ function DetailAntrianPengangkutan() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState("");
+  const [jumlah, setJumlah] = React.useState("");
   const [location, setLocation] = React.useState({
     latitude: null,
     longitude: null,
@@ -54,6 +55,9 @@ function DetailAntrianPengangkutan() {
   };
   const onStatusChangeHandler = (event) => {
     setStatus(event.target.value);
+  };
+  const onJumlahChangeHandler = (event) => {
+    setJumlah(event.target.value);
   };
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
@@ -130,6 +134,7 @@ function DetailAntrianPengangkutan() {
             signature: signature,
             keterangan: keterangan,
             image_url: url,
+            jumlah: jumlah,
           };
           await axios
             .post(
@@ -397,7 +402,7 @@ function DetailAntrianPengangkutan() {
             </div>
             ;
           </MapContainer>
-          <h5 className="card-title mt-5">F. Keterangan Petugas</h5>
+          <h5 className="card-title mt-5">B. Keterangan Petugas</h5>
           <div className="row">
             <div className="col-1"></div>
             <div className="col">
@@ -409,7 +414,7 @@ function DetailAntrianPengangkutan() {
               ></textarea>
             </div>
           </div>
-          <h5 className="card-title">G. Lampiran Foto</h5>
+          <h5 className="card-title">C. Lampiran Foto</h5>
           <div className="row">
             <div className="col-1"></div>
             <div className="col">
@@ -426,7 +431,7 @@ function DetailAntrianPengangkutan() {
               </div>
             </div>
           </div>
-          <h5 className="card-title">H. Status</h5>
+          <h5 className="card-title">D. Status</h5>
           <div className="row">
             <div className="col-1"></div>
             <div className="col">
@@ -443,6 +448,22 @@ function DetailAntrianPengangkutan() {
                 <option value="Laporan Palsu">Laporan Palsu</option>
                 <option value="Ditunda">Ditunda</option>
               </select>
+            </div>
+          </div>
+          <h5 className="card-title mb-3">E. Perkiraan jumlah sampah (Kg)</h5>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col">
+              <div className="mb-5 text-start">
+                <input
+                  type="number"
+                  id="password"
+                  className="form-control"
+                  placeholder="Masukan jumlah ..."
+                  value={jumlah}
+                  onChange={onJumlahChangeHandler}
+                ></input>
+              </div>
             </div>
           </div>
           <div className="tanda-tangan row mb-3">
