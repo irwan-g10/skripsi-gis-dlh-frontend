@@ -190,7 +190,7 @@ function DetailLaporanPengangkutan() {
                         <td className="text-end">{distance} km</td>
                       </tr>
                       <tr>
-                        <th scope="row">jarak</th>
+                        <th scope="row">Total angkutan (Kg)</th>
                         <td className="text-end">{data.jumlah} Kg</td>
                       </tr>
                       <tr>
