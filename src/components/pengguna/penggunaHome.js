@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import InformasiGeografis from "./informasi-geografis/InformasiGeografis";
 import JadwalPengangkutan from "./jadwal-pengangkutan/JadwalPengangkutan";
 import LaporPengaduanSampah from "./lapor-pengaduan/LaporPengaduanSampah";
+import DataStatistik from "./data-statistik/dataStatistik";
 
 function PenggunaHome() {
   return (
@@ -61,7 +62,12 @@ function PenggunaHome() {
           </div>
         </div>
       </div>
-
+      <div className=" border rounded p-5 shadow m-3" id="informasi-geografis">
+        <h2 className="mb-5">Data Statistik</h2>
+        <div className="list-layanan ">
+          <DataStatistik />
+        </div>
+      </div>
       <div className=" border rounded p-5 shadow m-3" id="informasi-geografis">
         <h2 className="mb-5">Informasi Geografis</h2>
         <div className="list-layanan ">
