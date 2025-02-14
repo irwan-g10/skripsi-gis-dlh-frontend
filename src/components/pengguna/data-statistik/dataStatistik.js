@@ -35,6 +35,7 @@ Chart.register(
 
 function DataStatistik() {
   const [dataUPT, setDataUPT] = React.useState([]);
+  const [dataTPS, setDataTPS] = React.useState([]);
   const [dataLaporanPengangkutan, setDataLaporanPengangkutan] = React.useState(
     []
   );
@@ -45,6 +46,14 @@ function DataStatistik() {
       .get(`${process.env.REACT_APP_API_URL}api/titik-upt`)
       .then((response) => {
         setDataUPT(response.data.result);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}api/titik-tpa`)
+      .then((response) => {
+        setDataTPS(response.data.result);
       })
       .catch((error) => {
         alert(error.message);
@@ -166,11 +175,7 @@ function DataStatistik() {
     )
     .reduce((acc, item) => acc + Number(item.jumlah), 0);
   const dataBar = {
-    labels: [
-      "UPTD pengangkutan sampah wilayah Soreang",
-      "UPTD pengangkutan sampah wilayah Baleendah",
-      "UPTD pengangkutan sampah wilayah Ciparay",
-    ],
+    labels: ["UPTD Soreang", "UPTD Baleendah", "UPTD Ciparay"],
     datasets: [
       {
         label: "Total Sampah (Kg)",
@@ -378,8 +383,35 @@ function DataStatistik() {
       y: { title: { display: true, text: "Jumlah Pengangkutan" } },
     },
   };
+  const kpiData = [
+    { title: "Total TPS", value: dataTPS.length, color: "primary" },
+    { title: "Total UPT", value: dataUPT.length, color: "success" },
+    {
+      title: "Total Laporan",
+      value: dataLaporanPengaduan.length,
+      color: "danger",
+    },
+  ];
   return (
     <div className="container">
+      <div className="container mt-4">
+        <div className="row">
+          {kpiData.map((item, index) => (
+            <div key={index} md={4} className=" col mb-4 text-center">
+              <div className={`card border-${item.color} shadow`}>
+                <div className="card-body">
+                  <div className="card-title text-uppercase text-muted font-weight-bold">
+                    {item.title}
+                  </div>
+                  <h3 className={`text-${item.color}`}>{item.value}</h3>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-top border-2 border-dark my-4 mx-5"></div>
       <div className="row">
         <div className="col">
           <div className="diagram-pie">
