@@ -206,7 +206,7 @@ function DataStatistik() {
   );
 
   const pengaduanH = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(today.toISOString().split("T")[0])
+    item.tanggal_pengangkutan?.startsWith(today.toISOString().split("T")[0])
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH = pengaduanH.reduce((sum, item) => {
@@ -225,7 +225,7 @@ function DataStatistik() {
   const day2Date = day2.toISOString().split("T")[0];
 
   const pengaduanH2 = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(day2Date)
+    item.tanggal_pengangkutan?.startsWith(day2Date)
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH2 = pengaduanH2.reduce((sum, item) => {
@@ -244,7 +244,7 @@ function DataStatistik() {
   const day3Date = day3.toISOString().split("T")[0];
 
   const pengaduanH3 = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(day3Date)
+    item.tanggal_pengangkutan?.startsWith(day3Date)
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH3 = pengaduanH3.reduce((sum, item) => {
@@ -263,7 +263,7 @@ function DataStatistik() {
   const day4Date = day4.toISOString().split("T")[0];
 
   const pengaduanH4 = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(day4Date)
+    item.tanggal_pengangkutan?.startsWith(day4Date)
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH4 = pengaduanH4.reduce((sum, item) => {
@@ -282,7 +282,7 @@ function DataStatistik() {
   const day5Date = day5.toISOString().split("T")[0];
 
   const pengaduanH5 = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(day5Date)
+    item.tanggal_pengangkutan?.startsWith(day5Date)
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH5 = pengaduanH5.reduce((sum, item) => {
@@ -301,7 +301,7 @@ function DataStatistik() {
   const day6Date = day6.toISOString().split("T")[0];
 
   const pengaduanH6 = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(day6Date)
+    item.tanggal_pengangkutan?.startsWith(day6Date)
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH6 = pengaduanH6.reduce((sum, item) => {
@@ -320,7 +320,7 @@ function DataStatistik() {
   const day7Date = day7.toISOString().split("T")[0];
 
   const pengaduanH7 = dataLaporanPengaduan.filter((item) =>
-    item.tanggal_pengangkutan.startsWith(day7Date)
+    item.tanggal_pengangkutan?.startsWith(day7Date)
   );
   // Jumlahkan 'jumlah' dari pengaduan hari ini
   const totalJumlahPengaduanH7 = pengaduanH7.reduce((sum, item) => {
